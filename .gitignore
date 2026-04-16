@@ -1,0 +1,23 @@
+# Logs
+logs
+*.log
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+
+bun.lock
+
+.claude
+.turbo
