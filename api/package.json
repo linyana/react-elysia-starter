@@ -1,19 +1,20 @@
 {
-  "name": "@project-name/api",
-  "private": true,
-  "version": "1.0.0",
-  "description": "Project Name API",
-  "license": "MIT",
-  "scripts": {
-    "dev": "bun --watch src/main.ts",
-    "prisma:push": "prisma db push",
-    "prisma:generate": "prisma generate"
-  },
-  "dependencies": {
-    "@elysiajs/cors": "^1.4.1",
-    "@prisma/adapter-pg": "^7.7.0",
-    "@prisma/client": "^7.6.0",
-    "elysia": "^1.4.28",
-    "prisma": "^7.7.0"
-  }
+	"name": "@project-name/api",
+	"private": true,
+	"version": "1.0.0",
+	"description": "AI Lab API",
+	"license": "MIT",
+	"scripts": {
+		"dev": "bun --watch src/main.ts",
+		"build": "bun run build/index.ts",
+		"prisma:push": "prisma db push",
+		"prisma:generate": "prisma generate"
+	},
+	"dependencies": {
+		"@elysiajs/cors": "^1.4.1",
+		"@prisma/adapter-pg": "^7.7.0",
+		"@prisma/client": "^7.6.0",
+		"elysia": "^1.4.28",
+		"prisma": "^7.7.0"
+	}
 }

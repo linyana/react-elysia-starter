@@ -7,7 +7,14 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**"]
+      "outputs": ["dist/**"],
+      "cache": false
+    },
+    "prisma:push": {
+      "dependsOn": ["^prisma:push"]
+    },
+    "prisma:generate": {
+      "dependsOn": ["^prisma:generate"]
     },
     "lint": {
       "dependsOn": ["^lint"]

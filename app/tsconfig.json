@@ -1,13 +1,14 @@
 {
-  "extends": "../tsconfig.json",
-  "compilerOptions": {
-    "jsx": "react-jsx",
-    "module": "ESNext",
-    "rootDir": "..",
-    "outDir": "dist/client",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@api/*": ["../api/src/*"]
-    }
-  }
+	"extends": "../tsconfig.json",
+	"references": [{ "path": "../api" }],
+	"compilerOptions": {
+		"jsx": "react-jsx",
+		"module": "ESNext",
+		"outDir": "dist/client",
+		"paths": {
+			"@/*": ["./src/*"],
+			"@api/*": ["../api/src/*"]
+		}
+	},
+	"include": ["src"]
 }

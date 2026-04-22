@@ -1,0 +1,13 @@
+**/node_modules
+**/dist
+
+.git
+.gitignore
+.github
+.vscode
+.claude
+.idea
+
+*.log
+*.md
+!README.md

@@ -31,7 +31,7 @@ const buildMenuItem = (route: IRouteType, parentPath = ''): any | null => {
   return {
     key: children.length ? `${fullPath}__group` : fullPath,
     label: menu.label,
-    icon: menu.icon,
+    iconName: menu.iconName,
     ...(children.length
       ? {
           children,
