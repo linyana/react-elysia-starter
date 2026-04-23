@@ -1,5 +1,5 @@
 import type { IRouteType } from '@/types';
-import { Dashboard } from './pages';
+import { Dashboard, Login } from './pages';
 
 const NotFound = () => {
   throw new Response('Not Found', {
@@ -9,6 +9,15 @@ const NotFound = () => {
 };
 
 export const routes: IRouteType[] = [
+  {
+    id: '/login',
+    path: '/login',
+    element: <Login />,
+    handle: {
+      layout: 'BLANK',
+      auth: false,
+    },
+  },
   {
     id: '/dashboard',
     path: '/dashboard',
