@@ -15,7 +15,7 @@ async function main() {
     })
   }
 
-  const passwordTest = await Bun.password.hash('Silk123456');
+  const passwordTest = await Bun.password.hash('Abc12345');
   await prisma.users.upsert({
     where: {
       email: 'test@test.com',
