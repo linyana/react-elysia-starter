@@ -16,6 +16,9 @@
     "prisma:generate": {
       "dependsOn": ["^prisma:generate"]
     },
+    "prisma:seed": {
+      "dependsOn": ["^prisma:seed"]
+    },
     "lint": {
       "dependsOn": ["^lint"]
     },

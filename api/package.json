@@ -8,7 +8,8 @@
 		"dev": "bun --watch src/main.ts",
 		"build": "bun run build/index.ts",
 		"prisma:push": "prisma db push",
-		"prisma:generate": "prisma generate"
+		"prisma:generate": "prisma generate",
+		"prisma:seed": "prisma db seed"
 	},
 	"dependencies": {
 		"@elysiajs/cors": "^1.4.1",
@@ -16,5 +17,8 @@
 		"@prisma/client": "^7.6.0",
 		"elysia": "^1.4.28",
 		"prisma": "^7.7.0"
+	},
+	"devDependencies": {
+		"@types/bun": "^1.3.13"
 	}
 }

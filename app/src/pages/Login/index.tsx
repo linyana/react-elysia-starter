@@ -1,8 +1,6 @@
-import { useState } from "react";
 import {
 	Avatar,
 	Button,
-	Checkbox,
 	Col,
 	Flex,
 	Form,
@@ -14,37 +12,34 @@ import {
 } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Icon } from "@/components";
-import { useGlobal, useMessage } from "@/hooks";
+import { useAPI, useGlobal } from "@/hooks";
 import heroSvg from "@/assets/login-hero.svg";
 import logoSvg from "@/assets/logo.svg";
+import { API } from "@/libs";
 
 const { Title, Text, Paragraph, Link } = Typography;
 
 type IFormValues = {
 	email: string;
 	password: string;
-	remember: boolean;
 };
 
 export const Login = () => {
 	const navigate = useNavigate();
-	const message = useMessage();
 	const { actions } = useGlobal();
-	const [loading, setLoading] = useState(false);
 
-	const handleSubmit = async (values: IFormValues) => {
-		setLoading(true);
-		try {
-			await new Promise((resolve) => setTimeout(resolve, 700));
-			actions.set({
-				token: "demo-token",
-				user: { name: values.email.split("@")[0], email: values.email },
-			});
-			message.success("Welcome back.");
-			navigate("/dashboard");
-		} finally {
-			setLoading(false);
-		}
+	const { fetchData: login, loading } = useAPI(API.auth.login.post, {
+		success: {
+			message: "Welcome back.",
+			action: ({ token }) => {
+				actions.set({ token });
+				navigate("/dashboard");
+			},
+		},
+	});
+
+	const handleSubmit = (values: IFormValues) => {
+		login(values);
 	};
 
 	return (
@@ -90,47 +85,47 @@ export const Login = () => {
 					</Space>
 
 					<Flex vertical gap={20} style={{ maxWidth: 520 }}>
-						{/* <Tag
-              style={{
-                background: 'rgba(255,255,255,0.06)',
-                color: 'rgba(255,255,255,0.75)',
-                borderRadius: 999,
-                padding: '4px 12px',
-                fontSize: 12,
-                letterSpacing: '0.06em',
-                width: 'fit-content',
-              }}
-            >
-              <Space size={8}>
-                <span
-                  style={{
-                    display: 'inline-block',
-                    width: 6,
-                    height: 6,
-                    borderRadius: '50%',
-                    background: '#8ef0c5',
-                    boxShadow: '0 0 8px #8ef0c5',
-                  }}
-                />
-                Control plane · v2.4
-              </Space>
-            </Tag> */}
+						<Tag
+							style={{
+								background: "rgba(255,255,255,0.06)",
+								color: "rgba(255,255,255,0.75)",
+								borderRadius: 999,
+								padding: "4px 12px",
+								fontSize: 12,
+								letterSpacing: "0.06em",
+								width: "fit-content",
+							}}
+						>
+							<Space size={8}>
+								<span
+									style={{
+										display: "inline-block",
+										width: 6,
+										height: 6,
+										borderRadius: "50%",
+										background: "#8ef0c5",
+										boxShadow: "0 0 8px #8ef0c5",
+									}}
+								/>
+								Control plane · v2.4
+							</Space>
+						</Tag>
 
-						{/* <Title
-              level={1}
-              style={{
-                color: '#fafafa',
-                margin: 0,
-                fontSize: 46,
-                fontWeight: 600,
-                lineHeight: 1.1,
-                letterSpacing: '-0.02em',
-              }}
-            >
-              Build with clarity.
-              <br />
-              Ship with confidence.
-            </Title> */}
+						<Title
+							level={1}
+							style={{
+								color: "#fafafa",
+								margin: 0,
+								fontSize: 46,
+								fontWeight: 600,
+								lineHeight: 1.1,
+								letterSpacing: "-0.02em",
+							}}
+						>
+							Build with clarity.
+							<br />
+							Ship with confidence.
+						</Title>
 
 						<Paragraph
 							style={{
@@ -167,7 +162,6 @@ export const Login = () => {
 						<Form<IFormValues>
 							layout="vertical"
 							requiredMark={false}
-							initialValues={{ remember: true }}
 							onFinish={handleSubmit}
 							size="large"
 						>
@@ -189,11 +183,7 @@ export const Login = () => {
 							<Form.Item
 								name="password"
 								label={
-									<Flex
-										justify="space-between"
-										align="center"
-                    gap="small"
-									>
+									<Flex justify="space-between" align="center" gap="small">
 										<span>Password</span>
 										<div>
 											<Link href="#" style={{ fontSize: 12 }}>
@@ -209,10 +199,6 @@ export const Login = () => {
 									placeholder="Enter your password"
 									autoComplete="current-password"
 								/>
-							</Form.Item>
-
-							<Form.Item name="remember" valuePropName="checked">
-								<Checkbox>Keep me signed in for 30 days</Checkbox>
 							</Form.Item>
 
 							<Form.Item style={{ marginBottom: 0 }}>
@@ -245,5 +231,3 @@ export const Login = () => {
 		</Row>
 	);
 };
-
-export default Login;
