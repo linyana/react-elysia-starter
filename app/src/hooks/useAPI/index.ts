@@ -74,7 +74,7 @@ export function useAPI<TFn extends AnyEdenFn>(
    * Toasts, error messages, and race-condition handling are already
    * applied — callers only orchestrate.
    */
-  const fetchData = async (
+  const fetch = async (
     callOptions?: TCallOptions,
   ): Promise<TData | null> => {
     latestId.current += 1;
@@ -128,5 +128,5 @@ export function useAPI<TFn extends AnyEdenFn>(
     return responseBody as TData;
   };
 
-  return { data, loading, errorMessage, fetchData };
+  return { data, loading, errorMessage, fetch };
 }

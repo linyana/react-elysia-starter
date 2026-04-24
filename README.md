@@ -86,7 +86,7 @@ bun run build              # Production build
 │   │   ├── providers/     # Theme, Routes, Layout, Auth
 │   │   ├── pages/         # Page components
 │   │   └── components/    # Shared components
-│   └── public/
+│   └── PUBLIC/
 │
 ├── docker-compose.yaml    # PostgreSQL + Redis
 ├── turbo.json             # Turborepo config
@@ -101,11 +101,17 @@ Controllers return data directly — no response envelope needed:
 
 ```typescript
 // api/src/core/projects/controller.ts
-export const projectController = new Elysia({ prefix: '/projects' })
-  .get('/', () => projectService.getProjects())
-  .get('/:id', ({ params }) => projectService.getProject(Number(params.id)))
-  .post('/', ({ body }) => projectService.createProject(body), CreateProjectSchema)
-  .delete('/:id', ({ params }) => projectService.deleteProject(Number(params.id)));
+export const projectController = new Elysia({ prefix: "/projects" })
+	.get("/", () => projectService.getProjects())
+	.get("/:id", ({ params }) => projectService.getProject(Number(params.id)))
+	.post(
+		"/",
+		({ body }) => projectService.createProject(body),
+		CreateProjectSchema,
+	)
+	.delete("/:id", ({ params }) =>
+		projectService.deleteProject(Number(params.id)),
+	);
 ```
 
 ### End-to-End Type Safety
@@ -122,7 +128,7 @@ const { data: projects, fetchData } = useAPI(API.projects.get);
 Constants like `PERMISSION` are defined in `api/src/constants/` and imported by the frontend via the `@api/*` path alias:
 
 ```typescript
-import { PERMISSION } from '@api/constants';
+import { PERMISSION } from "@api/constants";
 ```
 
 ## Environment Variables
@@ -134,11 +140,11 @@ cp api/.env.example api/.env
 cp app/.env.example app/.env
 ```
 
-| Variable | Location | Description |
-|----------|----------|-------------|
-| `DATABASE_URL` | `api/.env` | PostgreSQL connection string |
-| `CORS_ORIGIN` | `api/.env` | Allowed CORS origin (default: `http://localhost:5173`) |
-| `VITE_API_BASE_URL` | `app/.env` | API base URL (default: `http://localhost:3000`) |
+| Variable            | Location   | Description                                            |
+| ------------------- | ---------- | ------------------------------------------------------ |
+| `DATABASE_URL`      | `api/.env` | PostgreSQL connection string                           |
+| `CORS_ORIGIN`       | `api/.env` | Allowed CORS origin (default: `http://localhost:5173`) |
+| `VITE_API_BASE_URL` | `app/.env` | API base URL (default: `http://localhost:3000`)        |
 
 ## License
 

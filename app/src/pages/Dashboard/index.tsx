@@ -3,12 +3,12 @@ import { API } from "@/libs";
 import { useAPI } from "@/hooks";
 
 export const Dashboard = () => {
-	const { data: projects, fetchData } = useAPI(API.projects.get, {
+	const { data: projects, fetch } = useAPI(API.projects.get, {
 		showLoading: false,
 	});
 
 	useEffect(() => {
-		fetchData();
+		fetch();
 	}, []);
 
 	return <div>Dashboard</div>;

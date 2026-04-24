@@ -1,83 +1,86 @@
-import { createBrowserRouter, type RouteObject, RouterProvider } from 'react-router-dom';
-import { useMemo } from 'react';
-import { routes } from '@/routes';
-import { LayoutProvider } from '../Layout';
-import { RouteError } from '@/components';
-import { useGlobal } from '@/hooks';
-import { hasAnyPermission } from '@/utils';
+import {
+	createBrowserRouter,
+	type RouteObject,
+	RouterProvider,
+} from "react-router-dom";
+import { useMemo } from "react";
+import { routes } from "@/routes";
+import { LayoutProvider } from "../Layout";
+import { RouteError } from "@/components";
+import { useGlobal } from "@/hooks";
+import { hasAnyPermission } from "@/utils";
 import type {
-  ILayoutType,
-  IMenuPositionType,
-  IRouteAccessType,
-  IRouteType,
-} from '@/types';
-import { PERMISSION } from '@api/constants';
-
+	ILayoutType,
+	IMenuPositionType,
+	IRouteAccessType,
+	IRouteType,
+} from "@/types";
+import { PERMISSION } from "@api/constants";
 
 const normalizeRoutes = (
-  routes: IRouteType[],
-  params: {
-    permissions: PERMISSION[];
-  },
+	routes: IRouteType[],
+	params: {
+		permissions: PERMISSION[];
+	},
 ): IRouteType[] => {
-  const { permissions } = params;
+	const { permissions } = params;
 
-  return routes.flatMap((route) => {
-    const handle = {
-      access: 'authenticated' as IRouteAccessType,
-      layout: 'DEFAULT' as ILayoutType,
-      permissions: [],
-      ...route.handle,
-      menu: route.handle?.menu
-        ? {
-            position: 'TOP' as IMenuPositionType,
-            ...route.handle?.menu,
-          }
-        : undefined,
-    };
-    const { permissions: routePermissions } = handle;
+	return routes.flatMap((route) => {
+		const handle = {
+			access: "AUTHENTICATED" as IRouteAccessType,
+			layout: "DEFAULT" as ILayoutType,
+			permissions: [],
+			...route.handle,
+			menu: route.handle?.menu
+				? {
+						position: "TOP" as IMenuPositionType,
+						...route.handle?.menu,
+					}
+				: undefined,
+		};
+		const { permissions: routePermissions } = handle;
 
-    if (!hasAnyPermission(permissions, routePermissions)) {
-      return [];
-    }
+		if (!hasAnyPermission(permissions, routePermissions)) {
+			return [];
+		}
 
-    return [
-      {
-        ...route,
-        handle,
-        children: route.children
-          ? normalizeRoutes(route.children, {
-              permissions,
-            })
-          : undefined,
-      },
-    ];
-  });
+		return [
+			{
+				...route,
+				handle,
+				children: route.children
+					? normalizeRoutes(route.children, {
+							permissions,
+						})
+					: undefined,
+			},
+		];
+	});
 };
 
 export const Routes = () => {
-  const { permissions } = useGlobal();
+	const { permissions } = useGlobal();
 
-  const finalRoutes = useMemo(() => {
-    let mergedRoutes = routes;
+	const finalRoutes = useMemo(() => {
+		let mergedRoutes = routes;
 
-    return normalizeRoutes(mergedRoutes, {
-      permissions,
-    });
-  }, [permissions]);
+		return normalizeRoutes(mergedRoutes, {
+			permissions,
+		});
+	}, [permissions]);
 
-  const router = useMemo(
-    () =>
-      createBrowserRouter([
-        {
-          path: '/',
-          element: <LayoutProvider routes={finalRoutes} />,
-          children: finalRoutes as RouteObject[],
-          errorElement: <RouteError />,
-        },
-      ]),
-    [finalRoutes],
-  );
+	const router = useMemo(
+		() =>
+			createBrowserRouter([
+				{
+					path: "/",
+					element: <LayoutProvider routes={finalRoutes} />,
+					children: finalRoutes as RouteObject[],
+					errorElement: <RouteError />,
+				},
+			]),
+		[finalRoutes],
+	);
 
-  return <RouterProvider router={router} />;
+	return <RouterProvider router={router} />;
 };

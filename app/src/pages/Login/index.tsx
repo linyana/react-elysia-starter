@@ -11,9 +11,10 @@ import {
 	Typography,
 } from "antd";
 import { Icon } from "@/components";
-import { useAuth } from "@/hooks";
+import { useAPI, useGlobal } from "@/hooks";
 import heroSvg from "@/assets/login-hero.svg";
 import logoSvg from "@/assets/logo.svg";
+import { API } from "@/libs";
 
 const { Title, Text, Paragraph, Link } = Typography;
 
@@ -23,10 +24,19 @@ type IFormValues = {
 };
 
 export const Login = () => {
-	const { login, loginLoading: loading } = useAuth();
+	const { actions } = useGlobal();
+
+	const { fetch, loading } = useAPI(API.auth.login.post, {
+		success: {
+			message: "Welcome back.",
+			action: ({ token }) => {
+				actions.set({ token });
+			},
+		},
+	});
 
 	const handleSubmit = (values: IFormValues) => {
-		login(values);
+		fetch(values);
 	};
 
 	return (

@@ -70,46 +70,8 @@ export const useAuth = () => {
     error: { message: null },
   });
 
-  // ── Verbs ─────────────────────────────────────────────────────────────
-  const login = async (credentials: ICredentials) => {
-    const toastKey = 'auth-login';
-    message.loading({ content: 'Signing in...', key: toastKey });
-
-    // 1. Exchange credentials for a token.
-    const loginRes = await loginApi.fetchData(credentials);
-    if (!loginRes) {
-      message.error({
-        key: toastKey,
-        content: loginApi.errorMessage ?? 'Sign-in failed.',
-      });
-      return;
-    }
-
-    // 2. Persist token BEFORE /me so `libs/api.ts` `headers()` picks it up.
-    global.actions.set({ [current.tokenKey]: loginRes.token });
-
-    // 3. Hydrate profile BEFORE navigating. Eliminates the post-login flash.
-    const meRes = await meApi.fetchData();
-    if (!meRes) {
-      // Token issued but profile fetch failed — roll back.
-      global.actions.set({ [current.tokenKey]: '' });
-      message.error({
-        key: toastKey,
-        content: meApi.errorMessage ?? 'Could not load profile.',
-      });
-      return;
-    }
-
-    // 4. Commit user + navigate in one event turn (React 18 batches).
-    global.actions.set({
-      user: { name: meRes.user.name, email: meRes.user.email },
-    });
-    message.success({ key: toastKey, content: 'Welcome back.' });
-    navigate(current.dashboardUrl, { replace: true });
-  };
-
   const reloadUser = async () => {
-    const res = await meApi.fetchData();
+    const res = await meApi.fetch();
     if (!res) {
       global.actions.set({ [current.tokenKey]: '', user: null });
       return;
@@ -143,7 +105,6 @@ export const useAuth = () => {
     dashboardUrl: current.dashboardUrl,
 
     // verbs
-    login,
     reloadUser,
     logout,
 
