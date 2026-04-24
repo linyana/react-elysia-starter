@@ -10,12 +10,10 @@ import {
 	Tag,
 	Typography,
 } from "antd";
-import { useNavigate } from "react-router-dom";
 import { Icon } from "@/components";
-import { useAPI, useGlobal } from "@/hooks";
+import { useAuth } from "@/hooks";
 import heroSvg from "@/assets/login-hero.svg";
 import logoSvg from "@/assets/logo.svg";
-import { API } from "@/libs";
 
 const { Title, Text, Paragraph, Link } = Typography;
 
@@ -25,18 +23,7 @@ type IFormValues = {
 };
 
 export const Login = () => {
-	const navigate = useNavigate();
-	const { actions } = useGlobal();
-
-	const { fetchData: login, loading } = useAPI(API.auth.login.post, {
-		success: {
-			message: "Welcome back.",
-			action: ({ token }) => {
-				actions.set({ token });
-				navigate("/dashboard");
-			},
-		},
-	});
+	const { login, loginLoading: loading } = useAuth();
 
 	const handleSubmit = (values: IFormValues) => {
 		login(values);

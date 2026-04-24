@@ -3,5 +3,5 @@ export const LAYOUT = {
   SMALL_PADDING: '8px',
   HEADER_HEIGHT: '64px',
   FOOTER_HEIGHT: '65px',
-  SIDER_WIDTH: '185px',
+  SIDER_WIDTH: '225px',
 };

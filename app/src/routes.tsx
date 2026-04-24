@@ -15,7 +15,7 @@ export const routes: IRouteType[] = [
     element: <Login />,
     handle: {
       layout: 'BLANK',
-      auth: false,
+      access: 'guest',
     },
   },
   {

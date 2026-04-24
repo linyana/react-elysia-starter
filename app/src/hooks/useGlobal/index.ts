@@ -7,10 +7,10 @@ const initData: IStateType = {
   apiBaseUrl: import.meta.env.VITE_API_BASE_URL ?? '',
   token: '',
   adminToken: '',
-  appToken: '',
   user: null,
   permissions: [],
   collapsed: false,
+  hydrated: false,
 };
 
 export const useGlobal = create<IGlobalStateType>()(
@@ -20,20 +20,23 @@ export const useGlobal = create<IGlobalStateType>()(
 
       actions: {
         set,
+        // Preserve `hydrated` across resets: once the app has booted, a
+        // logout/reset should not revert us to the "pre-hydration" state
+        // (which would re-trigger the full-screen AuthGate loading).
         reset: (state) =>
-          set({
+          set((prev) => ({
             ...initData,
+            hydrated: prev.hydrated,
             ...state,
-          }),
+          })),
       },
     }),
     // Persistent configuration(localStorage)
     {
       name: 'project-name',
-      partialize: ({ token, adminToken, appToken, collapsed }) => ({
+      partialize: ({ token, adminToken, collapsed }) => ({
         token,
         adminToken,
-        appToken,
         collapsed,
       }),
     },

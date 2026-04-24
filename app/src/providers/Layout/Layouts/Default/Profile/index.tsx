@@ -1,11 +1,12 @@
 import { Avatar, Dropdown, Flex, Typography, Menu } from 'antd';
 import { EllipsisVertical, LogOutIcon, User } from 'lucide-react';
-import { useGlobal } from '@/hooks';
+import { useAuth, useGlobal } from '@/hooks';
 
 const { Text } = Typography;
 
 export const UserProfile = () => {
   const { user, collapsed } = useGlobal();
+  const { logout } = useAuth();
 
   if (!user) return null;
 
@@ -40,11 +41,7 @@ export const UserProfile = () => {
             danger: true,
             title: '',
             label: 'Log out',
-            onClick: () => {
-              // logout({
-              //   message: null,
-              // });
-            },
+            onClick: () => logout(),
             icon: <LogOutIcon size={14} />,
           },
         ],

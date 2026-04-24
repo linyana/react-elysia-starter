@@ -1,13 +1,15 @@
 import { ErrorBoundary } from './components';
 import { MessageApiProvider } from './hooks';
-import { Routes, ThemeProvider } from './providers';
+import { AuthGate, Routes, ThemeProvider } from './providers';
 
 function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider>
         <MessageApiProvider>
-          <Routes />
+          <AuthGate>
+            <Routes />
+          </AuthGate>
         </MessageApiProvider>
       </ThemeProvider>
     </ErrorBoundary>

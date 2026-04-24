@@ -5,7 +5,12 @@ import { LayoutProvider } from '../Layout';
 import { RouteError } from '@/components';
 import { useGlobal } from '@/hooks';
 import { hasAnyPermission } from '@/utils';
-import type { ILayoutType, IMenuPositionType, IRouteType } from '@/types';
+import type {
+  ILayoutType,
+  IMenuPositionType,
+  IRouteAccessType,
+  IRouteType,
+} from '@/types';
 import { PERMISSION } from '@api/constants';
 
 
@@ -19,7 +24,7 @@ const normalizeRoutes = (
 
   return routes.flatMap((route) => {
     const handle = {
-      auth: true,
+      access: 'authenticated' as IRouteAccessType,
       layout: 'DEFAULT' as ILayoutType,
       permissions: [],
       ...route.handle,

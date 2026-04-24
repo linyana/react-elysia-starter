@@ -79,14 +79,40 @@ Because handlers explicitly return `ok(data)`, Eden sees the full wrapper type a
 **`useApi` hook (`app/src/hooks/useApi/`):**  
 Wraps any Eden Treaty call with React loading/data/error state. Types are fully inferred via `InferData<TFn>` — the hook unwraps the `{ data }` envelope so consumers get the actual payload. Provides loading toasts, success/error messages (Ant Design), and race-condition prevention (request IDs).
 
-Services in `app/src/services/` are thin wrappers with zero manual type annotations:
+### 🔒 Rule: all API calls must go through `useAPI`
+
+Every HTTP call from the frontend **must** be made via the `useAPI` hook. Do not:
+- call `API.xxx.yyy.post(...)` / `.get(...)` directly anywhere except inside the `libs/api.ts` definition itself;
+- introduce `fetch`, `axios`, or any other HTTP client;
+- write ad-hoc wrappers that bypass `useAPI`.
+
+Why: `useAPI` is the enforcement point for loading toasts, unified error messages, race-condition prevention (request IDs), and end-to-end type inference. Bypassing it silently drops those guarantees and fragments the UX.
+
+**Composing multiple calls (e.g. atomic login = `/auth/login` + `/auth/me`)**: declare multiple `useAPI` instances in the same domain hook (e.g. `useAuth`) and chain them via the `fetchData` return value. `fetchData` resolves to the response payload on success and `null` on error — the success/error toast is already handled by the hook, so the caller only orchestrates.
+
 ```ts
-export const useGetProjects = (options?) => useApi(api.api.projects.get, options);
-export const useCreateProject = (options?) => useApi(api.api.projects.post, { success: { message: 'default' }, ...options });
+// ✅ correct — compose via useAPI
+const loginApi = useAPI(API.auth.login.post, { success: { message: null } });
+const meApi    = useAPI(API.auth.me.get,   { showLoading: false, error: { message: null } });
+
+const login = async (creds) => {
+  const loginRes = await loginApi.fetchData(creds);
+  if (!loginRes) return;
+  actions.set({ token: loginRes.token });
+  const meRes = await meApi.fetchData();
+  if (!meRes) return;
+  actions.set({ user: meRes.user });
+  navigate(dashboardUrl);
+};
+
+// ❌ forbidden — raw treaty call
+const { data } = await API.auth.login.post(creds);
 ```
 
+**Domain composite hooks** (e.g. `useAuth`, future `useProjects`) are the right place to compose `useAPI` calls into business verbs. Do not create a separate `services/xxx.ts` layer whose only job is to rename a `useAPI(API.x.y.z)` — that's indirection without abstraction. Add a layer only when it does real work (composition, state, side-effects).
+
 **`useHttp` hook (`app/src/hooks/useHttp/`):**  
-Legacy axios-based hook — kept for backward compatibility. New code should use `useApi`.
+Legacy axios-based hook — kept for backward compatibility. New code must use `useAPI`.
 
 **Path aliases (app):**
 - `@/*` → `app/src/*`

@@ -66,7 +66,17 @@ export function useAPI<TFn extends AnyEdenFn>(
   const message = useMessage();
   const latestId = useRef(0);
 
-  const fetchData = async (callOptions?: TCallOptions) => {
+  /**
+   * Execute the wrapped call.
+   *
+   * Returns the response payload on success, or `null` on error / stale
+   * response (so composition can short-circuit with a simple falsy check).
+   * Toasts, error messages, and race-condition handling are already
+   * applied — callers only orchestrate.
+   */
+  const fetchData = async (
+    callOptions?: TCallOptions,
+  ): Promise<TData | null> => {
     latestId.current += 1;
     const requestId = latestId.current;
 
@@ -82,7 +92,8 @@ export function useAPI<TFn extends AnyEdenFn>(
 
     const { data: responseBody, error } = await apiFn(callOptions);
 
-    if (requestId !== latestId.current) return;
+    // Stale response (superseded by a newer call) — swallow silently.
+    if (requestId !== latestId.current) return null;
 
     setLoading(false);
 
@@ -100,19 +111,21 @@ export function useAPI<TFn extends AnyEdenFn>(
       }
 
       options?.error?.action?.(msg);
-    } else {
-      setData(responseBody);
-
-      const successMsg = options?.success?.message;
-      if (successMsg !== undefined && successMsg !== null) {
-        const content = successMsg === 'default' ? 'Successfully' : successMsg;
-        message.success({ key: loadingKey, content });
-      } else if (showLoading) {
-        message.dismiss(loadingKey);
-      }
-
-      options?.success?.action?.(responseBody);
+      return null;
     }
+
+    setData(responseBody);
+
+    const successMsg = options?.success?.message;
+    if (successMsg !== undefined && successMsg !== null) {
+      const content = successMsg === 'default' ? 'Successfully' : successMsg;
+      message.success({ key: loadingKey, content });
+    } else if (showLoading) {
+      message.dismiss(loadingKey);
+    }
+
+    options?.success?.action?.(responseBody);
+    return responseBody as TData;
   };
 
   return { data, loading, errorMessage, fetchData };
