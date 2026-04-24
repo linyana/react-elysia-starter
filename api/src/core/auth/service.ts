@@ -16,7 +16,6 @@ class AuthService {
     const created = await prisma.tenants.create({
       data: {
         name: tenant.name,
-        slug: tenant.slug,
         users: {
           create: { email: user.email, name: user.name, password },
         },
@@ -59,7 +58,6 @@ class AuthService {
       tenant: {
         id: user.tenant.id,
         name: user.tenant.name,
-        slug: user.tenant.slug,
       },
     };
   }

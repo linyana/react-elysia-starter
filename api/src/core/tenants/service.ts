@@ -12,10 +12,6 @@ class TenantService {
     return prisma.tenants.findUniqueOrThrow({ where: { id } });
   }
 
-  getTenantBySlug(slug: string) {
-    return prisma.tenants.findUniqueOrThrow({ where: { slug } });
-  }
-
   createTenant(data: ICreateTenantRequestType) {
     return prisma.tenants.create({ data });
   }
