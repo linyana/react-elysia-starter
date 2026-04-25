@@ -1,10 +1,10 @@
 {
 	"extends": "../tsconfig.json",
-	"references": [{ "path": "../api" }],
 	"compilerOptions": {
 		"jsx": "react-jsx",
 		"module": "ESNext",
-		"outDir": "dist/client",
+		"noEmit": true,
+		"rootDir": "..",
 		"paths": {
 			"@/*": ["./src/*"],
 			"@api/*": ["../api/src/*"]

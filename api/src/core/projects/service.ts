@@ -1,4 +1,4 @@
-import { prisma } from '@/libs';
+import { prisma } from '../../libs';
 import { ICreateProjectRequestType } from './types';
 
 class ProjectService {

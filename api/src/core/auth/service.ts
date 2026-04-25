@@ -1,4 +1,4 @@
-import { prisma } from '@/libs';
+import { prisma } from '../../libs';
 import { ILoginRequestType, IRegisterRequestType } from './types';
 
 const issueToken = (tenantId: number, userId: number) =>

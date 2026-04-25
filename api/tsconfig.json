@@ -1,17 +1,10 @@
 {
 	"extends": "../tsconfig.json",
 	"compilerOptions": {
-		"composite": true,
-		"declaration": true,
-		"declarationMap": true,
-		"rootDir": "src",
-		"outDir": "dist",
+		"noEmit": true,
 		"emitDecoratorMetadata": true,
 		"experimentalDecorators": true,
-		"types": ["bun"],
-		"paths": {
-			"@/*": ["./src/*"]
-		}
+		"types": ["bun"]
 	},
 	"include": ["src"]
 }

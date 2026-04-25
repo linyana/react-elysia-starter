@@ -1,4 +1,4 @@
-import { prisma } from '@/libs';
+import { prisma } from '../../libs';
 import { ICreateUserRequestType } from './types';
 
 const publicFields = {
