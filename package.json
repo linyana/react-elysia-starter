@@ -14,12 +14,14 @@
 		"prisma:generate": "turbo run prisma:generate --filter=@project-name/api",
 		"build:app": "turbo run build --filter=@project-name/app",
 		"build:api": "turbo run build --filter=@project-name/api",
-		"prisma:seed": "turbo run prisma:seed --filter=@project-name/api"
+		"prisma:seed": "turbo run prisma:seed --filter=@project-name/api",
+		"type-check": "tsgo -b api/tsconfig.json && tsgo --noEmit -p app/tsconfig.json"
 	},
 	"devDependencies": {
 		"@types/node": "^25.5.0",
 		"@typescript-eslint/eslint-plugin": "^8.58.0",
 		"@typescript-eslint/parser": "^8.58.0",
+		"@typescript/native-preview": "^7.0.0-dev.20260425.1",
 		"eslint": "^10.1.0",
 		"eslint-config-prettier": "^10.1.8",
 		"eslint-plugin-prettier": "^5.5.5",

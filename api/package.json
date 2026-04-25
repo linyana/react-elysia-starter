@@ -6,6 +6,7 @@
 	"license": "MIT",
 	"scripts": {
 		"dev": "bun --watch src/main.ts",
+		"type-check": "tsgo --noEmit",
 		"build": "bun run build/index.ts",
 		"prisma:push": "prisma db push",
 		"prisma:generate": "prisma generate",
