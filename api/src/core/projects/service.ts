@@ -1,24 +1,25 @@
 import { prisma } from '../../libs';
+import { ITokenClaims } from '../../libs';
 import { ICreateProjectRequestType } from './types';
 
 class ProjectService {
-  getProjects() {
+  getProjects(_auth: ITokenClaims) {
     return prisma.projects.findMany({
       orderBy: { updatedAt: 'desc' },
     });
   }
 
-  getProject(id: number) {
+  getProject(id: number, _auth: ITokenClaims) {
     return prisma.projects.findUniqueOrThrow({ where: { id } });
   }
 
-  deleteProject(id: number) {
+  deleteProject(id: number, _auth: ITokenClaims) {
     return prisma.projects.delete({
       where: { id },
     });
   }
 
-  createProject(data: ICreateProjectRequestType) {
+  createProject(data: ICreateProjectRequestType, _auth: ITokenClaims) {
     return prisma.projects.create({
       data,
     });

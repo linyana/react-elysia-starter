@@ -1,9 +1,11 @@
 import { Elysia } from 'elysia';
 import { projectService } from './service';
 import { CreateProjectSchema } from './types';
+import { authPlugin } from '../../libs';
 
 export const projectController = new Elysia({ prefix: '/projects' })
-  .get('/', () => projectService.getProjects())
-  .get('/:id', ({ params }) => projectService.getProject(Number(params.id)))
-  .post('/', ({ body }) => projectService.createProject(body), CreateProjectSchema)
-  .delete('/:id', ({ params }) => projectService.deleteProject(Number(params.id)));
+  .use(authPlugin)
+  .get('/', ({ auth }) => projectService.getProjects(auth))
+  .get('/:id', ({ params, auth }) => projectService.getProject(Number(params.id), auth))
+  .post('/', ({ body, auth }) => projectService.createProject(body, auth), CreateProjectSchema)
+  .delete('/:id', ({ params, auth }) => projectService.deleteProject(Number(params.id), auth));
