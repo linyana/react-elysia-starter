@@ -25,6 +25,13 @@ export type IRouteType = Omit<RouteObject, "children" | "handle" | "id"> & {
 		menu?: IMenuType;
 		layout?: ILayoutType;
 		access?: IRouteAccessType;
+		/**
+		 * Breadcrumb visibility override.
+		 * - `undefined` (default): auto — shown on level-2+ pages, hidden on level-1.
+		 * - `true`: force show.
+		 * - `false`: force hide.
+		 */
+		breadcrumb?: boolean;
 		// permissions?: PERMISSION[];
 	};
 	children?: IRouteType[];

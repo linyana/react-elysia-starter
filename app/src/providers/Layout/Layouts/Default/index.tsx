@@ -8,6 +8,7 @@ import { Footer } from "../../Footer";
 import { useGlobal, useMobile } from "@/hooks";
 import { UserProfile } from "./Profile";
 import { LayoutRouteMenu } from "../../Menu";
+import { AutoBreadcrumb } from "@/components";
 
 type IPropsType = {
 	children: React.ReactNode;
@@ -141,6 +142,7 @@ export const DefaultLayout = ({ routes, children }: IPropsType) => {
 								minWidth: 300,
 							}}
 						>
+							<AutoBreadcrumb />
 							{children}
 						</div>
 					</Layout.Content>
