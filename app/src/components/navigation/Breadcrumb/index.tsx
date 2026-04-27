@@ -1,7 +1,7 @@
 import { Breadcrumb as AntBreadcrumb } from "antd";
 import { useLocation, useMatches, useNavigate } from "react-router-dom";
 import type { IMenuType } from "@/types";
-import { LucideIcon } from "../LucideIcon";
+import { LucideIcon } from "../../primitives/LucideIcon";
 
 type IExtraCrumbType = {
 	title: React.ReactNode;

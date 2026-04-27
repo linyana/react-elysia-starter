@@ -1,5 +1,5 @@
 import type { IRouteType } from "@/types";
-import { Dashboard, Login, Placeholder } from "./pages";
+import { Dashboard, Login, Placeholder } from "@/pages";
 
 const NotFound = () => {
 	throw new Response("Not Found", {

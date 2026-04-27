@@ -1,6 +1,7 @@
-import { ErrorBoundary } from './components';
-import { MessageApiProvider } from './hooks';
-import { Routes, ThemeProvider } from './providers';
+
+import { ErrorBoundary } from '@/components';
+import { MessageApiProvider } from '@/hooks';
+import { Routes, ThemeProvider } from '@/providers';
 
 function App() {
   return (

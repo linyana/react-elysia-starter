@@ -1,4 +1,4 @@
-import { ILucideIconType, LucideIcon } from "@/components";
+import { ILucideIconType, LucideIcon } from "../../primitives/LucideIcon";
 import { Card, Flex, Typography } from "antd";
 import type { CardProps } from "antd";
 
