@@ -1,10 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/hooks";
 import type { IRouteAccessType, IRouteType } from "@/types";
-import { useState } from "react";
 import { GlobalLoading } from "@/components";
-
-type IStatusType = 'COMPLETE' | 'ERROR' | null
 
 export const AuthProvider: React.FC<{
 	route: IRouteType;
@@ -12,22 +9,23 @@ export const AuthProvider: React.FC<{
 }> = ({ route, children }) => {
 	const location = useLocation();
 
-	const { isAuthenticated, loginUrl, dashboardUrl, status } = useAuth();
-
 	const access: IRouteAccessType = route?.handle?.access ?? "AUTHENTICATED";
-	
-	if (access === "PUBLIC") return <>{children}</>;
-	
-	if(status !== 'COMPLETE') return <GlobalLoading />;
 
+	if (access === "PUBLIC") return <>{children}</>;
+
+	const { loginUrl, dashboardUrl, status } = useAuth();
+
+	if (status === "ERROR") return <div>Something went wrong</div>;
+
+	if (!["AUTHENTICATED", "UNAUTHENTICATED"].includes(status)) return <GlobalLoading />;
 
 	if (access === "GUEST") {
-		if (isAuthenticated) return <Navigate to={dashboardUrl} replace />;
+		if (status === "AUTHENTICATED") return <Navigate to={dashboardUrl} replace />;
 		return <>{children}</>;
 	}
 
 	// access === 'AUTHENTICATED'
-	if (!isAuthenticated) {
+	if (status === "UNAUTHENTICATED") {
 		return (
 			<Navigate to={loginUrl} replace state={{ from: location.pathname }} />
 		);

@@ -21,7 +21,10 @@ const app = new Elysia({ prefix: "/api" })
 		} catch { }
 		
 		const message = "message" in error ? error.message : "Unknown error";
-		if (code === "NOT_FOUND") set.status = 404;
+		const presetStatus = typeof set.status === "number" ? set.status : 0;
+		if (presetStatus >= 400) {
+			// status already set upstream (e.g. 401 from authPlugin) — preserve it
+		} else if (code === "NOT_FOUND") set.status = 404;
 		else if (code === "VALIDATION") set.status = 422;
 		else set.status = 400;
 		return { message };
