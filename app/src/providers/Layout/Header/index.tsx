@@ -48,25 +48,26 @@ export const Header = ({ routes }: IPropsType) => {
 							)
 						}
 						onClick={() => actions.set({ collapsed: !collapsed })}
-						size="large"
 					/>
-					<div
-						onClick={() => setPaletteOpen(true)}
-						style={{ width: 320, cursor: "pointer" }}
-					>
-						<Input
-							readOnly
-							placeholder="Search…"
-							prefix={<Search size={14} style={{ opacity: 0.6 }} />}
-							suffix={<Tag style={{ margin: 0, opacity: 0.7 }}>⌘K</Tag>}
-							style={{
-								borderRadius: 8,
-								cursor: "pointer",
-								pointerEvents: "none",
-							}}
-						/>
-					</div>
 				</Flex>
+
+				<div
+					onClick={() => setPaletteOpen(true)}
+					style={{ width: 460, cursor: "pointer", position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}
+				>
+					<Input
+            readOnly
+            variant="underlined"
+						placeholder="Search…"
+						prefix={<Search size={14} style={{ opacity: 0.6 }} />}
+						suffix={<Tag style={{ margin: 0, opacity: 0.7 }}>⌘K</Tag>}
+						style={{
+							borderRadius: 8,
+							cursor: "pointer",
+							pointerEvents: "none",
+						}}
+					/>
+				</div>
 
 				<Flex align="center" gap={4}>
 					<Tooltip title="Help center">
