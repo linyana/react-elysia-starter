@@ -16,7 +16,9 @@ export const ThemeProvider = ({ children }: IPropsType) => (
         },
         components: {
           Layout: {
-            headerBg: 'rgba(255, 255, 255, 0.85)',
+            headerBg: 'transparent',
+            bodyBg: 'transparent',
+            footerBg: 'transparent',
           },
           Button: {
             primaryShadow: 'none',

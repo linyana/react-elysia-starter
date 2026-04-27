@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { API } from "@/libs";
 import { useAPI } from "@/hooks";
+import { Card } from "antd";
 
 export const Dashboard = () => {
 	const { data: projects, fetch } = useAPI(API.projects.get, {
@@ -11,5 +12,5 @@ export const Dashboard = () => {
 		fetch();
 	}, []);
 
-	return <div>Dashboard</div>;
+	return <Card>Dashboard</Card>;
 };

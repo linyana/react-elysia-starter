@@ -85,6 +85,9 @@ export const UserProfile = () => {
             item: {
               height: 48,
             },
+            root: {
+              borderRight: "none",
+            },
           }}
         />
       </div>
