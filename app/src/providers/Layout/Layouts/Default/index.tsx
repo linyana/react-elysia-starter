@@ -43,8 +43,8 @@ export const DefaultLayout = ({ routes, children }: IPropsType) => {
 					top: 0,
 					insetInlineStart: 0,
 					overflow: "hidden",
-          zIndex: 1000,
-          backgroundColor: 'transparent'
+					zIndex: 1000,
+					backgroundColor: "transparent",
 				}}
 			>
 				<Flex
@@ -64,37 +64,31 @@ export const DefaultLayout = ({ routes, children }: IPropsType) => {
 					>
 						<Banner />
 					</div>
-					<div
-						style={{
-							flex: 1,
-							overflow: "auto",
-							scrollbarWidth: "thin",
-						}}
-					>
-						<Card
-							style={{
-								height: "100%",
-								margin: "0 8px",
-							}}
-							styles={{
-								body: {
-									padding: 8,
-								},
-							}}
-						>
-							<LayoutRouteMenu position="TOP" routes={routes} />
-						</Card>
-					</div>
+
 					<Card
 						style={{
-							margin: 8,
+							height: "100%",
+							margin: "0 8px 8px",
 						}}
 						styles={{
 							body: {
 								padding: 8,
+								display: "flex",
+								flexDirection: "column",
+								justifyContent: "space-between",
+								height: "100%",
 							},
 						}}
 					>
+						<div
+							style={{
+								flex: 1,
+								overflow: "auto",
+								scrollbarWidth: "thin",
+							}}
+						>
+							<LayoutRouteMenu routes={routes} />
+						</div>
 						<UserProfile />
 					</Card>
 				</Flex>

@@ -11,7 +11,6 @@ import { useGlobal } from "@/hooks";
 import { hasAnyPermission } from "@/utils";
 import type {
 	ILayoutType,
-	IMenuPositionType,
 	IRouteAccessType,
 	IRouteType,
 } from "@/types";
@@ -32,11 +31,6 @@ const normalizeRoutes = (
 			permissions: [],
 			...route.handle,
 			menu: route.handle?.menu
-				? {
-						position: "TOP" as IMenuPositionType,
-						...route.handle?.menu,
-					}
-				: undefined,
 		};
 		const { permissions: routePermissions } = handle;
 

@@ -3,7 +3,6 @@ import type { RouteObject } from "react-router-dom";
 import { icons } from "lucide-react";
 
 export type ILayoutType = "DEFAULT" | "BLANK" | "CENTERED" | "BASIC";
-export type IMenuPositionType = "TOP" | "BOTTOM";
 
 /**
  * Route access semantics.
@@ -14,9 +13,10 @@ export type IMenuPositionType = "TOP" | "BOTTOM";
 export type IRouteAccessType = "AUTHENTICATED" | "GUEST" | "PUBLIC";
 
 export type IMenuType = {
-	position?: IMenuPositionType;
 	label?: React.ReactNode;
 	iconName?: keyof typeof icons;
+	/** Surface this route as a default suggestion in the command palette. */
+	featured?: boolean;
 };
 
 export type IRouteType = Omit<RouteObject, "children" | "handle" | "id"> & {

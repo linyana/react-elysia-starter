@@ -26,6 +26,7 @@ export const routes: IRouteType[] = [
 			menu: {
 				label: "Dashboard",
 				iconName: "LayoutDashboard",
+				featured: true,
 			},
 		},
 	},
@@ -37,6 +38,7 @@ export const routes: IRouteType[] = [
 			menu: {
 				label: "Projects",
 				iconName: "FolderKanban",
+				featured: true,
 			},
 		},
 	},
@@ -48,6 +50,7 @@ export const routes: IRouteType[] = [
 			menu: {
 				label: "Tasks",
 				iconName: "ListChecks",
+				featured: true,
 			},
 		},
 	},
@@ -81,30 +84,6 @@ export const routes: IRouteType[] = [
 			menu: {
 				label: "Messages",
 				iconName: "MessageSquare",
-			},
-		},
-	},
-	{
-		id: "/settings",
-		path: "/settings",
-		element: <Placeholder title="Settings" />,
-		handle: {
-			menu: {
-				label: "Settings",
-				iconName: "Settings",
-				position: "BOTTOM",
-			},
-		},
-	},
-	{
-		id: "/help",
-		path: "/help",
-		element: <Placeholder title="Help & Support" />,
-		handle: {
-			menu: {
-				label: "Help",
-				iconName: "Helicopter",
-				position: "BOTTOM",
 			},
 		},
 	},

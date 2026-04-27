@@ -1,10 +1,18 @@
-import { Modal, Input, List, Empty } from 'antd';
-import { Search } from 'lucide-react';
+import { Modal, Input, List, Empty, theme } from 'antd';
+import { CornerDownLeft, Search } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import type { icons } from 'lucide-react';
 import type { IRouteType } from '@/types';
+import { Icon } from '@/components';
 
-type ICommand = { key: string; label: React.ReactNode; path: string };
+type ICommand = {
+  key: string;
+  label: React.ReactNode;
+  path: string;
+  iconName?: keyof typeof icons;
+  featured?: boolean;
+};
 
 const joinPath = (base: string, sub: string) =>
   `${base.replace(/\/$/, '')}/${sub.replace(/^\//, '')}`.replace(/\/+/g, '/');
@@ -16,7 +24,15 @@ const flattenRoutes = (routes: IRouteType[], parent = ''): ICommand[] =>
 
     const self =
       r.handle?.menu?.label && r.path && !r.path.includes('*') && !r.path.includes('http')
-        ? [{ key: full, label: r.handle.menu.label, path: full }]
+        ? [
+            {
+              key: full,
+              label: r.handle.menu.label,
+              path: full,
+              iconName: r.handle.menu.iconName,
+              featured: r.handle.menu.featured,
+            },
+          ]
         : [];
 
     return [...self, ...(r.children ? flattenRoutes(r.children, full) : [])];
@@ -32,13 +48,18 @@ export const CommandPalette = ({ open, onClose, routes }: IPropsType) => {
   const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [active, setActive] = useState(0);
+  const {
+    token: { controlItemBgHover, borderRadius, colorTextTertiary, colorBorderSecondary },
+  } = theme.useToken();
 
   const all = useMemo(() => flattenRoutes(routes), [routes]);
+  const featured = useMemo(() => all.filter((c) => c.featured), [all]);
+  const isEmptyQuery = !query.trim();
   const items = useMemo(() => {
     const q = query.trim().toLowerCase();
-    if (!q) return all;
+    if (!q) return featured.length ? featured : all;
     return all.filter((c) => String(c.label).toLowerCase().includes(q));
-  }, [all, query]);
+  }, [all, featured, query]);
 
   useEffect(() => {
     setActive(0);
@@ -88,7 +109,13 @@ export const CommandPalette = ({ open, onClose, routes }: IPropsType) => {
         variant="borderless"
         style={{ padding: '14px 16px' }}
       />
-      <div style={{ maxHeight: 360, overflow: 'auto', borderTop: '1px solid rgba(0,0,0,0.06)' }}>
+      <div
+        style={{
+          maxHeight: 360,
+          overflow: 'auto',
+          borderTop: `1px solid ${colorBorderSecondary}`,
+        }}
+      >
         {items.length === 0 ? (
           <Empty
             description="No matches"
@@ -96,25 +123,68 @@ export const CommandPalette = ({ open, onClose, routes }: IPropsType) => {
             style={{ padding: 24 }}
           />
         ) : (
-          <List
-            size="small"
-            dataSource={items}
+          <>
+            {isEmptyQuery && featured.length > 0 && (
+              <div
+                style={{
+                  padding: '10px 16px 4px',
+                  fontSize: 11,
+                  fontWeight: 600,
+                  letterSpacing: 0.4,
+                  textTransform: 'uppercase',
+                  color: colorTextTertiary,
+                }}
+              >
+                Suggested
+              </div>
+            )}
+            <List
+              size="small"
+              dataSource={items}
+              split={false}
+              style={{ padding: 6 }}
             renderItem={(item, i) => (
               <List.Item
                 onClick={() => select(item)}
                 onMouseEnter={() => setActive(i)}
                 style={{
                   cursor: 'pointer',
-                  padding: '10px 16px',
+                  padding: '8px 12px',
+                  borderRadius,
+                  background: i === active ? controlItemBgHover : undefined,
                   border: 'none',
-                  background: i === active ? 'rgba(0,0,0,0.05)' : undefined,
+                  gap: 12,
                 }}
               >
+                {item.iconName ? (
+                  <Icon
+                    name={item.iconName}
+                    size={16}
+                    style={{ color: colorTextTertiary, flexShrink: 0 }}
+                  />
+                ) : (
+                  <span style={{ width: 16, flexShrink: 0 }} />
+                )}
                 <span style={{ flex: 1 }}>{item.label}</span>
-                <span style={{ opacity: 0.4, fontSize: 12 }}>{item.path}</span>
+                <span
+                  style={{
+                    color: colorTextTertiary,
+                    fontSize: 12,
+                    fontFamily: 'ui-monospace, monospace',
+                  }}
+                >
+                  {item.path}
+                </span>
+                {i === active && (
+                  <CornerDownLeft
+                    size={14}
+                    style={{ color: colorTextTertiary, flexShrink: 0 }}
+                  />
+                )}
               </List.Item>
             )}
           />
+          </>
         )}
       </div>
     </Modal>

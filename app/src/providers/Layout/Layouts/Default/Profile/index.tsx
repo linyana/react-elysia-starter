@@ -51,7 +51,6 @@ export const UserProfile = () => {
     >
       <Flex
         align="center"
-        justify="center"
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         style={{
@@ -75,7 +74,6 @@ export const UserProfile = () => {
             overflow: 'hidden',
             transition: 'max-width 0.2s ease',
             marginLeft: collapsed ? 0 : LAYOUT.SMALL_PADDING,
-            flex: collapsed ? 'none' : 1,
           }}
         >
           <Flex
@@ -96,7 +94,6 @@ export const UserProfile = () => {
                 {user?.email}
               </Text>
             </Flex>
-            <EllipsisVertical size={14} style={{ opacity: 0.6, flexShrink: 0 }} />
           </Flex>
         </div>
       </Flex>

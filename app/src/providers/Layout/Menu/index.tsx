@@ -2,15 +2,13 @@
 import React, { useMemo, useState, useEffect } from "react";
 import { Menu } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
-import type { IMenuPositionType, IRouteType } from "@/types";
+import type { IRouteType } from "@/types";
 import { Icon } from "@/components";
 
-const isMenuRoute = (position: IMenuPositionType) => (route: IRouteType) => {
+const isMenuRoute = () => (route: IRouteType) => {
 	const { handle: { menu } = {}, path = "" } = route;
 	if (!menu) return false;
-	const pos = (menu.position ?? "TOP") === position;
-	const valid = path && !path.includes("*");
-	return pos && valid;
+	return path && !path.includes("*");
 };
 
 const joinPaths = (basePath: string, subPath?: string) => {
@@ -53,9 +51,8 @@ const collectKeys = (items: any[]): string[] =>
 	]);
 
 export const LayoutRouteMenu: React.FC<{
-	position: IMenuPositionType;
 	routes: IRouteType[];
-}> = ({ position, routes }) => {
+}> = ({ routes }) => {
 	const [openKeys, setOpenKeys] = useState<string[]>([]);
 	const location = useLocation();
 	const navigate = useNavigate();
@@ -63,10 +60,10 @@ export const LayoutRouteMenu: React.FC<{
 	const items = useMemo(
 		() =>
 			routes
-				.filter(isMenuRoute(position))
+				.filter(isMenuRoute())
 				.map((r) => buildMenuItem(r))
 				.filter(Boolean),
-		[routes, position],
+		[routes],
 	);
 
 	const selectedKey = useMemo(() => {
