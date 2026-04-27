@@ -126,7 +126,7 @@ export const DefaultLayout = ({ routes, children }: IPropsType) => {
 						}}
 						align="center"
 					>
-						<Header />
+						<Header routes={routes} />
 					</Flex>
 				</Layout.Header>
 
