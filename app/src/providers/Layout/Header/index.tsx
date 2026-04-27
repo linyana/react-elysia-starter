@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
+import { useMatches } from "react-router-dom";
 import { useGlobal } from "@/hooks";
-import { MenuFoldOutlined, MenuUnfoldOutlined } from "@ant-design/icons";
-import { Button, Flex, Input, Tag, Tooltip } from "antd";
-import { CircleHelp, Search } from "lucide-react";
+import { Button, Flex, Input, Tag, Tooltip, Typography } from "antd";
+import { Search } from "lucide-react";
 import type { IRouteType } from "@/types";
 import { CommandPalette } from "./CommandPalette";
 import { LucideIcon } from "@/components";
@@ -14,6 +14,9 @@ type IPropsType = {
 export const Header = ({ routes }: IPropsType) => {
 	const { collapsed, actions } = useGlobal();
 	const [paletteOpen, setPaletteOpen] = useState(false);
+	const matches = useMatches();
+	const currentHandle = matches[matches.length - 1]?.handle as IRouteType["handle"];
+	const pageTitle = currentHandle?.menu?.label;
 
 	useEffect(() => {
 		const handler = (e: KeyboardEvent) => {
@@ -49,6 +52,11 @@ export const Header = ({ routes }: IPropsType) => {
 						}
 						onClick={() => actions.set({ collapsed: !collapsed })}
 					/>
+					{pageTitle && (
+						<Typography.Text strong style={{ fontSize: 15 }}>
+							{pageTitle}
+						</Typography.Text>
+					)}
 				</Flex>
 
 				<div

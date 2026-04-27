@@ -6,6 +6,7 @@ import {
 	tenantController,
 	userController,
 } from "./core";
+import { authPlugin } from "./libs";
 
 const app = new Elysia({ prefix: "/api" })
 	.use(cors())
@@ -18,8 +19,8 @@ const app = new Elysia({ prefix: "/api" })
 				path,
 				message: JSON.parse(err.message),
 			});
-		} catch { }
-		
+		} catch {}
+
 		const message = "message" in error ? error.message : "Unknown error";
 		const presetStatus = typeof set.status === "number" ? set.status : 0;
 		if (presetStatus >= 400) {
@@ -29,7 +30,10 @@ const app = new Elysia({ prefix: "/api" })
 		else set.status = 400;
 		return { message };
 	})
+	// Public routes — login & register need no token; /me self-protects via authPlugin
 	.use(authController)
+	// Everything else requires a valid JWT
+	.use(authPlugin)
 	.use(tenantController)
 	.use(userController)
 	.use(projectController)
