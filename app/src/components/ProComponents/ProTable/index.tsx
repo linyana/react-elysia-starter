@@ -11,7 +11,7 @@ type IPropsType<T> = TableProps<T> & {
 
 const { Paragraph } = Typography;
 
-export const PaginationTable = <T extends object>({
+export const ProTable = <T extends object>({
   setFilter,
   pagination,
   selectedProps,

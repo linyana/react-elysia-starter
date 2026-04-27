@@ -1,3 +1,2 @@
-export * from './TitleBar';
-export * from './Icon';
-export * from './Breadcrumb';
+export * from "./LucideIcon";
+export * from "./Breadcrumb";

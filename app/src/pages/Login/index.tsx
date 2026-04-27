@@ -10,7 +10,7 @@ import {
 	Tag,
 	Typography,
 } from "antd";
-import { Icon } from "@/components";
+import { LucideIcon } from "@/components";
 import { useAPI, useGlobal } from "@/hooks";
 import heroSvg from "@/assets/login-hero.svg";
 import logoSvg from "@/assets/logo.svg";
@@ -171,7 +171,7 @@ export const Login = () => {
 								]}
 							>
 								<Input
-									prefix={<Icon name="Mail" size={16} />}
+									prefix={<LucideIcon name="Mail" size={16} />}
 									placeholder="you@company.com"
 									autoComplete="email"
 								/>
@@ -192,7 +192,7 @@ export const Login = () => {
 								rules={[{ required: true, message: "Password is required" }]}
 							>
 								<Input.Password
-									prefix={<Icon name="Lock" size={16} />}
+									prefix={<LucideIcon name="Lock" size={16} />}
 									placeholder="Enter your password"
 									autoComplete="current-password"
 								/>

@@ -3,7 +3,7 @@ import React, { useMemo, useState, useEffect } from "react";
 import { Menu } from "antd";
 import { useLocation, useNavigate } from "react-router-dom";
 import type { IRouteType } from "@/types";
-import { Icon } from "@/components";
+import { LucideIcon } from "@/components";
 
 const isMenuRoute = () => (route: IRouteType) => {
 	const { handle: { menu } = {}, path = "" } = route;
@@ -33,7 +33,7 @@ const buildMenuItem = (route: IRouteType, parentPath = ""): any | null => {
 		label: menu.label,
 		icon: menu.iconName ? (
 			<div>
-				<Icon name={menu.iconName} />
+				<LucideIcon name={menu.iconName} />
 			</div>
 		) : undefined,
 		...(children.length

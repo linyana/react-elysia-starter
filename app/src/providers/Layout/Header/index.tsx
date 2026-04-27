@@ -5,7 +5,7 @@ import { Button, Flex, Input, Tag, Tooltip } from "antd";
 import { CircleHelp, Search } from "lucide-react";
 import type { IRouteType } from "@/types";
 import { CommandPalette } from "./CommandPalette";
-import { Icon } from "@/components";
+import { LucideIcon } from "@/components";
 
 type IPropsType = {
 	routes: IRouteType[];
@@ -39,9 +39,9 @@ export const Header = ({ routes }: IPropsType) => {
 						type="text"
 						icon={
 							collapsed ? (
-								<Icon name="ListCollapse" />
+								<LucideIcon name="ListCollapse" />
 							) : (
-								<Icon
+								<LucideIcon
 									name="ListCollapse"
 									style={{ transform: "rotate(180deg)" }}
 								/>
@@ -53,11 +53,17 @@ export const Header = ({ routes }: IPropsType) => {
 
 				<div
 					onClick={() => setPaletteOpen(true)}
-					style={{ width: 460, cursor: "pointer", position: 'absolute', left: '50%', transform: 'translateX(-50%)' }}
+					style={{
+						width: 460,
+						cursor: "pointer",
+						position: "absolute",
+						left: "50%",
+						transform: "translateX(-50%)",
+					}}
 				>
 					<Input
-            readOnly
-            variant="underlined"
+						readOnly
+						variant="underlined"
 						placeholder="Search…"
 						prefix={<Search size={14} style={{ opacity: 0.6 }} />}
 						suffix={<Tag style={{ margin: 0, opacity: 0.7 }}>⌘K</Tag>}
@@ -74,7 +80,7 @@ export const Header = ({ routes }: IPropsType) => {
 						<Button
 							type="text"
 							shape="circle"
-							icon={<CircleHelp size={18} />}
+							icon={<LucideIcon name="CircleQuestionMark" />}
 						/>
 					</Tooltip>
 				</Flex>
