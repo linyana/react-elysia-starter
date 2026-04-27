@@ -1,5 +1,5 @@
 import type { IRouteType } from "@/types";
-import { Dashboard, Login, Placeholder } from "@/pages";
+import { Dashboard, Login, Users } from "@/pages";
 
 const NotFound = () => {
 	throw new Response("Not Found", {
@@ -31,59 +31,14 @@ export const routes: IRouteType[] = [
 		},
 	},
 	{
-		id: "/projects",
-		path: "/projects",
-		element: <Placeholder title="Projects" />,
+		id: "/users",
+		path: "/users",
+		element: <Users />,
 		handle: {
 			menu: {
-				label: "Projects",
-				iconName: "FolderKanban",
-				featured: true,
-			},
-		},
-	},
-	{
-		id: "/tasks",
-		path: "/tasks",
-		element: <Placeholder title="Tasks" />,
-		handle: {
-			menu: {
-				label: "Tasks",
-				iconName: "ListChecks",
-				featured: true,
-			},
-		},
-	},
-	{
-		id: "/team",
-		path: "/team",
-		element: <Placeholder title="Team" />,
-		handle: {
-			menu: {
-				label: "Team",
+				label: "Users",
 				iconName: "Users",
-			},
-		},
-	},
-	{
-		id: "/analytics",
-		path: "/analytics",
-		element: <Placeholder title="Analytics" />,
-		handle: {
-			menu: {
-				label: "Analytics",
-				iconName: "ChartLine",
-			},
-		},
-	},
-	{
-		id: "/messages",
-		path: "/messages",
-		element: <Placeholder title="Messages" />,
-		handle: {
-			menu: {
-				label: "Messages",
-				iconName: "MessageSquare",
+				featured: true,
 			},
 		},
 	},
