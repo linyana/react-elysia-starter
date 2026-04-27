@@ -1,18 +1,28 @@
-import { icons } from "lucide-react";
+import { icons, LucideProps } from "lucide-react";
 
-export type ILucideIconType = keyof typeof icons
+export type ILucideIconType = keyof typeof icons;
+
+type Props = {
+	name: ILucideIconType;
+	size?: number;
+	color?: string;
+} & LucideProps;
 
 export const LucideIcon = ({
 	name,
 	size = 18,
 	style,
-}: {
-	name: ILucideIconType;
-	size?: number;
-	style?: React.CSSProperties;
-}) => {
+	color,
+	...props
+}: Props) => {
 	const IconComponent = icons[name];
+
 	return (
-		<IconComponent size={size} color="#4e4e4e" style={{ verticalAlign: "middle", ...style }} />
+		<IconComponent
+			size={size}
+			color={color || "currentColor"}
+			style={{ verticalAlign: "middle", ...style }}
+			{...props}
+		/>
 	);
 };

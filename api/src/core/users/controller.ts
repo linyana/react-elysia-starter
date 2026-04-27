@@ -1,16 +1,28 @@
 import { Elysia, t } from 'elysia';
 import { userService } from './service';
 import { CreateUserSchema } from './types';
+import { authPlugin } from '../../libs';
 
 export const userController = new Elysia({ prefix: '/users' })
+  .use(authPlugin)
   .get(
     '/',
     ({ query }) =>
-      userService.getUsers(
-        query.tenantId ? Number(query.tenantId) : undefined,
-      ),
-    { query: t.Object({ tenantId: t.Optional(t.String()) }) },
+      userService.getUsers({
+        tenantId: query.tenantId,
+        offset: query.offset,
+        limit: query.limit,
+        keyword: query.keyword,
+      }),
+    {
+      query: t.Object({
+        tenantId: t.Optional(t.Numeric()),
+        offset: t.Optional(t.Numeric()),
+        limit: t.Optional(t.Numeric()),
+        keyword: t.Optional(t.String()),
+      }),
+    },
   )
   .get('/:id', ({ params }) => userService.getUser(Number(params.id)))
-  .post('/', ({ body }) => userService.createUser(body), CreateUserSchema)
+  .post('/', ({ body, auth }) => userService.createUser(body, auth.tenantId), CreateUserSchema)
   .delete('/:id', ({ params }) => userService.deleteUser(Number(params.id)));
