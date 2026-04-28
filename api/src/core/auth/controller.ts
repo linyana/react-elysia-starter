@@ -1,10 +1,11 @@
 import { Elysia } from 'elysia';
 import { authService } from './service';
 import { LoginSchema, RegisterSchema } from './types';
-import { authPlugin, jwtPlugin } from '../../libs';
+import { guardsPlugin, jwtPlugin } from '../../libs';
 
 export const authController = new Elysia({ prefix: '/auth' })
   .use(jwtPlugin)
+  .use(guardsPlugin)
   .post(
     '/register',
     async ({ body, jwt }) => {
@@ -23,5 +24,4 @@ export const authController = new Elysia({ prefix: '/auth' })
     },
     LoginSchema
   )
-  .use(authPlugin)
-  .get('/me', ({ auth }) => authService.me(auth));
+  .get('/me', ({ auth }) => authService.me(auth), { auth: true });

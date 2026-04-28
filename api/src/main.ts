@@ -6,9 +6,10 @@ import {
 	tenantController,
 	userController,
 } from "./core";
-import { authPlugin } from "./libs";
 
-const app = new Elysia({ prefix: "/api" })
+const app = new Elysia({
+	prefix: "/api",
+})
 	.use(cors())
 	.onError(({ code, error, set, path }) => {
 		const err = error instanceof Error ? error : new Error(String(error));
@@ -30,10 +31,8 @@ const app = new Elysia({ prefix: "/api" })
 		else set.status = 400;
 		return { message };
 	})
-	// Public routes — login & register need no token; /me self-protects via authPlugin
+	// Each controller declares its own auth dependency via authPlugin's `auth` macro
 	.use(authController)
-	// Everything else requires a valid JWT
-	.use(authPlugin)
 	.use(tenantController)
 	.use(userController)
 	.use(projectController)

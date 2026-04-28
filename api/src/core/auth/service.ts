@@ -66,6 +66,8 @@ class AuthService {
       email: user.email,
       name: user.name,
       tenantName: user.tenant.name ?? null,
+      // TODO: replace wildcard with real RBAC lookup once a roles/permissions table exists
+      permissions: ['*'],
     };
   }
 }

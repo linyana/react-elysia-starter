@@ -1,10 +1,11 @@
 import { Elysia, t } from 'elysia';
 import { userService } from './service';
 import { CreateUserSchema } from './types';
-import { authPlugin } from '../../libs';
+import { guardsPlugin } from '../../libs';
 
 export const userController = new Elysia({ prefix: '/users' })
-  .use(authPlugin)
+  .use(guardsPlugin)
+  .guard({ auth: true })
   .get(
     '/',
     ({ query }) =>

@@ -1,8 +1,11 @@
 import { Elysia } from 'elysia';
 import { tenantService } from './service';
 import { CreateTenantSchema } from './types';
+import { guardsPlugin } from '../../libs';
 
 export const tenantController = new Elysia({ prefix: '/tenants' })
+  .use(guardsPlugin)
+  .guard({ auth: true })
   .get('/', () => tenantService.getTenants())
   .get('/:id', ({ params }) => tenantService.getTenant(Number(params.id)))
   .post('/', ({ body }) => tenantService.createTenant(body), CreateTenantSchema)
