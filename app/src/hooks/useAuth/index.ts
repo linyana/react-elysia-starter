@@ -41,7 +41,8 @@ export const useAuth = () => {
 	const mode = resolveMode(pathname);
 	const current = CONFIG[mode];
 
-	const { fetch } = useAPI(API.auth.me.get, {
+	const { fetch } = useAPI({
+		fetcher: API.auth.me.get,
 		showLoading: false,
 		success: {
 			message: null,

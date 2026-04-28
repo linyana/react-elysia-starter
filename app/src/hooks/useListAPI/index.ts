@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import type { IFilterType, IPaginationType } from "@api/types";
-import { useAPI, type UseAPIData } from "../useAPI";
+import { useAPI, type UseAPIData, type UseAPIOptions } from "../useAPI";
 
 type AnyEdenFn = (...args: any[]) => Promise<{ data: any; error: any }>;
 
@@ -11,20 +11,16 @@ type IInferItem<TFn extends AnyEdenFn> =
 
 const DEFAULT_LIMIT = 10;
 
-/**
- * useListAPI — composite hook for paginated list endpoints whose response
- * shape is `{ items, totalCount }`. Owns filter state (offset/limit/keyword/
- * sortBy/orderBy), auto-fetches on filter change, and exposes the values a
- * `ProTable` consumes (`dataSource`, `pagination`, `setFilter`).
- *
- * @example
- * const { dataSource, pagination, loading, setFilter, refetch } =
- *   useListAPI(API.users.get);
- */
-export const useListAPI = <TFn extends AnyEdenFn>(
-	apiFn: TFn,
-	initialFilter: Partial<IFilterType> = {},
-) => {
+type UseListAPIProps<TFn extends AnyEdenFn> = {
+	fetcher: TFn;
+	initialFilter?: Partial<IFilterType>;
+} & UseAPIOptions<UseAPIData<TFn>>;
+
+export const useListAPI = <TFn extends AnyEdenFn>({
+	fetcher,
+	initialFilter = {},
+	...props
+}: UseListAPIProps<TFn>) => {
 	type TItem = IInferItem<TFn>;
 
 	const [filter, setFilter] = useState<IFilterType>({
@@ -33,8 +29,10 @@ export const useListAPI = <TFn extends AnyEdenFn>(
 		...initialFilter,
 	});
 
-	const { data, loading, fetch } = useAPI(apiFn, {
-		showLoading: false,
+	const { data, loading, fetch } = useAPI({
+		fetcher,
+		showLoading: props?.showLoading ?? false,
+		...props,
 	});
 
 	const refetch = () => fetch({ query: filter } as Parameters<TFn>[0]);

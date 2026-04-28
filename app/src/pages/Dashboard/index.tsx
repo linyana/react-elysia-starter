@@ -4,7 +4,8 @@ import { useAPI } from "@/hooks";
 import { Card } from "antd";
 
 export const Dashboard = () => {
-	const { data: projects, fetch } = useAPI(API.projects.get, {
+	const { data: projects, fetch } = useAPI({
+		fetcher: API.projects.get,
 		showLoading: false,
 	});
 

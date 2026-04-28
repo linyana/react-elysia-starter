@@ -12,10 +12,10 @@ type IPropsType = {
 };
 
 export const RemoveUser = ({ fetch, record }: IPropsType) => {
-	const { fetch: deleteUser } = useAPI(
-		(id: number) => API.users({ id }).delete(),
-		{ success: { message: "User deleted", action: fetch } },
-	);
+	const { fetch: deleteUser } = useAPI({
+		fetcher: (id: number) => API.users({ id }).delete(),
+		success: { message: "User deleted", action: fetch },
+	});
 
 	return (
 		<Popconfirm

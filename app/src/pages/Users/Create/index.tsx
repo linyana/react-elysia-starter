@@ -1,25 +1,20 @@
 import { useState } from "react";
-import { Button, Form, Input, InputNumber, Modal } from "antd";
+import { Button, Form, Input, Modal } from "antd";
 import { Plus } from "lucide-react";
 import { useAPI } from "@/hooks";
 import { API } from "@/libs";
+import { ICreateUserRequestType } from "@api/core/users/types";
 
 type IPropsType = {
 	fetch: () => void;
 };
 
-type ICreateUserForm = {
-	tenantId: number;
-	name: string;
-	email: string;
-	password: string;
-};
-
 export const CreateUser = ({ fetch }: IPropsType) => {
 	const [open, setOpen] = useState(false);
-	const [form] = Form.useForm<ICreateUserForm>();
+	const [form] = Form.useForm<ICreateUserRequestType>();
 
-	const { fetch: createUser, loading } = useAPI(API.users.post, {
+	const { fetch: createUser, loading } = useAPI({
+		fetcher: API.users.post,
 		success: {
 			message: "User created",
 			action: () => {
@@ -52,6 +47,7 @@ export const CreateUser = ({ fetch }: IPropsType) => {
 				confirmLoading={loading}
 				okText="Create"
 				destroyOnHidden
+				centered
 			>
 				<Form form={form} layout="vertical" preserve={false}>
 					<Form.Item
@@ -80,13 +76,6 @@ export const CreateUser = ({ fetch }: IPropsType) => {
 						]}
 					>
 						<Input.Password placeholder="••••••••" />
-					</Form.Item>
-					<Form.Item
-						name="tenantId"
-						label="Tenant ID"
-						rules={[{ required: true, message: "Tenant ID is required" }]}
-					>
-						<InputNumber style={{ width: "100%" }} min={1} />
 					</Form.Item>
 				</Form>
 			</Modal>

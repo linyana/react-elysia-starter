@@ -5,9 +5,9 @@ import { CreateUser } from "../Create";
 import { RemoveUser } from "../Remove";
 
 export const UserList = () => {
-	const { data, pagination, loading, setFilter, fetch } = useListAPI(
-		API.users.get,
-	);
+	const { data, pagination, loading, setFilter, fetch } = useListAPI({
+		fetcher: API.users.get,
+	});
 
 	return (
 		<ProCard

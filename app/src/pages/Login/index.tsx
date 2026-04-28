@@ -26,7 +26,8 @@ type IFormValues = {
 export const Login = () => {
 	const { actions } = useGlobal();
 
-	const { fetch, loading } = useAPI(API.auth.login.post, {
+	const { fetch, loading } = useAPI({
+		fetcher: API.auth.login.post,
 		success: {
 			message: "Welcome back.",
 			action: ({ token }) => {

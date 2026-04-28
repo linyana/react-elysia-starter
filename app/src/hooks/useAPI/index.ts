@@ -38,25 +38,14 @@ export type UseAPIOptions<TData> = {
 
 // ─── Hook ─────────────────────────────────────────────────────────────────────
 
-/**
- * useApi — wraps any Eden Treaty call with React loading/data/error state.
- *
- * Types are inferred entirely from the Eden function; no manual type definitions needed.
- *
- * @example
- * const { data: projects, fetchData } = useAPI(API.projects.get);
- * useEffect(() => { fetchData(); }, []);
- *
- * @example — with body
- * const { fetchData: create } = useAPI(API.projects.post, {
- *   success: { message: 'default', action: () => refresh() },
- * });
- * create({ body: { name: 'foo', path: '/foo' } });
- */
-export function useAPI<TFn extends AnyEdenFn>(
-	apiFn: TFn,
-	options?: UseAPIOptions<InferData<TFn>>,
-) {
+type UseAPIProps<TFn extends AnyEdenFn> = { fetcher: TFn } & UseAPIOptions<
+	InferData<TFn>
+>;
+
+export function useAPI<TFn extends AnyEdenFn>({
+	fetcher,
+	...options
+}: UseAPIProps<TFn>) {
 	type TData = InferData<TFn>;
 	type TCallOptions = InferOptions<TFn>;
 
@@ -88,7 +77,7 @@ export function useAPI<TFn extends AnyEdenFn>(
 		setLoading(true);
 		setErrorMessage(null);
 
-		const { data: responseBody, error } = await apiFn(callOptions);
+		const { data: responseBody, error } = await fetcher(callOptions);
 
 		// Stale response (superseded by a newer call) — swallow silently.
 		if (requestId !== latestId.current) return null;
