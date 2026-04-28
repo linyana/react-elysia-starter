@@ -2,14 +2,12 @@ import { TableForm, ProCard, ProTable, SearchInput } from "@/components";
 import { useListAPI } from "@/hooks";
 import { API } from "@/libs";
 import { CreateUser } from "../Create";
-import { useUserColumns } from "./columns";
+import { RemoveUser } from "../Remove";
 
 export const UserList = () => {
 	const { data, pagination, loading, setFilter, fetch } = useListAPI(
 		API.users.get,
 	);
-
-	const columns = useUserColumns({ fetch });
 
 	return (
 		<ProCard
@@ -21,7 +19,23 @@ export const UserList = () => {
 				<SearchInput placeholder="Search by name or email" />
 			</TableForm>
 			<ProTable
-				columns={columns}
+				columns={[
+          { title: "Name", dataIndex: "name", key: "name" },
+          { title: "Email", dataIndex: "email", key: "email" },
+          {
+            title: "Created At",
+            dataIndex: "createdAt",
+            key: "createdAt",
+            render: (text: string) => new Date(text).toLocaleString(),
+          },
+          {
+            title: "Actions",
+            key: "actions",
+            render: (_, record) => (
+              <RemoveUser record={record} fetch={fetch} />
+            ),
+          },
+        ]}
 				dataSource={data}
 				loading={loading}
 				pagination={pagination}

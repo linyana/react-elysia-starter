@@ -1,9 +1,12 @@
-import { useColumns } from "@/hooks";
-import { IColumnsType } from "@/hooks/useColumns/types";
+import { useGlobal } from "@/hooks";
+import { hasAllPermissions } from "@/utils";
 import type { IPaginationType } from "@api/types";
 import { Table, Typography, type TableProps } from "antd";
+import { IColumnsType } from "./types";
 
-type IPropsType<T> = TableProps<T> & {
+export * from "./types";
+
+type IPropsType<T> = Omit<TableProps<T>, "columns"> & {
 	selectedProps?: {
 		length?: number;
 	};
@@ -18,10 +21,14 @@ export const ProTable = <T extends object>({
 	setFilter,
 	pagination,
 	selectedProps,
-	columns: unFilteredColumns,
+	columns: rawColumns,
 	...props
 }: IPropsType<T>) => {
-	const columns = useColumns<T>(unFilteredColumns);
+	const { permissions = [] } = useGlobal();
+
+	const columns = rawColumns.filter((column) =>
+		hasAllPermissions(permissions, column.permissions || []),
+	);
 
 	const { totalCount, offset, limit } = pagination;
 	const start = totalCount === 0 ? 0 : offset + 1;
@@ -68,7 +75,7 @@ export const ProTable = <T extends object>({
 					showTotal: () => `Showing ${start} - ${end} from ${totalCount} items`,
 					showQuickJumper: true,
 				}}
-				columns={[]}
+				columns={columns}
 			/>
 		</>
 	);
