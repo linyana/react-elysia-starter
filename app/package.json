@@ -4,7 +4,7 @@
 	"version": "0.0.0",
 	"type": "module",
 	"scripts": {
-		"dev": "vite",
+		"dev": "bun scripts/dev.ts",
 		"build": "bun run type-check && vite build",
 		"type-check": "tsgo --noEmit",
 		"preview": "vite preview"
