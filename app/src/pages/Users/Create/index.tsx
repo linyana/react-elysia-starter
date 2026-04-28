@@ -5,7 +5,7 @@ import { useAPI } from "@/hooks";
 import { API } from "@/libs";
 
 type IPropsType = {
-	refetch: () => void;
+	fetch: () => void;
 };
 
 type ICreateUserForm = {
@@ -15,7 +15,7 @@ type ICreateUserForm = {
 	password: string;
 };
 
-export const CreateUser = ({ refetch }: IPropsType) => {
+export const CreateUser = ({ fetch }: IPropsType) => {
 	const [open, setOpen] = useState(false);
 	const [form] = Form.useForm<ICreateUserForm>();
 
@@ -25,7 +25,7 @@ export const CreateUser = ({ refetch }: IPropsType) => {
 			action: () => {
 				setOpen(false);
 				form.resetFields();
-				refetch();
+				fetch();
 			},
 		},
 	});

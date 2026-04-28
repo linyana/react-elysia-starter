@@ -1,34 +1,31 @@
-import {
-  Form,
-  type FormProps,
-} from 'antd'
+import { Form, type FormProps } from "antd";
 
-type FilterFormProps<T> = {
-  setFilter: React.Dispatch<React.SetStateAction<T | any>>
-  children: React.ReactNode
-} & Omit<FormProps, 'onValuesChange'>
+type TableFormProps<T> = {
+	setFilter: React.Dispatch<React.SetStateAction<T | any>>;
+	children: React.ReactNode;
+} & Omit<FormProps, "onValuesChange">;
 
-export const FilterForm = <T extends Record<string, any>>({
-  setFilter,
-  children,
-  ...rest
-}: FilterFormProps<T>) => {
-  const [form] = Form.useForm<T>()
+export const TableForm = <T extends Record<string, any>>({
+	setFilter,
+	children,
+	...rest
+}: TableFormProps<T>) => {
+	const [form] = Form.useForm<T>();
 
-  return (
-    <Form
-      form={form}
-      layout="vertical"
-      onValuesChange={(_changed, allValues) => {
-        setFilter((prev: T) => ({
-          ...prev,
-          ...allValues,
-          offset: 0,
-        }))
-      }}
-      {...rest}
-    >
-      {children}
-    </Form>
-  )
-}
+	return (
+		<Form
+			form={form}
+			layout="vertical"
+			onValuesChange={(_changed, allValues) => {
+				setFilter((prev: T) => ({
+					...prev,
+					...allValues,
+					offset: 0,
+				}));
+			}}
+			{...rest}
+		>
+			{children}
+		</Form>
+	);
+};

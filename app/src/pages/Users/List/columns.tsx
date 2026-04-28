@@ -6,13 +6,13 @@ import type { UseAPIData } from "@/hooks/useAPI";
 import { LucideIcon } from "@/components";
 
 type IPropsType = {
-	refetch: () => void;
+	fetch: () => void;
 };
 
-export const useUserColumns = ({ refetch }: IPropsType) => {
+export const useUserColumns = ({ fetch }: IPropsType) => {
 	const { fetch: deleteUser } = useAPI(
 		(id: number) => API.users({ id }).delete(),
-		{ success: { message: "User deleted", action: refetch } },
+		{ success: { message: "User deleted", action: fetch } },
 	);
 
 	return useColumns<UseAPIData<typeof API.users.get>["items"][number]>({
@@ -36,7 +36,12 @@ export const useUserColumns = ({ refetch }: IPropsType) => {
 						okButtonProps={{ danger: true }}
 						onConfirm={() => deleteUser(record.id)}
 					>
-						<Button size="small" type="text" danger icon={<LucideIcon name="Trash2" />} />
+						<Button
+							size="small"
+							type="text"
+							danger
+							icon={<LucideIcon name="Trash2" />}
+						/>
 					</Popconfirm>
 				),
 			},

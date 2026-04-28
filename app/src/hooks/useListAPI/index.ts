@@ -57,9 +57,9 @@ export const useListAPI = <TFn extends AnyEdenFn>(
 	return {
 		filter,
 		setFilter,
-		dataSource: list?.items ?? [],
+		data: list?.items ?? [],
 		pagination,
 		loading,
-		refetch,
+		fetch: refetch,
 	};
 };
