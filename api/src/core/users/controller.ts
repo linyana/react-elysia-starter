@@ -3,7 +3,7 @@ import { userService } from './service';
 import { CreateUserSchema } from './types';
 import { guardsPlugin } from '../../libs';
 
-export const userController = new Elysia({ prefix: '/users' })
+export const userController = new Elysia({ prefix: '/users', tags: ["Users"] })
   .use(guardsPlugin)
   .guard({ auth: true })
   .get(

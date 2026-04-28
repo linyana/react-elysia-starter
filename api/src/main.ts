@@ -6,11 +6,13 @@ import {
 	tenantController,
 	userController,
 } from "./core";
+import { openapi } from "@elysia/openapi";
 
 const app = new Elysia({
 	prefix: "/api",
 })
 	.use(cors())
+	.use(openapi())
 	.onError(({ code, error, set, path }) => {
 		const err = error instanceof Error ? error : new Error(String(error));
 

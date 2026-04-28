@@ -3,7 +3,10 @@ import { projectService } from "./service";
 import { CreateProjectSchema } from "./types";
 import { guardsPlugin } from "../../libs";
 
-export const projectController = new Elysia({ prefix: "/projects" })
+export const projectController = new Elysia({
+	prefix: "/projects",
+	tags: ["Projects"],
+})
 	.use(guardsPlugin)
 	.guard({ auth: true })
 	.get("/", ({ auth }) => projectService.getProjects(auth))

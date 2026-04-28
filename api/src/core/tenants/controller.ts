@@ -3,7 +3,7 @@ import { tenantService } from './service';
 import { CreateTenantSchema } from './types';
 import { guardsPlugin } from '../../libs';
 
-export const tenantController = new Elysia({ prefix: '/tenants' })
+export const tenantController = new Elysia({ prefix: '/tenants', tags: ["Tenants"] })
   .use(guardsPlugin)
   .guard({ auth: true })
   .get('/', () => tenantService.getTenants())
