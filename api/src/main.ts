@@ -1,15 +1,15 @@
-import { Elysia } from "elysia";
-import { cors } from "@elysiajs/cors";
+import { Elysia } from 'elysia';
+import { cors } from '@elysiajs/cors';
 import {
 	authController,
 	projectController,
 	tenantController,
 	userController,
-} from "./core";
-import { openapi } from "@elysia/openapi";
+} from './core';
+import { openapi } from '@elysia/openapi';
 
 const app = new Elysia({
-	prefix: "/api",
+	prefix: '/api',
 })
 	.use(cors())
 	.use(openapi())
@@ -17,19 +17,19 @@ const app = new Elysia({
 		const err = error instanceof Error ? error : new Error(String(error));
 
 		try {
-			console.error("\x1b[31m[API_ERROR]\x1b[0m", {
+			console.error('\x1b[31m[API_ERROR]\x1b[0m', {
 				code,
 				path,
 				message: JSON.parse(err.message),
 			});
 		} catch {}
 
-		const message = "message" in error ? error.message : "Unknown error";
-		const presetStatus = typeof set.status === "number" ? set.status : 0;
+		const message = 'message' in error ? error.message : 'Unknown error';
+		const presetStatus = typeof set.status === 'number' ? set.status : 0;
 		if (presetStatus >= 400) {
 			// status already set upstream (e.g. 401 from authPlugin) — preserve it
-		} else if (code === "NOT_FOUND") set.status = 404;
-		else if (code === "VALIDATION") set.status = 422;
+		} else if (code === 'NOT_FOUND') set.status = 404;
+		else if (code === 'VALIDATION') set.status = 422;
 		else set.status = 400;
 		return { message };
 	})

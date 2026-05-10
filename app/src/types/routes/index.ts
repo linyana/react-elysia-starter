@@ -1,8 +1,8 @@
 // import type { PERMISSION } from '@constants';
-import type { RouteObject } from "react-router-dom";
-import { icons } from "lucide-react";
+import type { RouteObject } from 'react-router-dom';
+import { icons } from 'lucide-react';
 
-export type ILayoutType = "DEFAULT" | "BLANK" | "CENTERED" | "BASIC";
+export type ILayoutType = 'DEFAULT' | 'BLANK' | 'CENTERED' | 'BASIC';
 
 /**
  * Route access semantics.
@@ -10,7 +10,7 @@ export type ILayoutType = "DEFAULT" | "BLANK" | "CENTERED" | "BASIC";
  * - `GUEST`: only reachable while logged out (e.g. /login, /register). Logged-in users are bounced to the post-login landing.
  * - `PUBLIC`: reachable in any state (marketing pages, legal, health checks).
  */
-export type IRouteAccessType = "AUTHENTICATED" | "GUEST" | "PUBLIC";
+export type IRouteAccessType = 'AUTHENTICATED' | 'GUEST' | 'PUBLIC';
 
 export type IMenuType = {
 	label?: React.ReactNode;
@@ -19,7 +19,7 @@ export type IMenuType = {
 	featured?: boolean;
 };
 
-export type IRouteType = Omit<RouteObject, "children" | "handle" | "id"> & {
+export type IRouteType = Omit<RouteObject, 'children' | 'handle' | 'id'> & {
 	id: string;
 	handle?: {
 		menu?: IMenuType;

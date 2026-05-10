@@ -2,19 +2,15 @@ import {
 	createBrowserRouter,
 	type RouteObject,
 	RouterProvider,
-} from "react-router-dom";
-import { useMemo } from "react";
-import { routes } from "@/routes";
-import { LayoutProvider } from "../Layout";
-import { RouteError } from "@/components";
-import { useGlobal } from "@/hooks";
-import { hasAnyPermission } from "@/utils";
-import type {
-	ILayoutType,
-	IRouteAccessType,
-	IRouteType,
-} from "@/types";
-import { PERMISSION } from "@api/constants";
+} from 'react-router-dom';
+import { useMemo } from 'react';
+import { routes } from '@/routes';
+import { LayoutProvider } from '../Layout';
+import { RouteError } from '@/components';
+import { useGlobal } from '@/hooks';
+import { hasAnyPermission } from '@/utils';
+import type { ILayoutType, IRouteAccessType, IRouteType } from '@/types';
+import { PERMISSION } from '@api/constants';
 
 const normalizeRoutes = (
 	routes: IRouteType[],
@@ -26,11 +22,11 @@ const normalizeRoutes = (
 
 	return routes.flatMap((route) => {
 		const handle = {
-			access: "AUTHENTICATED" as IRouteAccessType,
-			layout: "DEFAULT" as ILayoutType,
+			access: 'AUTHENTICATED' as IRouteAccessType,
+			layout: 'DEFAULT' as ILayoutType,
 			permissions: [],
 			...route.handle,
-			menu: route.handle?.menu
+			menu: route.handle?.menu,
 		};
 		const { permissions: routePermissions } = handle;
 
@@ -67,7 +63,7 @@ export const Routes = () => {
 		() =>
 			createBrowserRouter([
 				{
-					path: "/",
+					path: '/',
 					element: <LayoutProvider routes={finalRoutes} />,
 					children: finalRoutes as RouteObject[],
 					errorElement: <RouteError />,

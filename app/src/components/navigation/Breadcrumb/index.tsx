@@ -1,7 +1,7 @@
-import { Breadcrumb as AntBreadcrumb } from "antd";
-import { useLocation, useMatches, useNavigate } from "react-router-dom";
-import type { IMenuType } from "@/types";
-import { LucideIcon } from "../../primitives/LucideIcon";
+import { Breadcrumb as AntBreadcrumb } from 'antd';
+import { useLocation, useMatches, useNavigate } from 'react-router-dom';
+import type { IMenuType } from '@/types';
+import { LucideIcon } from '../../primitives/LucideIcon';
 
 type IExtraCrumbType = {
 	title: React.ReactNode;
@@ -42,7 +42,7 @@ export const AutoBreadcrumb = () => {
 	if (explicit === false) return null;
 
 	if (explicit !== true) {
-		const segments = pathname.split("/").filter(Boolean);
+		const segments = pathname.split('/').filter(Boolean);
 		if (segments.length < 2) return null;
 	}
 
@@ -59,7 +59,7 @@ export const AutoBreadcrumb = () => {
  * For dynamic trailing crumbs (e.g. an entity name on a detail page), pass
  * them via `extra`.
  */
-export const Breadcrumb = ({ extra = [], homeTo = "/", style }: IPropsType) => {
+export const Breadcrumb = ({ extra = [], homeTo = '/', style }: IPropsType) => {
 	const navigate = useNavigate();
 	const matches = useMatches() as IRouteMatchType[];
 
@@ -74,10 +74,10 @@ export const Breadcrumb = ({ extra = [], homeTo = "/", style }: IPropsType) => {
 
 	const items = [
 		{
-			key: "__home__",
+			key: '__home__',
 			title: <LucideIcon name="House" size={14} />,
 			onClick: () => navigate(homeTo),
-			className: "crumb-link",
+			className: 'crumb-link',
 		},
 		...allCrumbs.map((c, i) => {
 			const isLast = i === allCrumbs.length - 1;
@@ -85,7 +85,7 @@ export const Breadcrumb = ({ extra = [], homeTo = "/", style }: IPropsType) => {
 				key: `${i}`,
 				title: c.title,
 				onClick: !isLast && c.to ? () => navigate(c.to!) : undefined,
-				className: !isLast && c.to ? "crumb-link" : undefined,
+				className: !isLast && c.to ? 'crumb-link' : undefined,
 			};
 		}),
 	];
@@ -100,7 +100,7 @@ export const Breadcrumb = ({ extra = [], homeTo = "/", style }: IPropsType) => {
 						<span
 							className={className}
 							onClick={onClick}
-							style={{ cursor: "pointer" }}
+							style={{ cursor: 'pointer' }}
 						>
 							{title}
 						</span>

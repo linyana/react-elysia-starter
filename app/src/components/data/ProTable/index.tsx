@@ -1,12 +1,12 @@
-import { useGlobal } from "@/hooks";
-import { hasAllPermissions } from "@/utils";
-import type { IPaginationType } from "@api/types";
-import { Table, Typography, type TableProps } from "antd";
-import { IColumnsType } from "./types";
+import { useGlobal } from '@/hooks';
+import { hasAllPermissions } from '@/utils';
+import type { IPaginationType } from '@api/types';
+import { Table, Typography, type TableProps } from 'antd';
+import { IColumnsType } from './types';
 
-export * from "./types";
+export * from './types';
 
-type IPropsType<T> = Omit<TableProps<T>, "columns"> & {
+type IPropsType<T> = Omit<TableProps<T>, 'columns'> & {
 	selectedProps?: {
 		length?: number;
 	};
@@ -43,17 +43,22 @@ export const ProTable = <T extends object>({
 						marginBottom: 0,
 					}}
 				>
-					{`${selectedProps?.length} item${selectedProps?.length === 1 ? "" : "s"} selected`}
+					{`${selectedProps?.length} item${selectedProps?.length === 1 ? '' : 's'} selected`}
 				</Paragraph>
 			) : (
 				<></>
 			)}
 			<Table<T>
-				onChange={({ current = 1, pageSize = 10 }, _filter, sorter: any) => {
-					const orderMap: Record<string, "asc" | "desc" | undefined> = {
-						ascend: "asc",
-						descend: "desc",
-					};
+				onChange={(
+					{ current = 1, pageSize = 10 },
+					_filter,
+					sorter: any,
+				) => {
+					const orderMap: Record<string, 'asc' | 'desc' | undefined> =
+						{
+							ascend: 'asc',
+							descend: 'desc',
+						};
 					setFilter((prev: any) => ({
 						...prev,
 						sortBy: sorter.field,
@@ -72,7 +77,8 @@ export const ProTable = <T extends object>({
 					pageSize: limit,
 					current: Math.floor(offset / limit) + 1,
 					showSizeChanger: true,
-					showTotal: () => `Showing ${start} - ${end} from ${totalCount} items`,
+					showTotal: () =>
+						`Showing ${start} - ${end} from ${totalCount} items`,
 					showQuickJumper: true,
 				}}
 				columns={columns}

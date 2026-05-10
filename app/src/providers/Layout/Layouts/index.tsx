@@ -4,8 +4,8 @@ import { CenteredLayout } from './Centered';
 import { DefaultLayout } from './Default';
 
 export const Layout = {
-  Blank: BlankLayout,
-  Centered: CenteredLayout,
-  Default: DefaultLayout,
-  Basic: BasicLayout,
+	Blank: BlankLayout,
+	Centered: CenteredLayout,
+	Default: DefaultLayout,
+	Basic: BasicLayout,
 };

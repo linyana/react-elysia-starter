@@ -101,15 +101,15 @@ Controllers return data directly — no response envelope needed:
 
 ```typescript
 // api/src/core/projects/controller.ts
-export const projectController = new Elysia({ prefix: "/projects" })
-	.get("/", () => projectService.getProjects())
-	.get("/:id", ({ params }) => projectService.getProject(Number(params.id)))
+export const projectController = new Elysia({ prefix: '/projects' })
+	.get('/', () => projectService.getProjects())
+	.get('/:id', ({ params }) => projectService.getProject(Number(params.id)))
 	.post(
-		"/",
+		'/',
 		({ body }) => projectService.createProject(body),
 		CreateProjectSchema,
 	)
-	.delete("/:id", ({ params }) =>
+	.delete('/:id', ({ params }) =>
 		projectService.deleteProject(Number(params.id)),
 	);
 ```
@@ -128,7 +128,7 @@ const { data: projects, fetchData } = useAPI(API.projects.get);
 Constants like `PERMISSION` are defined in `api/src/constants/` and imported by the frontend via the `@api/*` path alias:
 
 ```typescript
-import { PERMISSION } from "@api/constants";
+import { PERMISSION } from '@api/constants';
 ```
 
 ## Environment Variables

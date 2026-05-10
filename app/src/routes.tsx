@@ -1,50 +1,50 @@
-import type { IRouteType } from "@/types";
-import { Dashboard, Login, Users } from "@/pages";
+import type { IRouteType } from '@/types';
+import { Dashboard, Login, Users } from '@/pages';
 
 const NotFound = () => {
-	throw new Response("Not Found", {
+	throw new Response('Not Found', {
 		status: 404,
-		statusText: "Not Found",
+		statusText: 'Not Found',
 	});
 };
 
 export const routes: IRouteType[] = [
 	{
-		id: "/login",
-		path: "/login",
+		id: '/login',
+		path: '/login',
 		element: <Login />,
 		handle: {
-			layout: "BLANK",
-			access: "GUEST",
+			layout: 'BLANK',
+			access: 'GUEST',
 		},
 	},
 	{
-		id: "/dashboard",
-		path: "/dashboard",
+		id: '/dashboard',
+		path: '/dashboard',
 		element: <Dashboard />,
 		handle: {
 			menu: {
-				label: "Dashboard",
-				iconName: "LayoutDashboard",
+				label: 'Dashboard',
+				iconName: 'LayoutDashboard',
 				featured: true,
 			},
 		},
 	},
 	{
-		id: "/users",
-		path: "/users",
+		id: '/users',
+		path: '/users',
 		element: <Users />,
 		handle: {
 			menu: {
-				label: "Users",
-				iconName: "Users",
+				label: 'Users',
+				iconName: 'Users',
 				featured: true,
 			},
 		},
 	},
 	{
-		id: "not-found",
-		path: "*",
+		id: 'not-found',
+		path: '*',
 		element: <NotFound />,
 	},
 ];

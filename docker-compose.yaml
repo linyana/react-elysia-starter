@@ -1,34 +1,34 @@
 name: project-name
 
 services:
-  postgres:
-    image: postgres:13.5
-    restart: unless-stopped
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password
-      POSTGRES_DB: project-name
-      PGDATA: /var/lib/postgresql/data/pgdata
-      TZ: Asia/Shanghai
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/pgdata
-    ports:
-      - "5432:5432"
+    postgres:
+        image: postgres:13.5
+        restart: unless-stopped
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: password
+            POSTGRES_DB: project-name
+            PGDATA: /var/lib/postgresql/data/pgdata
+            TZ: Asia/Shanghai
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/pgdata
+        ports:
+            - '5432:5432'
 
-  redis:
-    image: redis:7-alpine
-    restart: unless-stopped
-    ports:
-      - "6379:6379"
+    redis:
+        image: redis:7-alpine
+        restart: unless-stopped
+        ports:
+            - '6379:6379'
 
-  # nest_api:
-  #   build:
-  #     context: .
-  #     dockerfile: ./api/Dockerfile
-  #   env_file: ./api/.env
-  #   restart: always
-  #   ports:
-  #     - 3000:3000
+    # nest_api:
+    #   build:
+    #     context: .
+    #     dockerfile: ./api/Dockerfile
+    #   env_file: ./api/.env
+    #   restart: always
+    #   ports:
+    #     - 3000:3000
 
 volumes:
-  postgres_data:
+    postgres_data:

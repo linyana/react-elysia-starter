@@ -1,10 +1,10 @@
-import { ILucideIconType, LucideIcon } from "../../primitives/LucideIcon";
-import { Card, Flex, Typography } from "antd";
-import type { CardProps } from "antd";
+import { ILucideIconType, LucideIcon } from '../../primitives/LucideIcon';
+import { Card, Flex, Typography } from 'antd';
+import type { CardProps } from 'antd';
 
 const { Title, Text } = Typography;
 
-type IPropsType = Omit<CardProps, "title" | "extra"> & {
+type IPropsType = Omit<CardProps, 'title' | 'extra'> & {
 	title?: React.ReactNode;
 	description?: React.ReactNode;
 	extra?: React.ReactNode;
@@ -36,13 +36,13 @@ export const ProCard = ({
 					<Flex
 						align="center"
 						justify="space-between"
-						style={{ margin: "12px 0" }}
+						style={{ margin: '12px 0' }}
 						wrap="wrap"
 					>
 						<Flex align="center" gap="middle">
 							{iconName && (
 								<Flex justify="center" align="center">
-                  <LucideIcon size={24} name={iconName} />
+									<LucideIcon size={24} name={iconName} />
 								</Flex>
 							)}
 							<Flex vertical>
@@ -53,7 +53,7 @@ export const ProCard = ({
 									<Text
 										type="secondary"
 										style={{
-											whiteSpace: "normal",
+											whiteSpace: 'normal',
 											fontWeight: 400,
 											fontSize: 13,
 										}}

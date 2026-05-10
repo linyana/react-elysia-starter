@@ -1,4 +1,4 @@
-import { icons, LucideProps } from "lucide-react";
+import { icons, LucideProps } from 'lucide-react';
 
 export type ILucideIconType = keyof typeof icons;
 
@@ -20,8 +20,8 @@ export const LucideIcon = ({
 	return (
 		<IconComponent
 			size={size}
-			color={color || "currentColor"}
-			style={{ verticalAlign: "middle", ...style }}
+			color={color || 'currentColor'}
+			style={{ verticalAlign: 'middle', ...style }}
 			{...props}
 		/>
 	);

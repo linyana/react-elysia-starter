@@ -9,12 +9,12 @@ import {
 	Space,
 	Tag,
 	Typography,
-} from "antd";
-import { LucideIcon } from "@/components";
-import { useAPI, useGlobal } from "@/hooks";
-import heroSvg from "@/assets/login-hero.svg";
-import logoSvg from "@/assets/logo.svg";
-import { API } from "@/libs";
+} from 'antd';
+import { LucideIcon } from '@/components';
+import { useAPI, useGlobal } from '@/hooks';
+import heroSvg from '@/assets/login-hero.svg';
+import logoSvg from '@/assets/logo.svg';
+import { API } from '@/libs';
 
 const { Title, Text, Paragraph, Link } = Typography;
 
@@ -29,7 +29,7 @@ export const Login = () => {
 	const { fetch, loading } = useAPI({
 		fetcher: API.auth.login.post,
 		success: {
-			message: "Welcome back.",
+			message: 'Welcome back.',
 			action: ({ token }) => {
 				actions.set({ token });
 			},
@@ -41,17 +41,17 @@ export const Login = () => {
 	};
 
 	return (
-		<Row style={{ minHeight: "100vh" }}>
+		<Row style={{ minHeight: '100vh' }}>
 			<Col
 				xs={0}
 				md={12}
 				lg={13}
 				style={{
-					position: "relative",
-					overflow: "hidden",
+					position: 'relative',
+					overflow: 'hidden',
 					background:
-						"radial-gradient(1200px 600px at 15% -10%, #1f1f23 0%, #0b0b0d 55%, #060607 100%)",
-					color: "#fafafa",
+						'radial-gradient(1200px 600px at 15% -10%, #1f1f23 0%, #0b0b0d 55%, #060607 100%)',
+					color: '#fafafa',
 				}}
 			>
 				<img
@@ -59,24 +59,32 @@ export const Login = () => {
 					alt=""
 					aria-hidden
 					style={{
-						position: "absolute",
+						position: 'absolute',
 						inset: 0,
-						width: "100%",
-						height: "100%",
-						objectFit: "cover",
+						width: '100%',
+						height: '100%',
+						objectFit: 'cover',
 						opacity: 0.9,
 					}}
 				/>
 				<Flex
 					vertical
 					justify="space-between"
-					style={{ position: "relative", height: "100%", padding: "48px 56px" }}
+					style={{
+						position: 'relative',
+						height: '100%',
+						padding: '48px 56px',
+					}}
 				>
 					<Space align="center" size={10}>
 						<Avatar src={logoSvg} shape="square" size={32} />
 						<Text
 							strong
-							style={{ color: "#fff", letterSpacing: "0.18em", fontSize: 13 }}
+							style={{
+								color: '#fff',
+								letterSpacing: '0.18em',
+								fontSize: 13,
+							}}
 						>
 							PROJECT NAME
 						</Text>
@@ -85,24 +93,24 @@ export const Login = () => {
 					<Flex vertical gap={20} style={{ maxWidth: 520 }}>
 						<Tag
 							style={{
-								background: "rgba(255,255,255,0.06)",
-								color: "rgba(255,255,255,0.75)",
+								background: 'rgba(255,255,255,0.06)',
+								color: 'rgba(255,255,255,0.75)',
 								borderRadius: 999,
-								padding: "4px 12px",
+								padding: '4px 12px',
 								fontSize: 12,
-								letterSpacing: "0.06em",
-								width: "fit-content",
+								letterSpacing: '0.06em',
+								width: 'fit-content',
 							}}
 						>
 							<Space size={8}>
 								<span
 									style={{
-										display: "inline-block",
+										display: 'inline-block',
 										width: 6,
 										height: 6,
-										borderRadius: "50%",
-										background: "#8ef0c5",
-										boxShadow: "0 0 8px #8ef0c5",
+										borderRadius: '50%',
+										background: '#8ef0c5',
+										boxShadow: '0 0 8px #8ef0c5',
 									}}
 								/>
 								Control plane · v2.4
@@ -112,12 +120,12 @@ export const Login = () => {
 						<Title
 							level={1}
 							style={{
-								color: "#fafafa",
+								color: '#fafafa',
 								margin: 0,
 								fontSize: 46,
 								fontWeight: 600,
 								lineHeight: 1.1,
-								letterSpacing: "-0.02em",
+								letterSpacing: '-0.02em',
 							}}
 						>
 							Build with clarity.
@@ -127,15 +135,16 @@ export const Login = () => {
 
 						<Paragraph
 							style={{
-								color: "rgba(240,240,240,0.65)",
+								color: 'rgba(240,240,240,0.65)',
 								fontSize: 15,
 								lineHeight: 1.65,
 								margin: 0,
 								maxWidth: 460,
 							}}
 						>
-							A calm workspace for teams who care about craft — unified
-							observability, intentional defaults, and friction-free deploys.
+							A calm workspace for teams who care about craft —
+							unified observability, intentional defaults, and
+							friction-free deploys.
 						</Paragraph>
 					</Flex>
 				</Flex>
@@ -145,11 +154,14 @@ export const Login = () => {
 				<Flex
 					align="center"
 					justify="center"
-					style={{ minHeight: "100vh", padding: 24 }}
+					style={{ minHeight: '100vh', padding: 24 }}
 				>
-					<Flex vertical style={{ width: "100%", maxWidth: 400 }}>
+					<Flex vertical style={{ width: '100%', maxWidth: 400 }}>
 						<Space vertical size={4} style={{ marginBottom: 28 }}>
-							<Title level={2} style={{ margin: 0, fontWeight: 600 }}>
+							<Title
+								level={2}
+								style={{ margin: 0, fontWeight: 600 }}
+							>
 								Sign in to your workspace
 							</Title>
 							<Text type="secondary">
@@ -167,12 +179,20 @@ export const Login = () => {
 								name="email"
 								label="Email"
 								rules={[
-									{ required: true, message: "Email is required" },
-									{ type: "email", message: "Enter a valid email" },
+									{
+										required: true,
+										message: 'Email is required',
+									},
+									{
+										type: 'email',
+										message: 'Enter a valid email',
+									},
 								]}
 							>
 								<Input
-									prefix={<LucideIcon name="Mail" size={16} />}
+									prefix={
+										<LucideIcon name="Mail" size={16} />
+									}
 									placeholder="you@company.com"
 									autoComplete="email"
 								/>
@@ -181,19 +201,33 @@ export const Login = () => {
 							<Form.Item
 								name="password"
 								label={
-									<Flex justify="space-between" align="center" gap="small">
+									<Flex
+										justify="space-between"
+										align="center"
+										gap="small"
+									>
 										<span>Password</span>
 										<div>
-											<Link href="#" style={{ fontSize: 12 }}>
+											<Link
+												href="#"
+												style={{ fontSize: 12 }}
+											>
 												Forgot password?
 											</Link>
 										</div>
 									</Flex>
 								}
-								rules={[{ required: true, message: "Password is required" }]}
+								rules={[
+									{
+										required: true,
+										message: 'Password is required',
+									},
+								]}
 							>
 								<Input.Password
-									prefix={<LucideIcon name="Lock" size={16} />}
+									prefix={
+										<LucideIcon name="Lock" size={16} />
+									}
 									placeholder="Enter your password"
 									autoComplete="current-password"
 								/>
@@ -215,12 +249,13 @@ export const Login = () => {
 							type="secondary"
 							style={{
 								fontSize: 12,
-								textAlign: "center",
+								textAlign: 'center',
 								marginTop: 24,
 								marginBottom: 0,
 							}}
 						>
-							By continuing you agree to our <Link href="#">Terms</Link> and{" "}
+							By continuing you agree to our{' '}
+							<Link href="#">Terms</Link> and{' '}
 							<Link href="#">Privacy Policy</Link>.
 						</Paragraph>
 					</Flex>

@@ -6,102 +6,128 @@ import { Layout } from '@/providers';
 import { useGlobal } from '@/hooks';
 
 interface ErrorResultProps {
-  status: ResultStatusType;
-  title: string;
-  subTitle?: string;
-  extra?: React.ReactNode;
+	status: ResultStatusType;
+	title: string;
+	subTitle?: string;
+	extra?: React.ReactNode;
 }
 
-export const GlobalError: React.FC<ErrorResultProps> = ({ status, title, subTitle, extra }) => {
-  const navigate = useNavigate();
-  const { actions } = useGlobal();
+export const GlobalError: React.FC<ErrorResultProps> = ({
+	status,
+	title,
+	subTitle,
+	extra,
+}) => {
+	const navigate = useNavigate();
+	const { actions } = useGlobal();
 
-  return (
-    <Layout.Centered>
-      <Result
-        status={status}
-        title={title}
-        subTitle={subTitle}
-        extra={
-          extra || (
-            <Space orientation="horizontal" size="middle" wrap>
-              <Button
-                onClick={() => {
-                  actions.reset();
-                  navigate('/', {
-                    replace: true,
-                  });
-                }}
-              >
-                Back To Login
-              </Button>
-              <Button type="primary" onClick={() => window.location.reload()}>
-                Try Again
-              </Button>
-            </Space>
-          )
-        }
-      />
-    </Layout.Centered>
-  );
+	return (
+		<Layout.Centered>
+			<Result
+				status={status}
+				title={title}
+				subTitle={subTitle}
+				extra={
+					extra || (
+						<Space orientation="horizontal" size="middle" wrap>
+							<Button
+								onClick={() => {
+									actions.reset();
+									navigate('/', {
+										replace: true,
+									});
+								}}
+							>
+								Back To Login
+							</Button>
+							<Button
+								type="primary"
+								onClick={() => window.location.reload()}
+							>
+								Try Again
+							</Button>
+						</Space>
+					)
+				}
+			/>
+		</Layout.Centered>
+	);
 };
 
-export const ErrorPage = ({ status, errorMessage }: { status: number; errorMessage?: string }) => {
-  const navigate = useNavigate();
-  const { actions } = useGlobal();
+export const ErrorPage = ({
+	status,
+	errorMessage,
+}: {
+	status: number;
+	errorMessage?: string;
+}) => {
+	const navigate = useNavigate();
+	const { actions } = useGlobal();
 
-  switch (status) {
-    case 401:
-      return (
-        <GlobalError
-          status="403"
-          title="Authentication Required"
-          subTitle={errorMessage || 'Your session has expired. Please log in again.'}
-          extra={
-            <Button
-              type="primary"
-              onClick={() => {
-                actions.reset();
-                navigate('/', {
-                  replace: true,
-                });
-              }}
-            >
-              Log in to continue
-            </Button>
-          }
-        />
-      );
-    case 403:
-      return (
-        <GlobalError
-          status="403"
-          title="Access Denied"
-          subTitle={errorMessage || "You don't have permission to access this page."}
-        />
-      );
-    case 404:
-      return (
-        <GlobalError
-          status="404"
-          title="Page Not Found"
-          subTitle={errorMessage || 'The page you are looking for does not exist.'}
-        />
-      );
-    default:
-      return (
-        <GlobalError
-          status="500"
-          title="Error"
-          subTitle={errorMessage || 'An unexpected error occurred. Please try again or contact us.'}
-        />
-      );
-  }
+	switch (status) {
+		case 401:
+			return (
+				<GlobalError
+					status="403"
+					title="Authentication Required"
+					subTitle={
+						errorMessage ||
+						'Your session has expired. Please log in again.'
+					}
+					extra={
+						<Button
+							type="primary"
+							onClick={() => {
+								actions.reset();
+								navigate('/', {
+									replace: true,
+								});
+							}}
+						>
+							Log in to continue
+						</Button>
+					}
+				/>
+			);
+		case 403:
+			return (
+				<GlobalError
+					status="403"
+					title="Access Denied"
+					subTitle={
+						errorMessage ||
+						"You don't have permission to access this page."
+					}
+				/>
+			);
+		case 404:
+			return (
+				<GlobalError
+					status="404"
+					title="Page Not Found"
+					subTitle={
+						errorMessage ||
+						'The page you are looking for does not exist.'
+					}
+				/>
+			);
+		default:
+			return (
+				<GlobalError
+					status="500"
+					title="Error"
+					subTitle={
+						errorMessage ||
+						'An unexpected error occurred. Please try again or contact us.'
+					}
+				/>
+			);
+	}
 };
 
 export const RouteError: React.FC = () => {
-  const error: any = useRouteError();
-  const errorMessage = error.data || error.message || error.statusText;
+	const error: any = useRouteError();
+	const errorMessage = error.data || error.message || error.statusText;
 
-  return <ErrorPage status={error.status} errorMessage={errorMessage} />;
+	return <ErrorPage status={error.status} errorMessage={errorMessage} />;
 };

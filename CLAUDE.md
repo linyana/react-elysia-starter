@@ -26,8 +26,8 @@ cd app && bun run build    # tsc --noEmit && vite build
 cd api && bun run prisma:push      # Push schema to DB (no migration history)
 cd api && bun run prisma:generate  # Regenerate Prisma client after schema change
 
-# Lint (from root)
-bun eslint .
+# Lint (from root, oxlint)
+bun run lint
 
 # Infrastructure (PostgreSQL on 5432, Redis on 6379)
 docker compose up -d
@@ -55,6 +55,7 @@ This is a **Bun workspace monorepo** managed by Turborepo with two packages: `ap
 Reads `routes` from `app/src/routes.tsx`, normalizes them (permission filtering, default `handle` values), then creates a `BrowserRouter` with a root route whose `element` is `LayoutProvider`. Route `handle` metadata drives layout type and sidebar menu config.
 
 **Route definition shape** (`IRouteType`):
+
 ```ts
 handle?: {
   menu?: { label, iconName, position }  // iconName is a Lucide icon key
@@ -71,9 +72,11 @@ Zustand store (persisted to localStorage). Holds `apiBaseUrl`, `token`, `user`, 
 The API exports `type App = typeof app` from `api/src/main.ts`. The frontend creates an Eden Treaty client in `app/src/libs/api.ts` typed against `App`. Every route's request/response types are inferred automatically — the frontend defines **no manual types** for API data shapes.
 
 The `ok()` helper in `api/src/libs/response.ts` wraps every handler's return value into the standard envelope:
+
 ```ts
 { status: 200, data: T, meta: { message: string } }
 ```
+
 Because handlers explicitly return `ok(data)`, Eden sees the full wrapper type and infers it end-to-end.
 
 **`useApi` hook (`app/src/hooks/useApi/`):**  
@@ -82,6 +85,7 @@ Wraps any Eden Treaty call with React loading/data/error state. Types are fully 
 ### 🔒 Rule: all API calls must go through `useAPI`
 
 Every HTTP call from the frontend **must** be made via the `useAPI` hook. Do not:
+
 - call `API.xxx.yyy.post(...)` / `.get(...)` directly anywhere except inside the `libs/api.ts` definition itself;
 - introduce `fetch`, `axios`, or any other HTTP client;
 - write ad-hoc wrappers that bypass `useAPI`.
@@ -93,16 +97,19 @@ Why: `useAPI` is the enforcement point for loading toasts, unified error message
 ```ts
 // ✅ correct — compose via useAPI
 const loginApi = useAPI(API.auth.login.post, { success: { message: null } });
-const meApi    = useAPI(API.auth.me.get,   { showLoading: false, error: { message: null } });
+const meApi = useAPI(API.auth.me.get, {
+	showLoading: false,
+	error: { message: null },
+});
 
 const login = async (creds) => {
-  const loginRes = await loginApi.fetchData(creds);
-  if (!loginRes) return;
-  actions.set({ token: loginRes.token });
-  const meRes = await meApi.fetchData();
-  if (!meRes) return;
-  actions.set({ user: meRes.user });
-  navigate(dashboardUrl);
+	const loginRes = await loginApi.fetchData(creds);
+	if (!loginRes) return;
+	actions.set({ token: loginRes.token });
+	const meRes = await meApi.fetchData();
+	if (!meRes) return;
+	actions.set({ user: meRes.user });
+	navigate(dashboardUrl);
 };
 
 // ❌ forbidden — raw treaty call
@@ -115,6 +122,7 @@ const { data } = await API.auth.login.post(creds);
 Legacy axios-based hook — kept for backward compatibility. New code must use `useAPI`.
 
 **Path aliases (app):**
+
 - `@/*` → `app/src/*`
 - `@api/*` → `api/src/*`
 

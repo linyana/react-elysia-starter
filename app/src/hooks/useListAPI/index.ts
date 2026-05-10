@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import type { IFilterType, IPaginationType } from "@api/types";
-import { useAPI, type UseAPIData, type UseAPIOptions } from "../useAPI";
+import { useEffect, useState } from 'react';
+import type { IFilterType, IPaginationType } from '@api/types';
+import { useAPI, type UseAPIData, type UseAPIOptions } from '../useAPI';
 
 type AnyEdenFn = (...args: any[]) => Promise<{ data: any; error: any }>;
 

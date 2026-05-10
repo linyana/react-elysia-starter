@@ -1,14 +1,14 @@
-import { Card, Flex, Layout, theme } from "antd";
-import { useEffect, useState } from "react";
-import { LAYOUT } from "@/config";
-import type { IRouteType } from "@/types";
-import { Banner } from "../../Banner";
-import { Header } from "../../Header";
-import { Footer } from "../../Footer";
-import { useGlobal, useMobile } from "@/hooks";
-import { UserProfile } from "./Profile";
-import { LayoutRouteMenu } from "../../Menu";
-import { AutoBreadcrumb } from "@/components";
+import { Card, Flex, Layout } from 'antd';
+import { useEffect, useState } from 'react';
+import { LAYOUT } from '@/config';
+import type { IRouteType } from '@/types';
+import { Banner } from '../../Banner';
+import { Header } from '../../Header';
+import { Footer } from '../../Footer';
+import { useGlobal, useMobile } from '@/hooks';
+import { UserProfile } from './Profile';
+import { LayoutRouteMenu } from '../../Menu';
+import { AutoBreadcrumb } from '@/components';
 
 type IPropsType = {
 	children: React.ReactNode;
@@ -18,12 +18,8 @@ type IPropsType = {
 export const DefaultLayout = ({ routes, children }: IPropsType) => {
 	const isMobile = useMobile();
 	const [isInit, setIsInit] = useState<boolean>(true);
-	const {
-		token: { colorBorderSecondary },
-	} = theme.useToken();
 	const { collapsed, actions } = useGlobal();
 
-	const border = `1px solid ${colorBorderSecondary}`;
 	useEffect(() => {
 		if (!isInit) {
 			actions.set({
@@ -39,27 +35,27 @@ export const DefaultLayout = ({ routes, children }: IPropsType) => {
 				collapsed={collapsed}
 				width={LAYOUT.SIDER_WIDTH}
 				style={{
-					height: "100vh",
-					position: "sticky",
+					height: '100vh',
+					position: 'sticky',
 					top: 0,
 					insetInlineStart: 0,
-					overflow: "hidden",
+					overflow: 'hidden',
 					zIndex: 1000,
-					backgroundColor: "transparent",
+					backgroundColor: 'transparent',
 				}}
 			>
 				<Flex
 					vertical
 					style={{
-						height: "100%",
+						height: '100%',
 					}}
 				>
 					<div
 						style={{
 							height: LAYOUT.HEADER_HEIGHT,
-							display: "flex",
-							alignItems: "center",
-							justifyContent: "center",
+							display: 'flex',
+							alignItems: 'center',
+							justifyContent: 'center',
 							flexShrink: 0,
 						}}
 					>
@@ -68,24 +64,24 @@ export const DefaultLayout = ({ routes, children }: IPropsType) => {
 
 					<Card
 						style={{
-							height: "100%",
-							margin: "0 8px 8px",
+							height: '100%',
+							margin: '0 8px 8px',
 						}}
 						styles={{
 							body: {
 								padding: 8,
-								display: "flex",
-								flexDirection: "column",
-								justifyContent: "space-between",
-								height: "100%",
+								display: 'flex',
+								flexDirection: 'column',
+								justifyContent: 'space-between',
+								height: '100%',
 							},
 						}}
 					>
 						<div
 							style={{
 								flex: 1,
-								overflow: "auto",
-								scrollbarWidth: "thin",
+								overflow: 'auto',
+								scrollbarWidth: 'thin',
 							}}
 						>
 							<LayoutRouteMenu routes={routes} />
@@ -103,21 +99,21 @@ export const DefaultLayout = ({ routes, children }: IPropsType) => {
 				<Layout.Header
 					style={{
 						padding: 0,
-						position: "fixed",
+						position: 'fixed',
 						top: 0,
 						right: 0,
-						width: `calc(100% - ${collapsed ? "80px" : LAYOUT.SIDER_WIDTH})`,
-						transition: "width 0.2s ease",
+						width: `calc(100% - ${collapsed ? '80px' : LAYOUT.SIDER_WIDTH})`,
+						transition: 'width 0.2s ease',
 						zIndex: 1000,
 						height: LAYOUT.HEADER_HEIGHT,
-						backdropFilter: "blur(6px)",
+						backdropFilter: 'blur(6px)',
 					}}
 				>
 					<Flex
 						style={{
-							height: "100%",
+							height: '100%',
 							padding: LAYOUT.SMALL_PADDING,
-							boxSizing: "border-box",
+							boxSizing: 'border-box',
 						}}
 						align="center"
 					>
@@ -129,7 +125,7 @@ export const DefaultLayout = ({ routes, children }: IPropsType) => {
 					style={{
 						minWidth: 0,
 						marginTop: LAYOUT.HEADER_HEIGHT,
-						overflowX: "auto",
+						overflowX: 'auto',
 					}}
 				>
 					<Layout.Content

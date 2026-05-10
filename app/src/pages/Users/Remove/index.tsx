@@ -1,10 +1,10 @@
-import { LucideIcon } from "@/components";
-import { useAPI } from "@/hooks";
-import type { UseAPIData } from "@/hooks/useAPI";
-import { API } from "@/libs";
-import { Button, Popconfirm } from "antd";
+import { LucideIcon } from '@/components';
+import { useAPI } from '@/hooks';
+import type { UseAPIData } from '@/hooks/useAPI';
+import { API } from '@/libs';
+import { Button, Popconfirm } from 'antd';
 
-type IUser = UseAPIData<typeof API.users.get>["items"][number];
+type IUser = UseAPIData<typeof API.users.get>['items'][number];
 
 type IPropsType = {
 	fetch: () => void;
@@ -14,7 +14,7 @@ type IPropsType = {
 export const RemoveUser = ({ fetch, record }: IPropsType) => {
 	const { fetch: deleteUser } = useAPI({
 		fetcher: (id: number) => API.users({ id }).delete(),
-		success: { message: "User deleted", action: fetch },
+		success: { message: 'User deleted', action: fetch },
 	});
 
 	return (

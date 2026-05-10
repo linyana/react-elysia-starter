@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { useMatches } from "react-router-dom";
-import { useGlobal } from "@/hooks";
-import { Button, Flex, Input, Tag, Tooltip, Typography } from "antd";
-import { Search } from "lucide-react";
-import type { IRouteType } from "@/types";
-import { CommandPalette } from "./CommandPalette";
-import { LucideIcon } from "@/components";
+import { useEffect, useState } from 'react';
+import { useMatches } from 'react-router-dom';
+import { useGlobal } from '@/hooks';
+import { Button, Flex, Input, Tag, Tooltip, Typography } from 'antd';
+import { Search } from 'lucide-react';
+import type { IRouteType } from '@/types';
+import { CommandPalette } from './CommandPalette';
+import { LucideIcon } from '@/components';
 
 type IPropsType = {
 	routes: IRouteType[];
@@ -15,18 +15,19 @@ export const Header = ({ routes }: IPropsType) => {
 	const { collapsed, actions } = useGlobal();
 	const [paletteOpen, setPaletteOpen] = useState(false);
 	const matches = useMatches();
-	const currentHandle = matches[matches.length - 1]?.handle as IRouteType["handle"];
+	const currentHandle = matches[matches.length - 1]
+		?.handle as IRouteType['handle'];
 	const pageTitle = currentHandle?.menu?.label;
 
 	useEffect(() => {
 		const handler = (e: KeyboardEvent) => {
-			if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+			if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
 				e.preventDefault();
 				setPaletteOpen(true);
 			}
 		};
-		window.addEventListener("keydown", handler);
-		return () => window.removeEventListener("keydown", handler);
+		window.addEventListener('keydown', handler);
+		return () => window.removeEventListener('keydown', handler);
 	}, []);
 
 	return (
@@ -35,7 +36,7 @@ export const Header = ({ routes }: IPropsType) => {
 				justify="space-between"
 				align="center"
 				gap={12}
-				style={{ width: "100%" }}
+				style={{ width: '100%' }}
 			>
 				<Flex align="center" gap={8}>
 					<Button
@@ -46,7 +47,7 @@ export const Header = ({ routes }: IPropsType) => {
 							) : (
 								<LucideIcon
 									name="ListCollapse"
-									style={{ transform: "rotate(180deg)" }}
+									style={{ transform: 'rotate(180deg)' }}
 								/>
 							)
 						}
@@ -63,10 +64,10 @@ export const Header = ({ routes }: IPropsType) => {
 					onClick={() => setPaletteOpen(true)}
 					style={{
 						width: 460,
-						cursor: "pointer",
-						position: "absolute",
-						left: "50%",
-						transform: "translateX(-50%)",
+						cursor: 'pointer',
+						position: 'absolute',
+						left: '50%',
+						transform: 'translateX(-50%)',
 					}}
 				>
 					<Input
@@ -74,11 +75,13 @@ export const Header = ({ routes }: IPropsType) => {
 						variant="underlined"
 						placeholder="Search…"
 						prefix={<Search size={14} style={{ opacity: 0.6 }} />}
-						suffix={<Tag style={{ margin: 0, opacity: 0.7 }}>⌘K</Tag>}
+						suffix={
+							<Tag style={{ margin: 0, opacity: 0.7 }}>⌘K</Tag>
+						}
 						style={{
 							borderRadius: 8,
-							cursor: "pointer",
-							pointerEvents: "none",
+							cursor: 'pointer',
+							pointerEvents: 'none',
 						}}
 					/>
 				</div>

@@ -6,5 +6,5 @@ export * from './auth';
 export * from './permission';
 
 export const guardsPlugin = new Elysia({ name: 'libs/guards' })
-  .use(authGuard)
-  .use(permissionGuard);
+	.use(authGuard)
+	.use(permissionGuard);

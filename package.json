@@ -15,17 +15,15 @@
 		"build:app": "turbo run build --filter=@project-name/app",
 		"build:api": "turbo run build --filter=@project-name/api",
 		"prisma:seed": "turbo run prisma:seed --filter=@project-name/api",
-		"type-check": "tsgo --noEmit -p api/tsconfig.json && tsgo --noEmit -p app/tsconfig.json"
+		"type-check": "tsgo --noEmit -p api/tsconfig.json && tsgo --noEmit -p app/tsconfig.json",
+		"lint": "oxlint",
+		"format": "prettier --write .",
+		"format:check": "prettier --check ."
 	},
 	"devDependencies": {
 		"@types/node": "^25.5.0",
-		"@typescript-eslint/eslint-plugin": "^8.58.0",
-		"@typescript-eslint/parser": "^8.58.0",
 		"@typescript/native-preview": "^7.0.0-dev.20260425.1",
-		"eslint": "^10.1.0",
-		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-prettier": "^5.5.5",
-		"eslint-plugin-react": "^7.37.5",
+		"oxlint": "^1.27.0",
 		"prettier": "^3.8.1",
 		"turbo": "^2.9.3",
 		"typescript": "^6.0.2"

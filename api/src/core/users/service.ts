@@ -1,7 +1,7 @@
-import { Prisma } from "@prisma/client";
-import { prisma } from "../../libs";
-import type { IListResponseType } from "../../types";
-import { ICreateUserRequestType } from "./types";
+import { Prisma } from '@prisma/client';
+import { prisma } from '../../libs';
+import type { IListResponseType } from '../../types';
+import { ICreateUserRequestType } from './types';
 
 const publicFields = {
 	id: true,
@@ -32,8 +32,18 @@ class UserService {
 			...(keyword
 				? {
 						OR: [
-							{ name: { contains: keyword, mode: "insensitive" } },
-							{ email: { contains: keyword, mode: "insensitive" } },
+							{
+								name: {
+									contains: keyword,
+									mode: 'insensitive',
+								},
+							},
+							{
+								email: {
+									contains: keyword,
+									mode: 'insensitive',
+								},
+							},
 						],
 					}
 				: {}),
@@ -42,7 +52,7 @@ class UserService {
 		const [items, totalCount] = await Promise.all([
 			prisma.users.findMany({
 				where,
-				orderBy: { updatedAt: "desc" },
+				orderBy: { updatedAt: 'desc' },
 				select: publicFields,
 				skip: offset,
 				take: limit,

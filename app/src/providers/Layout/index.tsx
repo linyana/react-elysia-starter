@@ -1,9 +1,9 @@
-import { Outlet, useMatches } from "react-router-dom";
-import type { ILayoutType, IRouteType } from "@/types";
-import { Layout } from "./Layouts";
-import { AuthProvider } from "../Auth";
+import { Outlet, useMatches } from 'react-router-dom';
+import type { ILayoutType, IRouteType } from '@/types';
+import { Layout } from './Layouts';
+import { AuthProvider } from '../Auth';
 
-export * from "./Layouts";
+export * from './Layouts';
 
 export const LayoutProvider: React.FC<{ routes: IRouteType[] }> = ({
 	routes,

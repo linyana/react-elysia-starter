@@ -1,27 +1,29 @@
 /* eslint-disable no-restricted-syntax */
-import React, { useMemo, useState, useEffect } from "react";
-import { Menu } from "antd";
-import { useLocation, useNavigate } from "react-router-dom";
-import type { IRouteType } from "@/types";
-import { LucideIcon } from "@/components";
+import React, { useMemo, useState, useEffect } from 'react';
+import { Menu } from 'antd';
+import { useLocation, useNavigate } from 'react-router-dom';
+import type { IRouteType } from '@/types';
+import { LucideIcon } from '@/components';
 
 const isMenuRoute = () => (route: IRouteType) => {
-	const { handle: { menu } = {}, path = "" } = route;
+	const { handle: { menu } = {}, path = '' } = route;
 	if (!menu) return false;
-	return path && !path.includes("*");
+	return path && !path.includes('*');
 };
 
 const joinPaths = (basePath: string, subPath?: string) => {
 	if (!subPath) return basePath;
-	if (subPath.includes("https://")) return subPath;
-	return `${basePath.replace(/\/$/, "")}/${subPath.replace(/^\//, "")}`;
+	if (subPath.includes('https://')) return subPath;
+	return `${basePath.replace(/\/$/, '')}/${subPath.replace(/^\//, '')}`;
 };
 
-const buildMenuItem = (route: IRouteType, parentPath = ""): any | null => {
+const buildMenuItem = (route: IRouteType, parentPath = ''): any | null => {
 	const menu = route?.handle?.menu;
 	if (!menu) return null;
 
-	const fullPath = route.path ? joinPaths(parentPath, route.path) : parentPath;
+	const fullPath = route.path
+		? joinPaths(parentPath, route.path)
+		: parentPath;
 
 	const children =
 		route.children
@@ -71,19 +73,27 @@ export const LayoutRouteMenu: React.FC<{
 		const keys = collectKeys(items);
 		return keys.reduce(
 			(match, key) =>
-				pathname.startsWith(key) && key.length > match.length ? key : match,
-			"",
+				pathname.startsWith(key) && key.length > match.length
+					? key
+					: match,
+			'',
 		);
 	}, [location.pathname, items]);
 
 	useEffect(() => {
 		if (!selectedKey) return;
 
-		const findParents = (nodes: any[], parents: string[] = []): string[] => {
+		const findParents = (
+			nodes: any[],
+			parents: string[] = [],
+		): string[] => {
 			for (const node of nodes) {
 				if (node.key === selectedKey) return parents;
 				if (node.children) {
-					const res = findParents(node.children, [...parents, node.key]);
+					const res = findParents(node.children, [
+						...parents,
+						node.key,
+					]);
 					if (res.length) return res;
 				}
 			}
@@ -102,7 +112,7 @@ export const LayoutRouteMenu: React.FC<{
 			openKeys={openKeys}
 			onOpenChange={(keys) => setOpenKeys(keys as string[])}
 			onClick={(e) => {
-				if (e.key.includes("http")) {
+				if (e.key.includes('http')) {
 					window.open(e.key);
 				} else {
 					navigate(e.key);
@@ -110,7 +120,7 @@ export const LayoutRouteMenu: React.FC<{
 			}}
 			styles={{
 				root: {
-					borderRight: "none",
+					borderRight: 'none',
 				},
 			}}
 		/>

@@ -1,10 +1,10 @@
-import { Modal, Input, List, Empty, theme } from "antd";
-import { CornerDownLeft, Search } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import type { icons } from "lucide-react";
-import type { IRouteType } from "@/types";
-import { LucideIcon } from "@/components";
+import { Modal, Input, List, Empty, theme } from 'antd';
+import { CornerDownLeft, Search } from 'lucide-react';
+import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import type { icons } from 'lucide-react';
+import type { IRouteType } from '@/types';
+import { LucideIcon } from '@/components';
 
 type ICommand = {
 	key: string;
@@ -15,18 +15,18 @@ type ICommand = {
 };
 
 const joinPath = (base: string, sub: string) =>
-	`${base.replace(/\/$/, "")}/${sub.replace(/^\//, "")}`.replace(/\/+/g, "/");
+	`${base.replace(/\/$/, '')}/${sub.replace(/^\//, '')}`.replace(/\/+/g, '/');
 
-const flattenRoutes = (routes: IRouteType[], parent = ""): ICommand[] =>
+const flattenRoutes = (routes: IRouteType[], parent = ''): ICommand[] =>
 	routes.flatMap((r) => {
-		const sub = r.path ?? "";
+		const sub = r.path ?? '';
 		const full = sub ? joinPath(parent, sub) : parent;
 
 		const self =
 			r.handle?.menu?.label &&
 			r.path &&
-			!r.path.includes("*") &&
-			!r.path.includes("http")
+			!r.path.includes('*') &&
+			!r.path.includes('http')
 				? [
 						{
 							key: full,
@@ -38,7 +38,10 @@ const flattenRoutes = (routes: IRouteType[], parent = ""): ICommand[] =>
 					]
 				: [];
 
-		return [...self, ...(r.children ? flattenRoutes(r.children, full) : [])];
+		return [
+			...self,
+			...(r.children ? flattenRoutes(r.children, full) : []),
+		];
 	});
 
 type IPropsType = {
@@ -49,7 +52,7 @@ type IPropsType = {
 
 export const CommandPalette = ({ open, onClose, routes }: IPropsType) => {
 	const navigate = useNavigate();
-	const [query, setQuery] = useState("");
+	const [query, setQuery] = useState('');
 	const [active, setActive] = useState(0);
 	const {
 		token: {
@@ -77,18 +80,18 @@ export const CommandPalette = ({ open, onClose, routes }: IPropsType) => {
 		const target = cmd ?? items[active];
 		if (!target) return;
 		navigate(target.path);
-		setQuery("");
+		setQuery('');
 		onClose();
 	};
 
 	const onKeyDown: React.KeyboardEventHandler = (e) => {
-		if (e.key === "ArrowDown") {
+		if (e.key === 'ArrowDown') {
 			e.preventDefault();
 			setActive((i) => Math.min(i + 1, items.length - 1));
-		} else if (e.key === "ArrowUp") {
+		} else if (e.key === 'ArrowUp') {
 			e.preventDefault();
 			setActive((i) => Math.max(i - 1, 0));
-		} else if (e.key === "Enter") {
+		} else if (e.key === 'Enter') {
 			e.preventDefault();
 			select();
 		}
@@ -98,7 +101,7 @@ export const CommandPalette = ({ open, onClose, routes }: IPropsType) => {
 		<Modal
 			open={open}
 			onCancel={() => {
-				setQuery("");
+				setQuery('');
 				onClose();
 			}}
 			footer={null}
@@ -112,15 +115,20 @@ export const CommandPalette = ({ open, onClose, routes }: IPropsType) => {
 				value={query}
 				onChange={(e) => setQuery(e.target.value)}
 				onKeyDown={onKeyDown}
-				prefix={<Search size={16} style={{ opacity: 0.6, marginRight: 4 }} />}
+				prefix={
+					<Search
+						size={16}
+						style={{ opacity: 0.6, marginRight: 4 }}
+					/>
+				}
 				placeholder="Jump to page…"
 				variant="borderless"
-				style={{ padding: "14px 16px" }}
+				style={{ padding: '14px 16px' }}
 			/>
 			<div
 				style={{
 					maxHeight: 360,
-					overflow: "auto",
+					overflow: 'auto',
 					borderTop: `1px solid ${colorBorderSecondary}`,
 				}}
 			>
@@ -135,11 +143,11 @@ export const CommandPalette = ({ open, onClose, routes }: IPropsType) => {
 						{isEmptyQuery && featured.length > 0 && (
 							<div
 								style={{
-									padding: "10px 16px 4px",
+									padding: '10px 16px 4px',
 									fontSize: 11,
 									fontWeight: 600,
 									letterSpacing: 0.4,
-									textTransform: "uppercase",
+									textTransform: 'uppercase',
 									color: colorTextTertiary,
 								}}
 							>
@@ -156,11 +164,14 @@ export const CommandPalette = ({ open, onClose, routes }: IPropsType) => {
 									onClick={() => select(item)}
 									onMouseEnter={() => setActive(i)}
 									style={{
-										cursor: "pointer",
-										padding: "8px 12px",
+										cursor: 'pointer',
+										padding: '8px 12px',
 										borderRadius,
-										background: i === active ? controlItemBgHover : undefined,
-										border: "none",
+										background:
+											i === active
+												? controlItemBgHover
+												: undefined,
+										border: 'none',
 										gap: 12,
 									}}
 								>
@@ -168,17 +179,25 @@ export const CommandPalette = ({ open, onClose, routes }: IPropsType) => {
 										<LucideIcon
 											name={item.iconName}
 											size={16}
-											style={{ color: colorTextTertiary, flexShrink: 0 }}
+											style={{
+												color: colorTextTertiary,
+												flexShrink: 0,
+											}}
 										/>
 									) : (
-										<span style={{ width: 16, flexShrink: 0 }} />
+										<span
+											style={{ width: 16, flexShrink: 0 }}
+										/>
 									)}
-									<span style={{ flex: 1 }}>{item.label}</span>
+									<span style={{ flex: 1 }}>
+										{item.label}
+									</span>
 									<span
 										style={{
 											color: colorTextTertiary,
 											fontSize: 12,
-											fontFamily: "ui-monospace, monospace",
+											fontFamily:
+												'ui-monospace, monospace',
 										}}
 									>
 										{item.path}
@@ -186,7 +205,10 @@ export const CommandPalette = ({ open, onClose, routes }: IPropsType) => {
 									{i === active && (
 										<CornerDownLeft
 											size={14}
-											style={{ color: colorTextTertiary, flexShrink: 0 }}
+											style={{
+												color: colorTextTertiary,
+												flexShrink: 0,
+											}}
 										/>
 									)}
 								</List.Item>

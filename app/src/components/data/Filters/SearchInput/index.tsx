@@ -4,9 +4,9 @@ import {
 	Input,
 	type InputProps,
 	Typography,
-} from "antd";
-import { useMobile } from "@/hooks";
-import { LucideIcon } from "@/components";
+} from 'antd';
+import { useMobile } from '@/hooks';
+import { LucideIcon } from '@/components';
 
 type ILabelProps = FormItemProps & {
 	isLabelStrong?: boolean;
@@ -30,21 +30,21 @@ export const SearchInput = ({
 	const inputNode = (
 		<Input
 			onKeyDown={(e) => {
-				if (e.key === "Enter") onSearch?.();
+				if (e.key === 'Enter') onSearch?.();
 			}}
 			prefix={
 				<LucideIcon
 					name="Search"
 					style={{
-						cursor: "pointer",
-          }}
-          size={16}
-          color="gray"
+						cursor: 'pointer',
+					}}
+					size={16}
+					color="gray"
 					onClick={onSearch}
 				/>
 			}
 			style={{
-				width: "100%",
+				width: '100%',
 			}}
 			allowClear={allowClear}
 			{...rest}
@@ -52,7 +52,7 @@ export const SearchInput = ({
 	);
 
 	const {
-		label = "Search",
+		label = 'Search',
 		isLabelStrong = true,
 		...restFormItemProps
 	} = formItemProps;
@@ -62,7 +62,7 @@ export const SearchInput = ({
 			name="keyword"
 			label={<Text strong={isLabelStrong}>{label}</Text>}
 			style={{
-				flex: isMobile ? "1" : "2",
+				flex: isMobile ? '1' : '2',
 				minWidth: 200,
 			}}
 			{...restFormItemProps}

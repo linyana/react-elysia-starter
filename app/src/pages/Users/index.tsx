@@ -1,4 +1,4 @@
-import { UserList } from "./List";
+import { UserList } from './List';
 
 export const Users = () => {
 	return <UserList />;

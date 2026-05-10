@@ -1,8 +1,8 @@
-import { TableForm, ProCard, ProTable, SearchInput } from "@/components";
-import { useListAPI } from "@/hooks";
-import { API } from "@/libs";
-import { CreateUser } from "../Create";
-import { RemoveUser } from "../Remove";
+import { TableForm, ProCard, ProTable, SearchInput } from '@/components';
+import { useListAPI } from '@/hooks';
+import { API } from '@/libs';
+import { CreateUser } from '../Create';
+import { RemoveUser } from '../Remove';
 
 export const UserList = () => {
 	const { data, pagination, loading, setFilter, fetch } = useListAPI({
@@ -20,22 +20,23 @@ export const UserList = () => {
 			</TableForm>
 			<ProTable
 				columns={[
-          { title: "Name", dataIndex: "name", key: "name" },
-          { title: "Email", dataIndex: "email", key: "email" },
-          {
-            title: "Created At",
-            dataIndex: "createdAt",
-            key: "createdAt",
-            render: (text: string) => new Date(text).toLocaleString(),
-          },
-          {
-            title: "Actions",
-            key: "actions",
-            render: (_, record) => (
-              <RemoveUser record={record} fetch={fetch} />
-            ),
-          },
-        ]}
+					{ title: 'Name', dataIndex: 'name', key: 'name' },
+					{ title: 'Email', dataIndex: 'email', key: 'email' },
+					{
+						title: 'Created At',
+						dataIndex: 'createdAt',
+						key: 'createdAt',
+						render: (text: string) =>
+							new Date(text).toLocaleString(),
+					},
+					{
+						title: 'Actions',
+						key: 'actions',
+						render: (_, record) => (
+							<RemoveUser record={record} fetch={fetch} />
+						),
+					},
+				]}
 				dataSource={data}
 				loading={loading}
 				pagination={pagination}

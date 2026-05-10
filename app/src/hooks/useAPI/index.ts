@@ -1,6 +1,6 @@
-import { useState, useRef } from "react";
-import { nanoid } from "nanoid";
-import { useMessage } from "@/hooks/useMessage";
+import { useState, useRef } from 'react';
+import { nanoid } from 'nanoid';
+import { useMessage } from '@/hooks/useMessage';
 
 // ─── Type helpers ────────────────────────────────────────────────────────────
 
@@ -8,7 +8,7 @@ type AnyEdenFn = (...args: any[]) => Promise<{ data: any; error: any }>;
 
 /** Infer the response payload type from an Eden Treaty function */
 type InferData<TFn extends AnyEdenFn> = NonNullable<
-	Awaited<ReturnType<TFn>>["data"]
+	Awaited<ReturnType<TFn>>['data']
 >;
 
 /** The parameter type the Eden function accepts (e.g. { body: ... } for POST) */
@@ -19,7 +19,7 @@ export type UseAPIData<TFn extends AnyEdenFn> = InferData<TFn>;
 
 // ─── Public types ─────────────────────────────────────────────────────────────
 
-type MessageOption = "default" | null | (string & {});
+type MessageOption = 'default' | null | (string & {});
 
 export type UseAPIOptions<TData> = {
 	/** Show a loading toast while the request is in flight (default: true) */
@@ -71,7 +71,7 @@ export function useAPI<TFn extends AnyEdenFn>({
 		const loadingKey = nanoid();
 
 		if (showLoading) {
-			message.loading({ content: "Loading...", key: loadingKey });
+			message.loading({ content: 'Loading...', key: loadingKey });
 		}
 
 		setLoading(true);
@@ -85,15 +85,16 @@ export function useAPI<TFn extends AnyEdenFn>({
 		setLoading(false);
 
 		if (error) {
-			const msg: string = error?.value?.message ?? "An unknown error occurred";
+			const msg: string =
+				error?.value?.message ?? 'An unknown error occurred';
 
 			setErrorMessage(msg);
 
-			const errMsg = options?.error?.message ?? "default";
+			const errMsg = options?.error?.message ?? 'default';
 			if (errMsg !== null) {
 				message.error({
 					key: loadingKey,
-					content: errMsg === "default" ? msg : errMsg,
+					content: errMsg === 'default' ? msg : errMsg,
 				});
 			} else if (showLoading) {
 				message.dismiss(loadingKey);
@@ -107,7 +108,8 @@ export function useAPI<TFn extends AnyEdenFn>({
 
 		const successMsg = options?.success?.message;
 		if (successMsg !== undefined && successMsg !== null) {
-			const content = successMsg === "default" ? "Successfully" : successMsg;
+			const content =
+				successMsg === 'default' ? 'Successfully' : successMsg;
 			message.success({ key: loadingKey, content });
 		} else if (showLoading) {
 			message.dismiss(loadingKey);

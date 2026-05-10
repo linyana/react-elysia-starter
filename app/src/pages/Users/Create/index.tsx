@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { Button, Form, Input, Modal } from "antd";
-import { Plus } from "lucide-react";
-import { useAPI } from "@/hooks";
-import { API } from "@/libs";
-import { ICreateUserRequestType } from "@api/core/users/types";
+import { useState } from 'react';
+import { Button, Form, Input, Modal } from 'antd';
+import { Plus } from 'lucide-react';
+import { useAPI } from '@/hooks';
+import { API } from '@/libs';
+import { ICreateUserRequestType } from '@api/core/users/types';
 
 type IPropsType = {
 	fetch: () => void;
@@ -16,7 +16,7 @@ export const CreateUser = ({ fetch }: IPropsType) => {
 	const { fetch: createUser, loading } = useAPI({
 		fetcher: API.users.post,
 		success: {
-			message: "User created",
+			message: 'User created',
 			action: () => {
 				setOpen(false);
 				form.resetFields();
@@ -53,7 +53,9 @@ export const CreateUser = ({ fetch }: IPropsType) => {
 					<Form.Item
 						name="name"
 						label="Name"
-						rules={[{ required: true, message: "Name is required" }]}
+						rules={[
+							{ required: true, message: 'Name is required' },
+						]}
 					>
 						<Input placeholder="Jane Doe" />
 					</Form.Item>
@@ -61,8 +63,8 @@ export const CreateUser = ({ fetch }: IPropsType) => {
 						name="email"
 						label="Email"
 						rules={[
-							{ required: true, message: "Email is required" },
-							{ type: "email", message: "Invalid email" },
+							{ required: true, message: 'Email is required' },
+							{ type: 'email', message: 'Invalid email' },
 						]}
 					>
 						<Input placeholder="jane@example.com" />
@@ -71,8 +73,8 @@ export const CreateUser = ({ fetch }: IPropsType) => {
 						name="password"
 						label="Password"
 						rules={[
-							{ required: true, message: "Password is required" },
-							{ min: 8, message: "At least 8 characters" },
+							{ required: true, message: 'Password is required' },
+							{ min: 8, message: 'At least 8 characters' },
 						]}
 					>
 						<Input.Password placeholder="••••••••" />

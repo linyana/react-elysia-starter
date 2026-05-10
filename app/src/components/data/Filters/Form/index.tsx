@@ -1,9 +1,9 @@
-import { Form, type FormProps } from "antd";
+import { Form, type FormProps } from 'antd';
 
 type TableFormProps<T> = {
 	setFilter: React.Dispatch<React.SetStateAction<T | any>>;
 	children: React.ReactNode;
-} & Omit<FormProps, "onValuesChange">;
+} & Omit<FormProps, 'onValuesChange'>;
 
 export const TableForm = <T extends Record<string, any>>({
 	setFilter,

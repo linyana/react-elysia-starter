@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { API } from "@/libs";
-import { useAPI } from "@/hooks";
-import { Card } from "antd";
+import { useEffect } from 'react';
+import { API } from '@/libs';
+import { useAPI } from '@/hooks';
+import { Card } from 'antd';
 
 export const Dashboard = () => {
-	const { data: projects, fetch } = useAPI({
+	const { fetch } = useAPI({
 		fetcher: API.projects.get,
 		showLoading: false,
 	});
