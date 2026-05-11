@@ -1,13 +1,13 @@
-import { Elysia, t } from 'elysia';
-import { userService } from './service';
-import { CreateUserSchema } from './types';
-import { guardsPlugin } from '../../libs';
+import { Elysia, t } from "elysia";
+import { userService } from "./service";
+import { CreateUserSchema } from "./types";
+import { guardsPlugin } from "../../libs";
 
-export const userController = new Elysia({ prefix: '/users', tags: ['Users'] })
+export const userController = new Elysia({ prefix: "/users", tags: ["Users"] })
 	.use(guardsPlugin)
 	.guard({ auth: true })
 	.get(
-		'/',
+		"/",
 		({ query }) =>
 			userService.getUsers({
 				tenantId: query.tenantId,
@@ -24,10 +24,14 @@ export const userController = new Elysia({ prefix: '/users', tags: ['Users'] })
 			}),
 		},
 	)
-	.get('/:id', ({ params }) => userService.getUser(Number(params.id)))
+	.get("/:id", ({ params }) => userService.getUser(Number(params.id)))
 	.post(
-		'/',
+		"/",
 		({ body, auth }) => userService.createUser(body, auth.tenantId),
 		CreateUserSchema,
 	)
-	.delete('/:id', ({ params }) => userService.deleteUser(Number(params.id)));
+	.delete("/", ({ body }) => userService.deleteUser(body.ids), {
+		body: t.Object({
+			ids: t.Array(t.String()),
+		}),
+	});

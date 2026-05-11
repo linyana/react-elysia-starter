@@ -8,13 +8,17 @@ type IUser = UseAPIData<typeof API.users.get>['items'][number];
 
 type IPropsType = {
 	fetch: () => void;
-	record: IUser;
+	items: IUser[];
+	shape: 'Popconfirm' | 'Modal';
 };
 
-export const RemoveUser = ({ fetch, record }: IPropsType) => {
-	const { fetch: deleteUser } = useAPI({
-		fetcher: (id: number) => API.users({ id }).delete(),
-		success: { message: 'User deleted', action: fetch },
+export const RemoveUser = ({ fetch, items, shape = 'Modal' }: IPropsType) => {
+	const { fetch: removeUser } = useAPI({
+		fetcher: () =>
+			API.users.delete({
+				ids: items.map((item) => String(item.id)),
+			}),
+		success: { message: 'Successfully removed this user', action: fetch },
 	});
 
 	return (
@@ -22,14 +26,11 @@ export const RemoveUser = ({ fetch, record }: IPropsType) => {
 			title="Delete this user?"
 			okText="Delete"
 			okButtonProps={{ danger: true }}
-			onConfirm={() => deleteUser(record.id)}
+			onConfirm={() => {
+				removeUser();
+			}}
 		>
-			<Button
-				size="small"
-				type="text"
-				danger
-				icon={<LucideIcon name="Trash2" />}
-			/>
+			<Button type="text" danger icon={<LucideIcon name="Trash2" />} />
 		</Popconfirm>
 	);
 };

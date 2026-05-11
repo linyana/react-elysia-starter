@@ -1,7 +1,7 @@
-import { Prisma } from '@prisma/client';
-import { prisma } from '../../libs';
-import type { IListResponseType } from '../../types';
-import { ICreateUserRequestType } from './types';
+import { Prisma } from "@prisma/client";
+import { prisma } from "../../libs";
+import type { IListResponseType } from "../../types";
+import { ICreateUserRequestType } from "./types";
 
 const publicFields = {
 	id: true,
@@ -35,13 +35,13 @@ class UserService {
 							{
 								name: {
 									contains: keyword,
-									mode: 'insensitive',
+									mode: "insensitive",
 								},
 							},
 							{
 								email: {
 									contains: keyword,
-									mode: 'insensitive',
+									mode: "insensitive",
 								},
 							},
 						],
@@ -52,7 +52,7 @@ class UserService {
 		const [items, totalCount] = await Promise.all([
 			prisma.users.findMany({
 				where,
-				orderBy: { updatedAt: 'desc' },
+				orderBy: { updatedAt: "desc" },
 				select: publicFields,
 				skip: offset,
 				take: limit,
@@ -78,8 +78,14 @@ class UserService {
 		});
 	}
 
-	deleteUser(id: number) {
-		return prisma.users.delete({ where: { id } });
+	deleteUser(ids: string[]) {
+		return prisma.users.deleteMany({
+			where: {
+				id: {
+					in: ids.map((id) => Number(id)),
+				},
+			},
+		});
 	}
 }
 
