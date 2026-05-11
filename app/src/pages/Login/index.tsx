@@ -10,11 +10,11 @@ import {
 	Tag,
 	Typography,
 } from 'antd';
-import { LucideIcon } from '@/components';
 import { useAPI, useGlobal } from '@/hooks';
 import heroSvg from '@/assets/login-hero.svg';
 import logoSvg from '@/assets/logo.svg';
 import { API } from '@/libs';
+import { LucideIcon } from '@/components';
 
 const { Title, Text, Paragraph, Link } = Typography;
 
