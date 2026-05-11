@@ -6,7 +6,6 @@ import {
 	type SelectProps,
 	Typography,
 } from 'antd';
-import { useMobile } from '@/hooks';
 
 type ILabelProps = FormItemProps & {
 	isLabelStrong?: boolean;
@@ -24,8 +23,6 @@ export const SearchSelect = ({
 	formItemProps = {},
 	...rest
 }: IPropsType) => {
-	const isMobile = useMobile();
-
 	const {
 		name,
 		label,

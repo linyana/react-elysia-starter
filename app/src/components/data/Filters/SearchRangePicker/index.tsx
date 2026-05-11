@@ -6,7 +6,6 @@ import {
 	Typography,
 	type TimeRangePickerProps,
 } from 'antd';
-import { useMobile } from '@/hooks';
 
 type ILabelProps = FormItemProps & {
 	isLabelStrong?: boolean;
@@ -25,8 +24,6 @@ export const SearchRangePicker = ({
 	formItemProps = {},
 	...rest
 }: IPropsType) => {
-	const isMobile = useMobile();
-
 	const {
 		name,
 		label,

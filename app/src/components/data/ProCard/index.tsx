@@ -14,7 +14,7 @@ type IPropsType = Omit<CardProps, 'title' | 'extra'> & {
 /**
  * Enhanced antd Card. Renders its header with the project's standard
  * title-bar style (icon + title + description + extra). All other Card
- * props (`bordered`, `hoverable`, `loading`, `styles`, `actions`, …) pass
+ * props (`bordered`, `hoverable`, `loading`, `actions`, …) pass
  * through unchanged.
  */
 export const ProCard = ({
@@ -23,7 +23,6 @@ export const ProCard = ({
 	extra,
 	iconName,
 	children,
-	styles,
 	...rest
 }: IPropsType) => {
 	const hasHeader = title || description || iconName || extra;
