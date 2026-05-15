@@ -33,7 +33,7 @@ export const UserList = () => {
 						title: 'Actions',
 						key: 'actions',
 						render: (_, record) => (
-							<RemoveUser record={record} fetch={fetch} />
+							<RemoveUser items={[record]} fetch={fetch} />
 						),
 					},
 				]}
