@@ -5,7 +5,7 @@ export type ProButtonAction = 'DELETE' | 'EDIT' | 'VIEW';
 
 const ACTION_CONFIG: Record<ProButtonAction, ButtonProps> = {
 	DELETE: { icon: <LucideIcon name="Trash2" />, danger: true },
-	EDIT: { icon: <LucideIcon name="Pencil" /> },
+	EDIT: { icon: <LucideIcon name="SquarePen" /> },
 	VIEW: { icon: <LucideIcon name="Eye" /> },
 };
 

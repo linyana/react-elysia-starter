@@ -1,6 +1,6 @@
 import { Elysia, t } from "elysia";
 import { userService } from "./service";
-import { CreateUserSchema } from "./types";
+import { CreateUserSchema, UpdateUserSchema } from "./types";
 import { guardsPlugin } from "../../libs";
 
 export const userController = new Elysia({ prefix: "/users", tags: ["Users"] })
@@ -29,6 +29,11 @@ export const userController = new Elysia({ prefix: "/users", tags: ["Users"] })
 		"/",
 		({ body, auth }) => userService.createUser(body, auth.tenantId),
 		CreateUserSchema,
+	)
+	.patch(
+		"/:id",
+		({ params, body }) => userService.updateUser(Number(params.id), body),
+		UpdateUserSchema,
 	)
 	.delete("/", ({ body }) => userService.deleteUser(body.ids), {
 		body: t.Object({

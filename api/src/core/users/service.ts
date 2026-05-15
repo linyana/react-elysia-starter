@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { prisma } from "../../libs";
 import type { IListResponseType } from "../../types";
-import { ICreateUserRequestType } from "./types";
+import { ICreateUserRequestType, IUpdateUserRequestType } from "./types";
 
 const publicFields = {
 	id: true,
@@ -74,6 +74,14 @@ class UserService {
 		const password = await Bun.password.hash(data.password);
 		return prisma.users.create({
 			data: { ...data, password, tenantId },
+			select: publicFields,
+		});
+	}
+
+	updateUser(id: number, data: IUpdateUserRequestType) {
+		return prisma.users.update({
+			where: { id },
+			data,
 			select: publicFields,
 		});
 	}

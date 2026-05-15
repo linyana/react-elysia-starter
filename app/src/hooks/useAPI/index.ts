@@ -126,5 +126,5 @@ export function useAPI<TFn extends AnyEdenFn>({
 		return responseBody as TData;
 	};
 
-	return { data, loading, errorMessage, fetch };
+	return { data, loading, errorMessage, fetch, setData };
 }

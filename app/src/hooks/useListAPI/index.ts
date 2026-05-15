@@ -30,7 +30,7 @@ export const useListAPI = <TFn extends AnyEdenFn>({
 		...initialFilter,
 	});
 
-	const { data, loading, fetch } = useAPI({
+	const { data, loading, fetch, setData } = useAPI({
 		fetcher,
 		showLoading: props?.showLoading ?? false,
 		...props,
@@ -53,6 +53,18 @@ export const useListAPI = <TFn extends AnyEdenFn>({
 		totalCount: list?.totalCount ?? 0,
 	};
 
+	const update = (id: number | string, patch: Partial<TItem>) => {
+		setData((prev: any) => {
+			if (!prev) return prev;
+			return {
+				...prev,
+				items: prev.items.map((item: any) =>
+					item.id === id ? { ...item, ...patch } : item,
+				),
+			};
+		});
+	};
+
 	return {
 		filter,
 		setFilter,
@@ -60,5 +72,6 @@ export const useListAPI = <TFn extends AnyEdenFn>({
 		pagination,
 		loading,
 		fetch: refetch,
+		update,
 	};
 };
