@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import type { IFilterType, IPaginationType } from '@api/types';
-import { useAPI, type UseAPIData, type UseAPIOptions } from '../useAPI';
+import {
+	useAPI,
+	type UseAPIData,
+	type UseAPIItem,
+	type UseAPIListShape,
+	type UseAPIOptions,
+} from '../useAPI';
 
 type AnyEdenFn = (...args: any[]) => Promise<{ data: any; error: any }>;
-
-type IListShape<T> = { items: T[]; totalCount: number };
-
-type IInferItem<TFn extends AnyEdenFn> =
-	UseAPIData<TFn> extends IListShape<infer U> ? U : never;
 
 const DEFAULT_LIMIT = 10;
 
@@ -21,7 +22,7 @@ export const useListAPI = <TFn extends AnyEdenFn>({
 	initialFilter = {},
 	...props
 }: UseListAPIProps<TFn>) => {
-	type TItem = IInferItem<TFn>;
+	type TItem = UseAPIItem<TFn>;
 
 	const [filter, setFilter] = useState<IFilterType>({
 		offset: 0,
@@ -41,7 +42,7 @@ export const useListAPI = <TFn extends AnyEdenFn>({
 		refetch();
 	}, [filter]);
 
-	const list = data as IListShape<TItem> | null;
+	const list = data as UseAPIListShape<TItem> | null;
 	const offset = filter.offset ?? 0;
 	const limit = filter.limit ?? DEFAULT_LIMIT;
 

@@ -17,6 +17,13 @@ type InferOptions<TFn extends AnyEdenFn> = Parameters<TFn>[0];
 /** Utility: extract the unwrapped payload type from an Eden Treaty function */
 export type UseAPIData<TFn extends AnyEdenFn> = InferData<TFn>;
 
+/** Shape of a paginated list response returned by the API. */
+export type UseAPIListShape<T> = { items: T[]; totalCount: number };
+
+/** Utility: extract the item type from a paginated list response. */
+export type UseAPIItem<TFn extends AnyEdenFn> =
+	InferData<TFn> extends UseAPIListShape<infer U> ? U : never;
+
 // ─── Public types ─────────────────────────────────────────────────────────────
 
 type MessageOption = 'default' | null | (string & {});

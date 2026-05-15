@@ -1,14 +1,12 @@
 import { ProButton, ProModal } from '@/components';
 import { useAPI } from '@/hooks';
-import type { UseAPIData } from '@/hooks/useAPI';
+import type { UseAPIItem } from '@/hooks/useAPI';
 import { API } from '@/libs';
 import { useState } from 'react';
 
-type IUser = UseAPIData<typeof API.users.get>['items'][number];
-
 type IPropsType = {
 	fetch: () => void;
-	items: IUser[];
+	items: UseAPIItem<typeof API.users.get>[];
 };
 
 export const RemoveUser = ({ fetch, items }: IPropsType) => {
@@ -23,6 +21,29 @@ export const RemoveUser = ({ fetch, items }: IPropsType) => {
 		},
 	});
 
+	const single = items.length === 1 ? items[0] : null;
+	const content = single
+		? {
+				title: `Delete user "${single.name}"?`,
+				body: (
+					<>
+						Are you sure you want to delete{' '}
+						<strong>{single.name}</strong> ({single.email})? This
+						action cannot be undone.
+					</>
+				),
+			}
+		: {
+				title: `Delete ${items.length} users?`,
+				body: (
+					<>
+						Are you sure you want to delete these{' '}
+						<strong>{items.length}</strong> users? This action
+						cannot be undone.
+					</>
+				),
+			};
+
 	return (
 		<>
 			<ProButton
@@ -32,7 +53,7 @@ export const RemoveUser = ({ fetch, items }: IPropsType) => {
 				}}
 			/>
 			<ProModal
-				title="Delete this user?"
+				title={content.title}
 				okText="Confirm"
 				onCancel={() => {
 					setOpen(false);
@@ -44,7 +65,7 @@ export const RemoveUser = ({ fetch, items }: IPropsType) => {
 				okButtonProps={{ danger: true }}
 				open={open}
 			>
-				Are you sure you want to delete this user?
+				{content.body}
 			</ProModal>
 		</>
 	);
