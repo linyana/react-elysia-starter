@@ -8,10 +8,10 @@ import { useState } from 'react';
 
 type IPropsType = {
 	item: UseAPIItem<typeof API.users.get>;
-	onUpdated: (id: number, patch: Partial<UseAPIItem<typeof API.users.get>>) => void;
+	onEdited: (id: number, patch: Partial<UseAPIItem<typeof API.users.get>>) => void;
 };
 
-export const UpdateUser = ({ item, onUpdated }: IPropsType) => {
+export const EditUser = ({ item, onEdited }: IPropsType) => {
 	const [open, setOpen] = useState(false);
 	const [form] = Form.useForm<IUpdateUserRequestType>();
 	const initial = { name: item.name, email: item.email };
@@ -22,7 +22,7 @@ export const UpdateUser = ({ item, onUpdated }: IPropsType) => {
 		success: {
 			message: 'User updated',
 			action: (data) => {
-				if (data) onUpdated(item.id, data);
+				if (data) onEdited(item.id, data);
 				setOpen(false);
 			},
 		},

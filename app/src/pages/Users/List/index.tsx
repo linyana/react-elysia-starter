@@ -2,7 +2,7 @@ import { TableForm, ProCard, ProTable, SearchInput } from '@/components';
 import { useListAPI } from '@/hooks';
 import { API } from '@/libs';
 import { CreateUser } from '../Create';
-import { UpdateUser } from '../Update';
+import { EditUser } from '../Edit';
 import { RemoveUser } from '../Remove';
 
 export const UserList = () => {
@@ -35,7 +35,7 @@ export const UserList = () => {
 						key: 'actions',
 						render: (_, record) => (
 							<>
-								<UpdateUser item={record} onUpdated={update} />
+								<EditUser item={record} onEdited={update} />
 								<RemoveUser items={[record]} fetch={fetch} />
 							</>
 						),
