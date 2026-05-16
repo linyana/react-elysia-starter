@@ -36,7 +36,7 @@ export const UserList = () => {
 						render: (_, record) => (
 							<>
 								<EditUser item={record} onEdited={update} />
-								<RemoveUser items={[record]} fetch={fetch} />
+								<RemoveUser items={[record]} refreshList={fetch} />
 							</>
 						),
 					},
@@ -45,7 +45,6 @@ export const UserList = () => {
 				loading={loading}
 				pagination={pagination}
 				setFilter={setFilter}
-				rowKey="id"
 			/>
 		</ProCard>
 	);

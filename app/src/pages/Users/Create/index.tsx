@@ -9,10 +9,11 @@ type IPropsType = {
 	fetch: () => void;
 };
 
+const initial: ICreateUserRequestType = { name: '', email: '', password: '' };
+
 export const CreateUser = ({ fetch }: IPropsType) => {
 	const [open, setOpen] = useState(false);
 	const [form] = Form.useForm<ICreateUserRequestType>();
-	const initial = { name: '', email: '', password: '' };
 
 	const { fetch: createUser, loading } = useAPI({
 		fetcher: API.users.post,
@@ -26,12 +27,16 @@ export const CreateUser = ({ fetch }: IPropsType) => {
 		},
 	});
 
+	const handleOpen = () => {
+		setOpen(true);
+	};
+
 	return (
 		<>
 			<ProButton
 				type="primary"
 				iconName="Plus"
-				onClick={() => setOpen(true)}
+				onClick={handleOpen}
 			>
 				Create User
 			</ProButton>
