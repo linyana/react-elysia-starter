@@ -1,29 +1,40 @@
 import { LucideIcon } from '@/components';
+import type { ILucideIconType } from '@/components';
 import { Button, ButtonProps } from 'antd';
 
 export type ProButtonAction = 'DELETE' | 'EDIT' | 'VIEW';
 
-const ACTION_CONFIG: Record<ProButtonAction, ButtonProps> = {
-	DELETE: { icon: <LucideIcon name="Trash2" />, danger: true },
-	EDIT: { icon: <LucideIcon name="SquarePen" /> },
-	VIEW: { icon: <LucideIcon name="Eye" /> },
+const ACTION_CONFIG: Record<
+	ProButtonAction,
+	{ iconName: ILucideIconType; danger?: boolean }
+> = {
+	DELETE: { iconName: 'Trash2', danger: true },
+	EDIT: { iconName: 'SquarePen' },
+	VIEW: { iconName: 'Eye' },
 };
 
-type IProButtonProps = ButtonProps & {
+export type ProButtonProps = ButtonProps & {
 	action?: ProButtonAction;
+	iconName?: ILucideIconType;
 };
 
 export const ProButton = ({
 	action,
+	iconName,
+	icon,
 	...rest
-}: IProButtonProps) => {
+}: ProButtonProps) => {
 	const config = action ? ACTION_CONFIG[action] : undefined;
+	const resolvedIconName = iconName ?? config?.iconName;
+	const resolvedIcon =
+		icon ??
+		(resolvedIconName ? <LucideIcon size={16} name={resolvedIconName} /> : undefined);
 
 	return (
 		<Button
-      type="text"
-      {...config}
+			danger={config?.danger}
 			{...rest}
+			icon={resolvedIcon}
 		/>
 	);
 };

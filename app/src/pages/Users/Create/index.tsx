@@ -1,9 +1,9 @@
-import { useState } from 'react';
-import { Button, Form, Input, Modal } from 'antd';
-import { Plus } from 'lucide-react';
+import { ProButton, ProForm, ProModal } from '@/components';
 import { useAPI } from '@/hooks';
 import { API } from '@/libs';
 import { ICreateUserRequestType } from '@api/core/users/types';
+import { Form, Input } from 'antd';
+import { useState } from 'react';
 
 type IPropsType = {
 	fetch: () => void;
@@ -12,6 +12,7 @@ type IPropsType = {
 export const CreateUser = ({ fetch }: IPropsType) => {
 	const [open, setOpen] = useState(false);
 	const [form] = Form.useForm<ICreateUserRequestType>();
+	const initial = { name: '', email: '', password: '' };
 
 	const { fetch: createUser, loading } = useAPI({
 		fetcher: API.users.post,
@@ -25,37 +26,32 @@ export const CreateUser = ({ fetch }: IPropsType) => {
 		},
 	});
 
-	const handleSubmit = async () => {
-		const values = await form.validateFields();
-		await createUser(values);
-	};
-
 	return (
 		<>
-			<Button
+			<ProButton
 				type="primary"
-				icon={<Plus size={14} />}
+				iconName="Plus"
 				onClick={() => setOpen(true)}
 			>
 				Create User
-			</Button>
-			<Modal
+			</ProButton>
+			<ProModal
 				title="Create User"
 				open={open}
-				onOk={handleSubmit}
 				onCancel={() => setOpen(false)}
-				confirmLoading={loading}
-				okText="Create"
-				destroyOnHidden
-				centered
+				footer={null}
 			>
-				<Form form={form} layout="vertical" preserve={false}>
+				<ProForm
+					form={form}
+					initial={initial}
+					onCancel={() => setOpen(false)}
+					onSubmit={createUser}
+					submitButton={{ loading, children: "Create", iconName: "Plus" }}
+				>
 					<Form.Item
 						name="name"
 						label="Name"
-						rules={[
-							{ required: true, message: 'Name is required' },
-						]}
+						rules={[{ required: true, message: "Name is required" }]}
 					>
 						<Input placeholder="Jane Doe" />
 					</Form.Item>
@@ -63,8 +59,8 @@ export const CreateUser = ({ fetch }: IPropsType) => {
 						name="email"
 						label="Email"
 						rules={[
-							{ required: true, message: 'Email is required' },
-							{ type: 'email', message: 'Invalid email' },
+							{ required: true, message: "Email is required" },
+							{ type: "email", message: "Invalid email" },
 						]}
 					>
 						<Input placeholder="jane@example.com" />
@@ -73,14 +69,14 @@ export const CreateUser = ({ fetch }: IPropsType) => {
 						name="password"
 						label="Password"
 						rules={[
-							{ required: true, message: 'Password is required' },
-							{ min: 8, message: 'At least 8 characters' },
+							{ required: true, message: "Password is required" },
+							{ min: 8, message: "At least 8 characters" },
 						]}
 					>
 						<Input.Password placeholder="••••••••" />
 					</Form.Item>
-				</Form>
-			</Modal>
+				</ProForm>
+			</ProModal>
 		</>
 	);
 };

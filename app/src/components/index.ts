@@ -3,4 +3,3 @@ export * from "./navigation";
 export * from "./data";
 export * from "./primitives";
 export * from "./pro";
-export * from "./Form";

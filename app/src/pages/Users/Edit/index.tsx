@@ -1,4 +1,4 @@
-import { ProButton, FormActions, ProModal } from '@/components';
+import { ProButton, ProForm, ProModal } from '@/components';
 import { useAPI } from '@/hooks';
 import type { UseAPIItem } from '@/hooks/useAPI';
 import { API } from '@/libs';
@@ -35,16 +35,19 @@ export const EditUser = ({ item, onEdited }: IPropsType) => {
 
 	return (
 		<>
-			<ProButton action="EDIT" onClick={handleOpen} />
+			<ProButton type="text" action="EDIT" onClick={handleOpen} />
 			<ProModal
 				title={`Edit user "${item.name}"`}
 				open={open}
 				onCancel={() => setOpen(false)}
 				footer={null}
 			>
-				<Form
+				<ProForm
 					form={form}
-					layout="vertical"
+					initial={initial}
+					onCancel={() => setOpen(false)}
+					onSubmit={updateUser}
+					submitButton={{ loading }}
 				>
 					<Form.Item
 						name="name"
@@ -65,14 +68,7 @@ export const EditUser = ({ item, onEdited }: IPropsType) => {
 					>
 						<Input />
 					</Form.Item>
-				</Form>
-				<FormActions
-					form={form}
-					initial={initial}
-					loading={loading}
-					onCancel={() => setOpen(false)}
-					onSubmit={updateUser}
-				/>
+				</ProForm>
 			</ProModal>
 		</>
 	);

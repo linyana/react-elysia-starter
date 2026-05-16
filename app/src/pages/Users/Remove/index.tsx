@@ -47,6 +47,7 @@ export const RemoveUser = ({ fetch, items }: IPropsType) => {
 	return (
 		<>
 			<ProButton
+				type="text"
 				action="DELETE"
 				onClick={() => {
 					setOpen(true);
