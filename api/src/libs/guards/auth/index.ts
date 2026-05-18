@@ -1,5 +1,6 @@
 import { Elysia } from 'elysia';
 import { jwt } from '@elysiajs/jwt';
+import { ENV } from '@/libs/env';
 import { JWT_NAME, TokenClaimsSchema, type IAuthType } from './types';
 
 export * from './types';
@@ -7,7 +8,7 @@ export * from './types';
 export const jwtPlugin = new Elysia({ name: 'libs/jwt' }).use(
 	jwt({
 		name: JWT_NAME,
-		secret: process.env.JWT_SECRET ?? 'dev-only-change-me',
+		secret: ENV.JWT_SECRET,
 		exp: '7d',
 		schema: TokenClaimsSchema,
 	}),
