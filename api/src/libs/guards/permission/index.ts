@@ -1,42 +1,21 @@
-import { Elysia } from 'elysia';
-import type { IAuthType } from '../auth';
-import {
-	PERMISSION_WILDCARD,
-	type IPermission,
-	type IPermissionResult,
-} from './types';
+import { Elysia } from "elysia";
+import type { IAuthType } from "../auth";
+import { PERMISSION_WILDCARD, type IPermission } from "./types";
+import { AppError } from "@/utils";
 
-export * from './types';
-
-const checkPermission = (
-	auth: IAuthType | undefined,
-	required: IPermission | IPermission[],
-): IPermissionResult => {
-	if (!auth) return { ok: false, status: 401, message: 'Unauthenticated' };
-	if (auth.permissions.includes(PERMISSION_WILDCARD)) return { ok: true };
-	const need = Array.isArray(required) ? required : [required];
-	const lacking = need.filter((p) => !auth.permissions.includes(p));
-	if (lacking.length) {
-		return {
-			ok: false,
-			status: 403,
-			message: `Missing permission: ${lacking.join(', ')}`,
-		};
-	}
-	return { ok: true };
-};
+export * from "./types";
 
 export const permissionGuard = new Elysia({
-	name: 'libs/guards/permission',
-}).macro('permissions', (required: IPermission | IPermission[]) => ({
-	// contract: routes using `hasPermission` must also enable `auth` so that
-	// `auth` has been resolved into context by the time this hook runs.
+	name: "libs/guards/permission",
+}).macro("permissions", (required: IPermission | IPermission[]) => ({
 	resolve: (ctx) => {
 		const { auth } = ctx as typeof ctx & { auth?: IAuthType };
-		const result = checkPermission(auth, required);
-		if (!result.ok) {
-			ctx.set.status = result.status;
-			throw new Error(result.message);
+		if (!auth) throw new AppError("Unauthenticated", 401);
+		if (auth.permissions.includes(PERMISSION_WILDCARD)) return {};
+		const need = Array.isArray(required) ? required : [required];
+		const lacking = need.filter((p) => !auth.permissions.includes(p));
+		if (lacking.length) {
+			throw new AppError(`Missing permission: ${lacking.join(", ")}`, 403);
 		}
 		return {};
 	},

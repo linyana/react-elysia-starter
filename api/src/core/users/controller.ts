@@ -33,8 +33,15 @@ export const userController = new Elysia({ prefix: "/users", tags: ["Users"] })
 			userService.updateUser({ id: Number(params.id), body, auth }),
 		EditUserSchema,
 	)
-	.delete("/", ({ body, auth }) => userService.deleteUser({ ids: body.ids, auth }), {
-		body: t.Object({
-			ids: t.Array(t.String()),
-		}),
-	});
+	.delete(
+		"/",
+		async ({ body, auth }) => {
+			await userService.deleteUser({ ids: body.ids, auth });
+			return "Successfully removed";
+		},
+		{
+			body: t.Object({
+				ids: t.Array(t.String()),
+			}),
+		},
+	);

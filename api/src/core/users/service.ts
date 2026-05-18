@@ -103,10 +103,10 @@ class UserService {
 		});
 	}
 
-	deleteUser({ ids, auth }: { ids: string[]; auth: IAuthType }) {
+	async deleteUser({ ids, auth }: { ids: string[]; auth: IAuthType }) {
 		const { tenantId } = auth;
 
-		return prisma.users.deleteMany({
+		await prisma.users.deleteMany({
 			where: {
 				tenantId,
 				id: {
