@@ -31,20 +31,20 @@ You'll see an interactive prompt:
 ```
 Agent Rules Setup
 
-Select the AI tools you use (comma-separated):
+Select the AI tools you use:
 
-  1. Claude Code  (rules, skills)
-  2. Cursor  (rules)
-  3. Windsurf  (rules)
-  4. Cline  (rules)
-  5. Continue  (rules)
-  6. Augment  (rules)
-  7. Trae  (rules, skills)
+> [ ] Claude Code  (rules, skills)
+  [ ] Cursor  (rules)
+  [ ] Windsurf  (rules)
+  [ ] Cline  (rules)
+  [ ] Continue  (rules)
+  [ ] Augment  (rules)
+  [ ] Trae  (rules, skills)
 
-> 1,2
+Up/Down: move   Space: toggle   A: toggle all   Enter: confirm   Esc: cancel
 ```
 
-The script creates directory junctions (Windows) or symlinks (Unix) from each tool's config directory to the shared `.agents/` source. Your selection is saved to `.agents/config.json` so subsequent `bun install` runs are automatic.
+Use the keyboard to select one or more tools. The script creates directory junctions (Windows) or symlinks (Unix) from each tool's config directory to the shared `.agents/` source. Your selection is saved to `.agents/config.json`; if it does not include every platform currently defined in the setup script, the next interactive run lets you continue selecting from the existing choices.
 
 ### `.agents/` structure
 

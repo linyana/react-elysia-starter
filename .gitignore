@@ -29,5 +29,6 @@ bun.lock
 .trae
 .agents/config.json
 .turbo
+.codex
 
 tsconfig.tsbuildinfo
