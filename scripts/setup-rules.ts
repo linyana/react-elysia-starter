@@ -2,7 +2,7 @@ import { existsSync, lstatSync } from 'fs';
 import { join } from 'path';
 
 const root = join(import.meta.dirname, '..');
-const source = join(root, '.agent', 'rules');
+const source = join(root, '.agents', 'rules');
 const targets = [
 	join(root, '.claude', 'rules'),
 	join(root, '.cursor', 'rules'),
