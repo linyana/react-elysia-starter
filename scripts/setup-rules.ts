@@ -2,8 +2,11 @@ import { existsSync, lstatSync } from 'fs';
 import { join } from 'path';
 
 const root = join(import.meta.dirname, '..');
-const source = join(root, '.claude', 'rules');
-const targets = [join(root, '.cursor', 'rules')];
+const source = join(root, '.agent', 'rules');
+const targets = [
+	join(root, '.claude', 'rules'),
+	join(root, '.cursor', 'rules'),
+];
 
 for (const target of targets) {
 	if (existsSync(target)) {

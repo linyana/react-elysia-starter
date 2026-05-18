@@ -19,8 +19,8 @@ dist
 
 bun.lock
 
-.claude/settings.*
-.cursor/rules
+.claude
+.cursor
 .turbo
 
 tsconfig.tsbuildinfo
