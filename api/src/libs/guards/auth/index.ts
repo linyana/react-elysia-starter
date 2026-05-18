@@ -1,6 +1,6 @@
 import { Elysia } from 'elysia';
 import { jwt } from '@elysiajs/jwt';
-import { JWT_NAME, TokenClaimsSchema, type ITokenClaims } from './types';
+import { JWT_NAME, TokenClaimsSchema, type IAuthType } from './types';
 
 export * from './types';
 
@@ -16,7 +16,7 @@ export const jwtPlugin = new Elysia({ name: 'libs/jwt' }).use(
 const getBearer = (header: string | null | undefined) =>
 	header?.startsWith('Bearer ') ? header.slice(7) : undefined;
 
-const toClaims = (payload: Record<string, unknown>): ITokenClaims => ({
+const toClaims = (payload: Record<string, unknown>): IAuthType => ({
 	userId: payload.userId as number,
 	tenantId: payload.tenantId as number,
 	email: payload.email as string,

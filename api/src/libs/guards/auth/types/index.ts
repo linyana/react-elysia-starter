@@ -11,4 +11,4 @@ export const TokenClaimsSchema = t.Object({
 	permissions: t.Array(t.String()),
 });
 
-export type ITokenClaims = typeof TokenClaimsSchema.static;
+export type IAuthType = typeof TokenClaimsSchema.static;

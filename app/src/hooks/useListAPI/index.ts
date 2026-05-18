@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react';
-import type { IFilterType, IPaginationType } from '@api/types';
+import { useEffect, useState } from "react";
+import type { IFilterType, IPaginationType } from "@api/types";
 import {
 	useAPI,
 	type UseAPIData,
 	type UseAPIItem,
 	type UseAPIListShape,
 	type UseAPIOptions,
-} from '../useAPI';
+} from "../useAPI";
 
 type AnyEdenFn = (...args: any[]) => Promise<{ data: any; error: any }>;
 
@@ -27,6 +27,8 @@ export const useListAPI = <TFn extends AnyEdenFn>({
 	const [filter, setFilter] = useState<IFilterType>({
 		offset: 0,
 		limit: DEFAULT_LIMIT,
+		orderBy: "desc",
+		sortBy: "created_at",
 		...initialFilter,
 	});
 

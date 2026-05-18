@@ -2,7 +2,6 @@ import { Elysia } from 'elysia';
 import { cors } from '@elysiajs/cors';
 import {
 	authController,
-	projectController,
 	tenantController,
 	userController,
 } from './core';
@@ -37,7 +36,6 @@ const app = new Elysia({
 	.use(authController)
 	.use(tenantController)
 	.use(userController)
-	.use(projectController)
 	.listen(3000);
 
 export type App = typeof app;

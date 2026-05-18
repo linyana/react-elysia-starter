@@ -2,40 +2,38 @@ import { Elysia, t } from "elysia";
 import { userService } from "./service";
 import { CreateUserSchema, UpdateUserSchema } from "./types";
 import { guardsPlugin } from "../../libs";
+import { UserListSchema } from "./types";
 
 export const userController = new Elysia({ prefix: "/users", tags: ["Users"] })
 	.use(guardsPlugin)
 	.guard({ auth: true })
 	.get(
 		"/",
-		({ query }) =>
+		({ query, auth }) =>
 			userService.getUsers({
-				tenantId: query.tenantId,
-				offset: query.offset,
-				limit: query.limit,
-				keyword: query.keyword,
+				query,
+				auth,
 			}),
-		{
-			query: t.Object({
-				tenantId: t.Optional(t.Numeric()),
-				offset: t.Optional(t.Numeric()),
-				limit: t.Optional(t.Numeric()),
-				keyword: t.Optional(t.String()),
-			}),
-		},
+		UserListSchema,
 	)
-	.get("/:id", ({ params }) => userService.getUser(Number(params.id)))
+	.get("/:id", ({ params, auth }) =>
+		userService.getUser({
+			id: Number(params.id),
+			auth,
+		}),
+	)
 	.post(
 		"/",
-		({ body, auth }) => userService.createUser(body, auth.tenantId),
+		({ body, auth }) => userService.createUser({ body, auth }),
 		CreateUserSchema,
 	)
 	.patch(
 		"/:id",
-		({ params, body }) => userService.updateUser(Number(params.id), body),
+		({ params, body, auth }) =>
+			userService.updateUser({ id: Number(params.id), body, auth }),
 		UpdateUserSchema,
 	)
-	.delete("/", ({ body }) => userService.deleteUser(body.ids), {
+	.delete("/", ({ body, auth }) => userService.deleteUser({ ids: body.ids, auth }), {
 		body: t.Object({
 			ids: t.Array(t.String()),
 		}),

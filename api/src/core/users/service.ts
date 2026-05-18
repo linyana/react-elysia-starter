@@ -1,34 +1,31 @@
 import { Prisma } from "@prisma/client";
-import { prisma } from "../../libs";
-import type { IListResponseType } from "../../types";
-import { ICreateUserRequestType, IUpdateUserRequestType } from "./types";
+import { IAuthType, prisma } from "../../libs";
+import {
+	ICreateUserRequestType,
+	IUpdateUserRequestType,
+	IUserListRequestType,
+} from "./types";
 
-const publicFields = {
+const SELECTED_FIELDS: Prisma.usersSelect = {
 	id: true,
 	createdAt: true,
 	updatedAt: true,
 	email: true,
 	name: true,
-} as const;
-
-type IGetUsersParams = {
-	tenantId?: number;
-	offset?: number;
-	limit?: number;
-	keyword?: string;
 };
-
-type IUserRecord = Prisma.usersGetPayload<{ select: typeof publicFields }>;
 
 class UserService {
 	async getUsers({
-		tenantId,
-		offset = 0,
-		limit = 10,
-		keyword,
-	}: IGetUsersParams = {}): Promise<IListResponseType<IUserRecord>> {
+		auth,
+		query,
+	}: {
+		auth: IAuthType;
+		query: IUserListRequestType;
+	}) {
+		const { offset = 0, limit = 10, keyword } = query;
+
 		const where: Prisma.usersWhereInput = {
-			...(tenantId ? { tenantId } : {}),
+			tenantId: auth.tenantId,
 			...(keyword
 				? {
 						OR: [
@@ -53,7 +50,7 @@ class UserService {
 			prisma.users.findMany({
 				where,
 				orderBy: { updatedAt: "desc" },
-				select: publicFields,
+				select: SELECTED_FIELDS,
 				skip: offset,
 				take: limit,
 			}),
@@ -63,32 +60,55 @@ class UserService {
 		return { items, totalCount };
 	}
 
-	getUser(id: number) {
+	async getUser({ id, auth }: { id: number; auth: IAuthType }) {
+		const { tenantId } = auth;
+
 		return prisma.users.findUniqueOrThrow({
-			where: { id },
-			select: publicFields,
+			where: { id, tenantId },
+			select: SELECTED_FIELDS,
 		});
 	}
 
-	async createUser(data: ICreateUserRequestType, tenantId: number) {
-		const password = await Bun.password.hash(data.password);
+	async createUser({
+		body,
+		auth,
+	}: {
+		body: ICreateUserRequestType;
+		auth: IAuthType;
+	}) {
+		const { tenantId } = auth;
+
+		const password = await Bun.password.hash(body.password);
 		return prisma.users.create({
-			data: { ...data, password, tenantId },
-			select: publicFields,
+			data: { ...body, password, tenantId },
+			select: SELECTED_FIELDS,
 		});
 	}
 
-	updateUser(id: number, data: IUpdateUserRequestType) {
+	updateUser({
+		id,
+		body,
+		auth,
+	}: {
+		id: number;
+		body: IUpdateUserRequestType;
+		auth: IAuthType;
+	}) {
+		const { tenantId } = auth;
+
 		return prisma.users.update({
-			where: { id },
-			data,
-			select: publicFields,
+			where: { id, tenantId },
+			data: body,
+			select: SELECTED_FIELDS,
 		});
 	}
 
-	deleteUser(ids: string[]) {
+	deleteUser({ ids, auth }: { ids: string[]; auth: IAuthType }) {
+		const { tenantId } = auth;
+
 		return prisma.users.deleteMany({
 			where: {
+				tenantId,
 				id: {
 					in: ids.map((id) => Number(id)),
 				},
