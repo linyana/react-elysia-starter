@@ -2,7 +2,7 @@ import { ProButton, ProForm, ProModal } from '@/components';
 import { useAPI } from '@/hooks';
 import type { UseAPIItem } from '@/hooks/useAPI';
 import { API } from '@/libs';
-import type { IUpdateUserRequestType } from '@api/core/users/types';
+import type { IEditUserRequestType } from '@api/core/users/types';
 import { Form, Input } from 'antd';
 import { useState } from 'react';
 
@@ -13,11 +13,11 @@ type IPropsType = {
 
 export const EditUser = ({ item, onEdited }: IPropsType) => {
 	const [open, setOpen] = useState(false);
-	const [form] = Form.useForm<IUpdateUserRequestType>();
+	const [form] = Form.useForm<IEditUserRequestType>();
 	const initial = { name: item.name, email: item.email };
 
 	const { fetch: updateUser, loading } = useAPI({
-		fetcher: (body: IUpdateUserRequestType) =>
+		fetcher: (body: IEditUserRequestType) =>
 			API.users({ id: String(item.id) }).patch(body),
 		success: {
 			message: 'User updated',

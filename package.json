@@ -8,7 +8,8 @@
 		"api"
 	],
 	"scripts": {
-		"dev": "vp run -r dev",
+		"dev": "bun scripts/dev.ts",
+		"dev:vp": "vp run -r dev",
 		"build": "vp run -r build",
 		"build:app": "vp run -F @project-name/app build",
 		"build:api": "vp run -F @project-name/api build",
@@ -19,7 +20,8 @@
 		"lint": "vp lint",
 		"format": "vp fmt",
 		"format:check": "vp fmt --check",
-		"check": "vp check"
+		"check": "vp check",
+		"postinstall": "bun scripts/setup-rules.ts"
 	},
 	"devDependencies": {
 		"@types/node": "^25.5.0",

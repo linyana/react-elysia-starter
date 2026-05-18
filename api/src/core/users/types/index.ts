@@ -1,3 +1,3 @@
 export * from './create';
-export * from './update';
+export * from './edit';
 export * from './list';

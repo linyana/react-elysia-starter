@@ -20,6 +20,20 @@ export default defineConfig({
 		],
 		overrides: [
 			{
+				files: ['api/src/**/*.ts', 'api/src/**/*.tsx'],
+				rules: {
+					'no-restricted-properties': [
+						'error',
+						{
+							object: 'process',
+							property: 'env',
+							message:
+								'Direct process.env access is forbidden. Use ENV from @/libs/env instead.',
+						},
+					],
+				},
+			},
+			{
 				files: ['app/src/**/*.ts', 'app/src/**/*.tsx'],
 				rules: {
 					'no-restricted-imports': [

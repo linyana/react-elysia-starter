@@ -1,5 +1,5 @@
 import { prisma } from '../../libs';
-import { ITokenClaims } from '../../libs';
+import { IAuthType } from '../../libs';
 import { ILoginRequestType, IRegisterRequestType } from './types';
 
 class AuthService {
@@ -34,7 +34,7 @@ class AuthService {
 		return this.buildClaims(user.id);
 	}
 
-	async me(claims: ITokenClaims) {
+	async me(claims: IAuthType) {
 		const user = await prisma.users.findUnique({
 			where: { id: claims.userId },
 			include: { tenant: true },
@@ -57,7 +57,7 @@ class AuthService {
 		};
 	}
 
-	private async buildClaims(userId: number): Promise<ITokenClaims> {
+	private async buildClaims(userId: number): Promise<IAuthType> {
 		const user = await prisma.users.findUniqueOrThrow({
 			where: { id: userId },
 			include: { tenant: true },

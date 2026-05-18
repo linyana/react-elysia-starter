@@ -1,5 +1,5 @@
 import { Elysia } from 'elysia';
-import type { ITokenClaims } from '../auth';
+import type { IAuthType } from '../auth';
 import {
 	PERMISSION_WILDCARD,
 	type IPermission,
@@ -9,7 +9,7 @@ import {
 export * from './types';
 
 const checkPermission = (
-	auth: ITokenClaims | undefined,
+	auth: IAuthType | undefined,
 	required: IPermission | IPermission[],
 ): IPermissionResult => {
 	if (!auth) return { ok: false, status: 401, message: 'Unauthenticated' };
@@ -32,7 +32,7 @@ export const permissionGuard = new Elysia({
 	// contract: routes using `hasPermission` must also enable `auth` so that
 	// `auth` has been resolved into context by the time this hook runs.
 	resolve: (ctx) => {
-		const { auth } = ctx as typeof ctx & { auth?: ITokenClaims };
+		const { auth } = ctx as typeof ctx & { auth?: IAuthType };
 		const result = checkPermission(auth, required);
 		if (!result.ok) {
 			ctx.set.status = result.status;

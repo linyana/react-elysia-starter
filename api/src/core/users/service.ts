@@ -2,7 +2,7 @@ import { Prisma } from "@prisma/client";
 import { IAuthType, prisma } from "../../libs";
 import {
 	ICreateUserRequestType,
-	IUpdateUserRequestType,
+	IEditUserRequestType,
 	IUserListRequestType,
 } from "./types";
 
@@ -91,7 +91,7 @@ class UserService {
 		auth,
 	}: {
 		id: number;
-		body: IUpdateUserRequestType;
+		body: IEditUserRequestType;
 		auth: IAuthType;
 	}) {
 		const { tenantId } = auth;
