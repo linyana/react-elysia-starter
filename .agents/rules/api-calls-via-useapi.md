@@ -5,18 +5,18 @@ globs: app/src/**/*.{ts,tsx}
 
 # All API calls must go through `useAPI`
 
-前端所有 HTTP 请求必须经 `useAPI` hook，不允许：
+Every frontend HTTP request must use the `useAPI` hook. The following are forbidden:
 
-- 直接调用 `API.xxx.yyy.post(...)` / `.get(...)`（`libs/api.ts` 定义处除外）
-- 引入 `fetch`、`axios` 或任何其他 HTTP 客户端
-- 自建绕过 `useAPI` 的 wrapper
+- Calling `API.xxx.yyy.post(...)` / `.get(...)` directly (except in the `libs/api.ts` definition itself)
+- Introducing `fetch`, `axios`, or any other HTTP client
+- Writing ad-hoc wrappers that bypass `useAPI`
 
-`useAPI` 是 loading toast / 统一错误提示 / 竞态取消 / 类型推断的唯一执行点。
+`useAPI` is the single enforcement point for loading toasts, unified error messages, race-condition prevention (request IDs), and end-to-end type inference.
 
-组合多个请求时，在领域 hook（如 `useAuth`）里声明多个 `useAPI` 实例，通过 `fetchData()` 返回值串联：
+When composing multiple requests, declare multiple `useAPI` instances in a domain hook (e.g. `useAuth`) and chain them via the `fetchData()` return value:
 
 ```ts
-// ✅ 在领域 hook 里组合
+// ✅ compose in a domain hook
 const loginApi = useAPI(API.auth.login.post, { success: { message: null } });
 const meApi = useAPI(API.auth.me.get, { showLoading: false, error: { message: null } });
 
@@ -29,8 +29,8 @@ const login = async (creds) => {
   actions.set({ user: meRes.user });
 };
 
-// ❌ 裸调用
+// ❌ raw call
 const { data } = await API.auth.login.post(creds);
 ```
 
-不要建 `services/xxx.ts` 只为转发 `useAPI(API.x.y.z)`。只在需要真正组合、状态、副作用时才加一层。
+Do not create a `services/xxx.ts` layer just to forward `useAPI(API.x.y.z)`. Only add a layer when it does real work (composition, state, side-effects).

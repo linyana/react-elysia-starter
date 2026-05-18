@@ -29,6 +29,9 @@ cd api && bun run prisma:generate  # Regenerate Prisma client after schema chang
 # Lint (from root, oxlint)
 bun run lint
 
+# AI tool integration (syncs .agents/ rules & skills to your editor)
+bun run setup
+
 # Infrastructure (PostgreSQL on 5432, Redis on 6379)
 docker compose up -d
 ```

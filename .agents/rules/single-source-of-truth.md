@@ -5,15 +5,15 @@ globs:
 
 # Single Source of Truth
 
-所有类型、常量、配置只声明一次。
+Every type, constant, and config must be declared exactly once.
 
-- 前后端都需要的定义放在后端（`api/`），前端通过 `@api/*` 别名导入。
-- 禁止跨包复制类型或常量。如果前端需要后端的类型，`import type` from `@api/...`。
-- 环境变量集中在 `api/src/libs/env/index.ts`（`ENV` 对象），禁止直接 `process.env`。
-  - 必填变量加入 `REQUIRED_KEYS`（缺失时启动崩溃）。
-  - 可选变量加入 `OPTIONAL_KEYS`（带默认值）。
-  - `env/index.ts` 内部使用 `Bun.env`，这是唯一允许接触原始环境变量的文件。
-  - 由 oxlint `no-restricted-properties` 规则强制执行，lint 和 build 均会拦截。
+- Definitions needed by both frontend and backend live in the backend (`api/`). The frontend imports them via the `@api/*` alias.
+- Never duplicate types or constants across packages. If the frontend needs a backend type, use `import type` from `@api/...`.
+- Environment variables are centralized in `api/src/libs/env/index.ts` (the `ENV` object). Direct `process.env` access is forbidden.
+  - Required variables go in `REQUIRED_KEYS` — the server crashes on startup if any are missing.
+  - Optional variables (with defaults) go in `OPTIONAL_KEYS`.
+  - `env/index.ts` uses `Bun.env` internally; it is the only file allowed to touch raw env access.
+  - Enforced by the oxlint `no-restricted-properties` rule — lint and build will both reject `process.env`.
 
 ```ts
 // ✅
