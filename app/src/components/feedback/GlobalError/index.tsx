@@ -15,28 +15,28 @@ interface ErrorConfig {
 
 const ERROR_CONFIG: Record<ErrorStatus, ErrorConfig> = {
 	401: {
-		title: 'Authentication Required',
-		subTitle: 'Your session has expired or you are not logged in. Please sign in to continue.',
+		title: 'Please Sign In',
+		subTitle: 'You need to be logged in to view this page.',
 		actions: 'login',
 	},
 	403: {
-		title: 'Access Denied',
-		subTitle: "You don't have permission to access this page. Contact your administrator if you believe this is a mistake.",
+		title: 'No Access',
+		subTitle: "You don't have permission for this page.",
 		actions: 'home',
 	},
 	404: {
 		title: 'Page Not Found',
-		subTitle: "The page you're looking for doesn't exist or has been moved.",
+		subTitle: "	This page doesn't exist or has been moved.",
 		actions: 'home',
 	},
 	500: {
-		title: 'Something Went Wrong',
-		subTitle: 'An unexpected error occurred on our end. Please try again later.',
+		title: 'Server Error',
+		subTitle: 'Something went wrong. Try refreshing or come back later.',
 		actions: 'retry',
 	},
 	502: {
 		title: 'Service Upgrading',
-		subTitle: "We're performing scheduled maintenance. Please check back in a few minutes.",
+		subTitle: "We're upgrading. This usually takes a few minutes.",
 		actions: 'retry',
 	},
 };
