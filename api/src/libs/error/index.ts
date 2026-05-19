@@ -11,7 +11,7 @@ const PRISMA_MESSAGE: Record<string, string> = {
 export const onError: ErrorHandler = ({ code, error, set, path }) => {
 	if (error instanceof AppError) {
 		set.status = error.status;
-		console.error("\x1b[33m[BIZ]\x1b[0m", path, error.message);
+		console.error("\x1b[33m[APP ERROR]\x1b[0m", path, error.message);
 		return { message: error.message };
 	}
 
