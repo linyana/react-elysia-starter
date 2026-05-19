@@ -4,7 +4,6 @@ export const RegisterSchema = {
 	body: t.Object({
 		tenant: t.Object({
 			name: t.String({ minLength: 1 }),
-			slug: t.String({ minLength: 1, pattern: '^[a-z0-9-]+$' }),
 		}),
 		user: t.Object({
 			email: t.String({ format: 'email' }),
