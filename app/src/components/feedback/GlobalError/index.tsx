@@ -35,7 +35,7 @@ const ERROR_CONFIG: Record<ErrorStatus, ErrorConfig> = {
 		actions: 'retry',
 	},
 	502: {
-		title: 'Service Upgrading',
+		title: 'Under Maintenance',
 		subTitle: "We're upgrading. This usually takes a few minutes.",
 		actions: 'retry',
 	},
