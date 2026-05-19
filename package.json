@@ -9,20 +9,16 @@
 	],
 	"scripts": {
 		"dev": "bun scripts/dev.ts",
-		"dev:vp": "vp run -r dev",
+		"setup": "bun scripts/setup.ts",
 		"build": "vp run -r build",
+		"type-check": "vp run -r type-check",
+		"check": "vp check scripts app api",
+		"check:fix": "vp check --fix app scripts api",
 		"build:app": "vp run -F @project-name/app build",
 		"build:api": "vp run -F @project-name/api build",
 		"prisma:push": "vp run -F @project-name/api prisma:push",
 		"prisma:generate": "vp run -F @project-name/api prisma:generate",
-		"prisma:seed": "vp run -F @project-name/api prisma:seed",
-		"type-check": "vp run -r type-check",
-		"lint": "vp lint",
-		"format": "vp fmt",
-		"format:check": "vp fmt --check",
-		"check": "vp check scripts app api",
-		"check:fix": "vp check --fix app scripts api",
-		"setup": "bun scripts/setup.ts"
+		"prisma:seed": "vp run -F @project-name/api prisma:seed"
 	},
 	"devDependencies": {
 		"@types/node": "^25.8.0",
