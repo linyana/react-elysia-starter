@@ -4,7 +4,7 @@ import { useAPI } from '@/hooks/useAPI';
 import { useGlobal } from '@/hooks/useGlobal';
 import { useMessage } from '@/hooks/useMessage';
 import { API } from '@/libs';
-import { GlobalLoading } from '@/components';
+import { ErrorPage, GlobalLoading } from '@/components';
 import type { IRouteAccessType, IRouteType } from '@/types';
 
 const CONFIG = {
@@ -51,6 +51,7 @@ export const AuthProvider: React.FC<{
 	const { token, actions } = useGlobal();
 
 	const [status, setStatus] = useState<IStatusType>('WAITING');
+	const [httpError, setHttpError] = useState<number>(500);
 
 	const mode = resolveMode(location.pathname);
 	const current = CONFIG[mode];
@@ -73,6 +74,7 @@ export const AuthProvider: React.FC<{
 				if (httpStatus === 401) {
 					actions.set({ [current.tokenKey]: '', user: null });
 				} else {
+					setHttpError(httpStatus ?? 500);
 					setStatus('ERROR');
 				}
 			},
@@ -124,7 +126,7 @@ export const AuthProvider: React.FC<{
 
 	if (access === 'PUBLIC') return wrap(children);
 
-	if (status === 'ERROR') return <div>Something went wrong</div>;
+	if (status === 'ERROR') return <ErrorPage status={httpError} />;
 
 	if (!['AUTHENTICATED', 'UNAUTHENTICATED'].includes(status))
 		return <GlobalLoading />;

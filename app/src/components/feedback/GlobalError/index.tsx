@@ -1,56 +1,95 @@
-import { Result, Button, Space } from 'antd';
+import { Button, Space, Typography } from 'antd';
 import { useNavigate, useRouteError } from 'react-router-dom';
-import React from 'react';
-import type { ResultStatusType } from 'antd/es/result';
+import { motion } from 'framer-motion';
 import { Layout } from '@/providers';
 import { useGlobal } from '@/hooks';
+import { errorIllustrations } from './illustrations';
 
-interface ErrorResultProps {
-	status: ResultStatusType;
+type ErrorStatus = keyof typeof errorIllustrations;
+
+interface ErrorConfig {
 	title: string;
-	subTitle?: string;
-	extra?: React.ReactNode;
+	subTitle: string;
+	actions: 'login' | 'home' | 'retry';
 }
 
-export const GlobalError: React.FC<ErrorResultProps> = ({
-	status,
-	title,
-	subTitle,
-	extra,
-}) => {
+const ERROR_CONFIG: Record<ErrorStatus, ErrorConfig> = {
+	401: {
+		title: 'Authentication Required',
+		subTitle: 'Your session has expired or you are not logged in. Please sign in to continue.',
+		actions: 'login',
+	},
+	403: {
+		title: 'Access Denied',
+		subTitle: "You don't have permission to access this page. Contact your administrator if you believe this is a mistake.",
+		actions: 'home',
+	},
+	404: {
+		title: 'Page Not Found',
+		subTitle: "The page you're looking for doesn't exist or has been moved.",
+		actions: 'home',
+	},
+	500: {
+		title: 'Something Went Wrong',
+		subTitle: 'An unexpected error occurred on our end. Please try again later.',
+		actions: 'retry',
+	},
+	502: {
+		title: 'Service Upgrading',
+		subTitle: "We're performing scheduled maintenance. Please check back in a few minutes.",
+		actions: 'retry',
+	},
+};
+
+const resolveStatus = (status: number): ErrorStatus => {
+	if (status in ERROR_CONFIG) return status as ErrorStatus;
+	if (status >= 500) return 500;
+	if (status === 403) return 403;
+	if (status === 401) return 401;
+	return 404;
+};
+
+const Actions = ({ type }: { type: ErrorConfig['actions'] }) => {
 	const navigate = useNavigate();
 	const { actions } = useGlobal();
 
+	const goLogin = () => {
+		actions.reset();
+		navigate('/', { replace: true });
+	};
+
+	const goHome = () => navigate('/dashboard', { replace: true });
+	const goBack = () => navigate(-1);
+	const retry = () => window.location.reload();
+
+	if (type === 'login') {
+		return (
+			<Space size="middle">
+				<Button type="primary" onClick={goLogin}>
+					Sign In
+				</Button>
+			</Space>
+		);
+	}
+
+	if (type === 'retry') {
+		return (
+			<Space size="middle">
+				<Button onClick={goHome}>Back to Home</Button>
+				<Button type="primary" onClick={retry}>
+					Retry
+				</Button>
+			</Space>
+		);
+	}
+
 	return (
-		<Layout.Centered>
-			<Result
-				status={status}
-				title={title}
-				subTitle={subTitle}
-				extra={
-					extra || (
-						<Space orientation="horizontal" size="middle" wrap>
-							<Button
-								onClick={() => {
-									actions.reset();
-									navigate('/', {
-										replace: true,
-									});
-								}}
-							>
-								Back To Login
-							</Button>
-							<Button
-								type="primary"
-								onClick={() => window.location.reload()}
-							>
-								Try Again
-							</Button>
-						</Space>
-					)
-				}
-			/>
-		</Layout.Centered>
+		<Space size="middle">
+			<Button onClick={goBack}>Go Back</Button>
+			<Button type="primary" onClick={goHome}>
+				Back to Home
+			</Button>
+		</Space>
 	);
 };
 
@@ -61,73 +100,58 @@ export const ErrorPage = ({
 	status: number;
 	errorMessage?: string;
 }) => {
-	const navigate = useNavigate();
-	const { actions } = useGlobal();
+	const resolved = resolveStatus(status);
+	const config = ERROR_CONFIG[resolved];
+	const illustration = errorIllustrations[resolved];
 
-	switch (status) {
-		case 401:
-			return (
-				<GlobalError
-					status="403"
-					title="Authentication Required"
-					subTitle={
-						errorMessage ||
-						'Your session has expired. Please log in again.'
-					}
-					extra={
-						<Button
-							type="primary"
-							onClick={() => {
-								actions.reset();
-								navigate('/', {
-									replace: true,
-								});
-							}}
-						>
-							Log in to continue
-						</Button>
-					}
-				/>
-			);
-		case 403:
-			return (
-				<GlobalError
-					status="403"
-					title="Access Denied"
-					subTitle={
-						errorMessage ||
-						"You don't have permission to access this page."
-					}
-				/>
-			);
-		case 404:
-			return (
-				<GlobalError
-					status="404"
-					title="Page Not Found"
-					subTitle={
-						errorMessage ||
-						'The page you are looking for does not exist.'
-					}
-				/>
-			);
-		default:
-			return (
-				<GlobalError
-					status="500"
-					title="Error"
-					subTitle={
-						errorMessage ||
-						'An unexpected error occurred. Please try again or contact us.'
-					}
-				/>
-			);
-	}
+	return (
+		<Layout.Centered>
+			<motion.div
+				initial={{ opacity: 0, y: 24 }}
+				animate={{ opacity: 1, y: 0 }}
+				transition={{ duration: 0.4, ease: 'easeOut' }}
+				style={{
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+					gap: 16,
+					padding: '40px 24px',
+					maxWidth: 480,
+					textAlign: 'center',
+				}}
+			>
+				<img src={illustration} alt={config.title} width={580} height={380} />
+
+				<Typography.Title level={3} style={{ margin: '8px 0 0' }}>
+					{config.title}
+				</Typography.Title>
+
+				<Typography.Text type="secondary" style={{ fontSize: 15 }}>
+					{errorMessage || config.subTitle}
+				</Typography.Text>
+
+				<div style={{ marginTop: 8 }}>
+					<Actions type={config.actions} />
+				</div>
+			</motion.div>
+		</Layout.Centered>
+	);
 };
 
-export const RouteError: React.FC = () => {
-	const error: any = useRouteError();
-	const errorMessage = error.data || error.message || error.statusText;
+export const GlobalError = ErrorPage;
 
-	return <ErrorPage status={error.status} errorMessage={errorMessage} />;
+export const RouteError = () => {
+	const error = useRouteError() as {
+		status?: number;
+		data?: string;
+		message?: string;
+		statusText?: string;
+	};
+
+	return (
+		<ErrorPage
+			status={error.status ?? 500}
+			errorMessage={error.data || error.message || error.statusText}
+		/>
+	);
 };

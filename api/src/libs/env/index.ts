@@ -1,4 +1,4 @@
-import { AppError } from "@/utils";
+import { AppError } from "@/libs/error";
 
 const REQUIRED_KEYS = ["DATABASE_URL", "JWT_SECRET"] as const;
 

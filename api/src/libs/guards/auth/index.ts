@@ -2,7 +2,7 @@ import { Elysia } from "elysia";
 import { jwt } from "@elysiajs/jwt";
 import { ENV } from "@/libs/env";
 import { JWT_NAME, TokenClaimsSchema, type IAuthType } from "./types";
-import { AppError } from "@/utils";
+import { AppError } from "@/libs/error";
 
 export * from "./types";
 

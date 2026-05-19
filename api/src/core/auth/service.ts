@@ -1,7 +1,5 @@
-import { prisma } from "../../libs";
-import { IAuthType } from "../../libs";
+import { prisma, IAuthType, AppError } from "../../libs";
 import { ILoginRequestType, IRegisterRequestType } from "./types";
-import { AppError } from "../../utils";
 
 class AuthService {
 	async register({ tenant, user }: IRegisterRequestType) {

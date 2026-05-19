@@ -1,7 +1,7 @@
 import { Elysia } from "elysia";
 import type { IAuthType } from "../auth";
 import { PERMISSION_WILDCARD, type IPermission } from "./types";
-import { AppError } from "@/utils";
+import { AppError } from "@/libs/error";
 
 export * from "./types";
 

@@ -1,6 +1,13 @@
 import { Prisma } from "@prisma/client";
 import type { ErrorHandler } from "elysia";
-import { AppError } from "../../utils";
+
+export class AppError extends Error {
+	status: number;
+	constructor(message: string, status = 400) {
+		super(message);
+		this.status = status;
+	}
+}
 
 const PRISMA_MESSAGE: Record<string, string> = {
 	P2002: "Record already exists",
