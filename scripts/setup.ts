@@ -1,5 +1,11 @@
 import { spawnSync } from 'child_process';
-import { existsSync, lstatSync, mkdirSync, readFileSync, writeFileSync } from 'fs';
+import {
+	existsSync,
+	lstatSync,
+	mkdirSync,
+	readFileSync,
+	writeFileSync,
+} from 'fs';
 import { join } from 'path';
 import { clearScreenDown, cursorTo, emitKeypressEvents } from 'readline';
 

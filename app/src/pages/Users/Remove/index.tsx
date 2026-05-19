@@ -18,8 +18,8 @@ export const RemoveUser = ({ refreshList, items }: IPropsType) => {
 			}),
 		success: {
 			action: () => {
-				setOpen(false)
-				refreshList()
+				setOpen(false);
+				refreshList();
 			},
 		},
 	});
@@ -30,8 +30,9 @@ export const RemoveUser = ({ refreshList, items }: IPropsType) => {
 				title: `Delete user "${single.name}"?`,
 				body: (
 					<>
-						Are you sure you want to delete <strong>{single.name}</strong> (
-						{single.email})? This action cannot be undone.
+						Are you sure you want to delete{' '}
+						<strong>{single.name}</strong> ({single.email})? This
+						action cannot be undone.
 					</>
 				),
 			}
@@ -39,8 +40,9 @@ export const RemoveUser = ({ refreshList, items }: IPropsType) => {
 				title: `Delete ${items.length} users?`,
 				body: (
 					<>
-						Are you sure you want to delete these{" "}
-						<strong>{items.length}</strong> users? This action cannot be undone.
+						Are you sure you want to delete these{' '}
+						<strong>{items.length}</strong> users? This action
+						cannot be undone.
 					</>
 				),
 			};

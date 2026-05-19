@@ -28,13 +28,9 @@ export const ProButton = ({
 	const resolvedIconName = iconName ?? config?.iconName;
 	const resolvedIcon =
 		icon ??
-		(resolvedIconName ? <LucideIcon size={16} name={resolvedIconName} /> : undefined);
+		(resolvedIconName ? (
+			<LucideIcon size={16} name={resolvedIconName} />
+		) : undefined);
 
-	return (
-		<Button
-			danger={config?.danger}
-			{...rest}
-			icon={resolvedIcon}
-		/>
-	);
+	return <Button danger={config?.danger} {...rest} icon={resolvedIcon} />;
 };

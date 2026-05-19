@@ -20,7 +20,8 @@
 		"lint": "vp lint",
 		"format": "vp fmt",
 		"format:check": "vp fmt --check",
-		"check": "vp check",
+		"check": "vp check scripts app api",
+		"check:fix": "vp check --fix app scripts api",
 		"setup": "bun scripts/setup.ts"
 	},
 	"devDependencies": {

@@ -1,14 +1,14 @@
-import { Elysia, t } from "elysia";
-import { userService } from "./service";
-import { CreateUserSchema, EditUserSchema } from "./types";
-import { guardsPlugin } from "../../libs";
-import { UserListSchema } from "./types";
+import { Elysia, t } from 'elysia';
+import { userService } from './service';
+import { CreateUserSchema, EditUserSchema } from './types';
+import { guardsPlugin } from '../../libs';
+import { UserListSchema } from './types';
 
-export const userController = new Elysia({ prefix: "/users", tags: ["Users"] })
+export const userController = new Elysia({ prefix: '/users', tags: ['Users'] })
 	.use(guardsPlugin)
 	.guard({ auth: true })
 	.get(
-		"/",
+		'/',
 		({ query, auth }) =>
 			userService.getUsers({
 				query,
@@ -16,28 +16,28 @@ export const userController = new Elysia({ prefix: "/users", tags: ["Users"] })
 			}),
 		UserListSchema,
 	)
-	.get("/:id", ({ params, auth }) =>
+	.get('/:id', ({ params, auth }) =>
 		userService.getUser({
 			id: Number(params.id),
 			auth,
 		}),
 	)
 	.post(
-		"/",
+		'/',
 		({ body, auth }) => userService.createUser({ body, auth }),
 		CreateUserSchema,
 	)
 	.patch(
-		"/:id",
+		'/:id',
 		({ params, body, auth }) =>
 			userService.updateUser({ id: Number(params.id), body, auth }),
 		EditUserSchema,
 	)
 	.delete(
-		"/",
+		'/',
 		async ({ body, auth }) => {
 			await userService.deleteUser({ ids: body.ids, auth });
-			return "Successfully removed";
+			return 'Successfully removed';
 		},
 		{
 			body: t.Object({

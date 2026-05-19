@@ -8,7 +8,10 @@ import { useState } from 'react';
 
 type IPropsType = {
 	item: UseAPIItem<typeof API.users.get>;
-	onEdited: (id: number, patch: Partial<UseAPIItem<typeof API.users.get>>) => void;
+	onEdited: (
+		id: number,
+		patch: Partial<UseAPIItem<typeof API.users.get>>,
+	) => void;
 };
 
 export const EditUser = ({ item, onEdited }: IPropsType) => {

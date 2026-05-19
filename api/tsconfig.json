@@ -6,6 +6,7 @@
 		"experimentalDecorators": true,
 		"types": ["bun"],
 		"paths": {
+			"@api/*": ["./src/*"],
 			"@/*": ["./src/*"]
 		}
 	},

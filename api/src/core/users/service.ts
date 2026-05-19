@@ -1,10 +1,10 @@
-import { Prisma } from "@prisma/client";
-import { IAuthType, prisma } from "../../libs";
+import { Prisma } from '@prisma/client';
+import { IAuthType, prisma } from '../../libs';
 import {
 	ICreateUserRequestType,
 	IEditUserRequestType,
 	IUserListRequestType,
-} from "./types";
+} from './types';
 
 const SELECTED_FIELDS: Prisma.usersSelect = {
 	id: true,
@@ -32,13 +32,13 @@ class UserService {
 							{
 								name: {
 									contains: keyword,
-									mode: "insensitive",
+									mode: 'insensitive',
 								},
 							},
 							{
 								email: {
 									contains: keyword,
-									mode: "insensitive",
+									mode: 'insensitive',
 								},
 							},
 						],
@@ -49,7 +49,7 @@ class UserService {
 		const [items, totalCount] = await Promise.all([
 			prisma.users.findMany({
 				where,
-				orderBy: { updatedAt: "desc" },
+				orderBy: { updatedAt: 'desc' },
 				select: SELECTED_FIELDS,
 				skip: offset,
 				take: limit,

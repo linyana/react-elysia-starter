@@ -1,13 +1,13 @@
-import { Elysia } from "elysia";
-import { cors } from "@elysiajs/cors";
-import { authController, tenantController, userController } from "@/core";
-import { openapi } from "@elysia/openapi";
-import { ensurePort, ENV, onError } from "@/libs";
+import { Elysia } from 'elysia';
+import { cors } from '@elysiajs/cors';
+import { authController, tenantController, userController } from '@api/core';
+import { openapi } from '@elysia/openapi';
+import { ensurePort, ENV, onError } from '@api/libs';
 
 const PORT = Number(ENV.PORT);
 
 const app = new Elysia({
-	prefix: "/api",
+	prefix: '/api',
 })
 	.use(cors())
 	.use(openapi())

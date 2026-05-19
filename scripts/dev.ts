@@ -24,5 +24,4 @@ const api = Bun.spawn(['bun', 'run', 'dev'], {
 });
 
 await Promise.all([app.exited, api.exited]);
-export { };
-
+export {};

@@ -70,22 +70,43 @@ export const ProForm = <T extends Record<string, unknown>>({
 						initial={{ opacity: 0, scale: 0.95, y: 8 }}
 						animate={{ opacity: 1, scale: 1, y: 0 }}
 						exit={{ opacity: 0, scale: 0.95, y: 8 }}
-						transition={{ duration: 0.18, ease: "easeOut" }}
-						style={{ display: "flex", justifyContent: "flex-end" }}
+						transition={{ duration: 0.18, ease: 'easeOut' }}
+						style={{ display: 'flex', justifyContent: 'flex-end' }}
 					>
 						<Flex gap="small" align="center">
 							<AnimatePresence initial={false}>
 								{!loading && (
 									<motion.div
 										key="cancel"
-										initial={{ width: 0, opacity: 0, scale: 0.8 }}
-										animate={{ width: "auto", opacity: 1, scale: 1 }}
-										exit={{ width: 0, opacity: 0, scale: 0.8 }}
-										transition={{ duration: 0.15, ease: "easeOut" }}
-										style={{ overflow: "hidden", display: "inline-flex" }}
+										initial={{
+											width: 0,
+											opacity: 0,
+											scale: 0.8,
+										}}
+										animate={{
+											width: 'auto',
+											opacity: 1,
+											scale: 1,
+										}}
+										exit={{
+											width: 0,
+											opacity: 0,
+											scale: 0.8,
+										}}
+										transition={{
+											duration: 0.15,
+											ease: 'easeOut',
+										}}
+										style={{
+											overflow: 'hidden',
+											display: 'inline-flex',
+										}}
 									>
-										<ProButton onClick={onCancel} {...cancelButton}>
-											{cancelButton?.children ?? "Cancel"}
+										<ProButton
+											onClick={onCancel}
+											{...cancelButton}
+										>
+											{cancelButton?.children ?? 'Cancel'}
 										</ProButton>
 									</motion.div>
 								)}
@@ -93,7 +114,10 @@ export const ProForm = <T extends Record<string, unknown>>({
 
 							<motion.div
 								animate={saveControls}
-								style={{ display: "inline-flex", alignItems: "center" }}
+								style={{
+									display: 'inline-flex',
+									alignItems: 'center',
+								}}
 							>
 								<ProButton
 									iconName="Save"
@@ -102,7 +126,7 @@ export const ProForm = <T extends Record<string, unknown>>({
 									onClick={handleSubmit}
 									{...submitButton}
 								>
-									{submitButton?.children ?? "Save"}
+									{submitButton?.children ?? 'Save'}
 								</ProButton>
 							</motion.div>
 						</Flex>

@@ -120,7 +120,12 @@ export const ErrorPage = ({
 					textAlign: 'center',
 				}}
 			>
-				<img src={illustration} alt={config.title} width={580} height={380} />
+				<img
+					src={illustration}
+					alt={config.title}
+					width={580}
+					height={380}
+				/>
 
 				<Typography.Title level={3} style={{ margin: '8px 0 0' }}>
 					{config.title}

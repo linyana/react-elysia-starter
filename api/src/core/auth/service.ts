@@ -1,12 +1,12 @@
-import { prisma, IAuthType, AppError } from "../../libs";
-import { ILoginRequestType, IRegisterRequestType } from "./types";
+import { prisma, IAuthType, AppError } from '../../libs';
+import { ILoginRequestType, IRegisterRequestType } from './types';
 
 class AuthService {
 	async register({ tenant, user }: IRegisterRequestType) {
 		const existing = await prisma.users.findUnique({
 			where: { email: user.email },
 		});
-		if (existing) throw new AppError("Email already registered");
+		if (existing) throw new AppError('Email already registered');
 
 		const password = await Bun.password.hash(user.password);
 		const created = await prisma.tenants.create({
@@ -25,10 +25,10 @@ class AuthService {
 
 	async login({ email, password }: ILoginRequestType) {
 		const user = await prisma.users.findUnique({ where: { email } });
-		if (!user) throw new AppError("Invalid credentials");
+		if (!user) throw new AppError('Invalid credentials');
 
 		const ok = await Bun.password.verify(password, user.password);
-		if (!ok) throw new AppError("Invalid credentials");
+		if (!ok) throw new AppError('Invalid credentials');
 
 		return this.buildClaims(user.id);
 	}
@@ -39,7 +39,7 @@ class AuthService {
 			include: { tenant: true },
 		});
 		if (!user || user.tenantId !== claims.tenantId) {
-			throw new AppError("Invalid token", 401);
+			throw new AppError('Invalid token', 401);
 		}
 
 		return {
@@ -68,7 +68,7 @@ class AuthService {
 			name: user.name,
 			tenantName: user.tenant.name ?? null,
 			// TODO: replace wildcard with real RBAC lookup once a roles/permissions table exists
-			permissions: ["*"],
+			permissions: ['*'],
 		};
 	}
 }

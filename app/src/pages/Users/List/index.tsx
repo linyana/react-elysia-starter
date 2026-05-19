@@ -36,7 +36,10 @@ export const UserList = () => {
 						render: (_, record) => (
 							<>
 								<EditUser item={record} onEdited={update} />
-								<RemoveUser items={[record]} refreshList={fetch} />
+								<RemoveUser
+									items={[record]}
+									refreshList={fetch}
+								/>
 							</>
 						),
 					},

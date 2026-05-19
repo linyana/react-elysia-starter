@@ -1,5 +1,5 @@
-import { FilterSchema } from "@/types";
-import { t } from "elysia";
+import { FilterSchema } from '@api/types';
+import { t } from 'elysia';
 
 export const UserListSchema = {
 	query: t.Composite([

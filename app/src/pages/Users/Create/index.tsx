@@ -33,11 +33,7 @@ export const CreateUser = ({ fetch }: IPropsType) => {
 
 	return (
 		<>
-			<ProButton
-				type="primary"
-				iconName="Plus"
-				onClick={handleOpen}
-			>
+			<ProButton type="primary" iconName="Plus" onClick={handleOpen}>
 				Create User
 			</ProButton>
 			<ProModal
@@ -51,12 +47,18 @@ export const CreateUser = ({ fetch }: IPropsType) => {
 					initial={initial}
 					onCancel={() => setOpen(false)}
 					onSubmit={createUser}
-					submitButton={{ loading, children: "Create", iconName: "Plus" }}
+					submitButton={{
+						loading,
+						children: 'Create',
+						iconName: 'Plus',
+					}}
 				>
 					<Form.Item
 						name="name"
 						label="Name"
-						rules={[{ required: true, message: "Name is required" }]}
+						rules={[
+							{ required: true, message: 'Name is required' },
+						]}
 					>
 						<Input placeholder="Jane Doe" />
 					</Form.Item>
@@ -64,8 +66,8 @@ export const CreateUser = ({ fetch }: IPropsType) => {
 						name="email"
 						label="Email"
 						rules={[
-							{ required: true, message: "Email is required" },
-							{ type: "email", message: "Invalid email" },
+							{ required: true, message: 'Email is required' },
+							{ type: 'email', message: 'Invalid email' },
 						]}
 					>
 						<Input placeholder="jane@example.com" />
@@ -74,8 +76,8 @@ export const CreateUser = ({ fetch }: IPropsType) => {
 						name="password"
 						label="Password"
 						rules={[
-							{ required: true, message: "Password is required" },
-							{ min: 8, message: "At least 8 characters" },
+							{ required: true, message: 'Password is required' },
+							{ min: 8, message: 'At least 8 characters' },
 						]}
 					>
 						<Input.Password placeholder="••••••••" />
